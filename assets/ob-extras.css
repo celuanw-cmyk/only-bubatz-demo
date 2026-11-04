@@ -1,0 +1,202 @@
+/* Only Bubatz — Zusatz-Ebene: Papier-Hintergrund, Cannabis-Blatt beim Warenkorb,
+   Marken-Leiste klebt korrekt unter dem Header. Wird NACH base.css geladen. */
+
+/* ---------- 1) Papier-Hintergrund (wie Flyer) ---------- */
+:root {
+  --ob-paper-grain: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='0.5'/></svg>");
+}
+
+body {
+  background-color: var(--kraft, #e5c99e);
+  background-image:
+    var(--ob-paper-grain),
+    radial-gradient(ellipse at 50% -10%, rgba(255, 250, 235, .55), transparent 62%),
+    linear-gradient(180deg, #e8d3ab 0%, #e2c99c 55%, #dcc094 100%);
+  background-blend-mode: multiply, normal, normal;
+  background-size: 180px 180px, cover, cover;
+  background-attachment: fixed, fixed, fixed;
+}
+
+/* Der Hero behält seine Flächen, damit er sich abhebt */
+.hero--scene, .hero--bleed, .hero { background-color: transparent; }
+
+/* ---------- 2) Cannabis-Blatt beim Öffnen des Warenkorbs ---------- */
+.ob-leaf-fade {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at 50% 45%, rgba(11, 36, 24, .98), rgba(11, 36, 24, 1));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s cubic-bezier(.4, 0, .2, 1);
+}
+/* Einblenden: kurz und knackig (90 ms) — sonst wirkt es wie ein Verschluss */
+.ob-leaf-fade.is-on { opacity: 1; transition: opacity .09s cubic-bezier(.22, .75, .25, 1); }
+/* Ausblenden: 200 ms, gleiche Kurve wie der Container, KEIN Zusatz-Effekt am Blatt */
+.ob-leaf-fade.is-out { opacity: 0; transition: opacity .2s cubic-bezier(.4, 0, .2, 1); }
+.ob-leaf-fade.is-out img { opacity: 0; transition: opacity .18s cubic-bezier(.4, 0, .2, 1); animation: none; }
+.ob-leaf-fade img {
+  width: clamp(240px, 38vw, 480px);
+  height: auto;
+  filter: drop-shadow(0 22px 46px rgba(0, 0, 0, .6));
+  animation: ob-leaf-pop .5s cubic-bezier(.18, .82, .24, 1) forwards;
+}
+@keyframes ob-leaf-pop {
+  0%   { transform: scale(.22) rotate(-14deg); opacity: 0;
+         filter: drop-shadow(0 0 0 rgba(31, 233, 171, 0)) drop-shadow(0 22px 46px rgba(0, 0, 0, .6)); }
+  38%  { transform: scale(1.2) rotate(3deg); opacity: 1;
+         filter: drop-shadow(0 0 52px rgba(31, 233, 171, .95)) drop-shadow(0 22px 46px rgba(0, 0, 0, .6)); }
+  68%  { transform: scale(.94) rotate(-1deg); opacity: 1;
+         filter: drop-shadow(0 0 16px rgba(31, 233, 171, .5)) drop-shadow(0 22px 46px rgba(0, 0, 0, .6)); }
+  100% { transform: scale(1) rotate(0); opacity: 1;
+         filter: drop-shadow(0 0 0 rgba(31, 233, 171, 0)) drop-shadow(0 22px 46px rgba(0, 0, 0, .6)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ob-leaf-fade img { animation: none; }
+  .ob-leaf-fade { transition: none; }
+}
+
+/* ---------- 3) Marken-Leiste klebt unter dem Header ---------- */
+.shop-v28 .brandbar {
+  position: sticky;
+  top: var(--sv-hdr, 88px);
+  z-index: 85;
+}
+/* Fallback, wenn sticky im Shop-Kontext nicht greift: fest gepinnt */
+.shop-v28 .brandbar.is-fixed {
+  position: fixed;
+  top: var(--sv-hdr, 88px);
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 85;
+}
+/* Platzhalter ist standardmäßig ZU — er darf nie ohne echten fixed-Zustand stehen,
+   sonst entsteht ein 53px-Loch (Leistenhöhe 52px + 1px Rahmen) über der Leiste. */
+.shop-v28 .brandbar-spacer { display: none; width: 100%; height: 0; }
+body.ob-scrolled .shop-v28 .brandbar {
+  box-shadow: 0 16px 30px -26px rgba(20, 16, 10, .7);
+}
+
+/* ---------- 4) Kopfleiste (Navigation) klebt oben ---------- */
+.site-header.is-pinned {
+  position: fixed; top: 0; left: 0; right: 0; width: 100%;
+  z-index: 95; box-shadow: 0 18px 34px -30px rgba(20, 16, 10, .85);
+  transition: transform .28s cubic-bezier(.32, .72, .28, 1);
+  will-change: transform;
+}
+.site-header.is-hidden { transform: translateY(-100%); box-shadow: none; }
+/* Kopfleiste weg -> Markenleiste rutscht nach oben */
+html.ob-hdr-hidden .shop-v28 .brandbar.is-fixed { top: 0; }
+.shop-v28 .brandbar { box-shadow: 0 16px 30px -26px rgba(20, 16, 10, .7); transition: box-shadow .28s ease; }
+.header-spacer { display: block; width: 100%; }
+
+/* ---------- 5) Warenkorb-Knopf wie auf dem Flyer ---------- */
+.site-header .icon-btn[data-cart-open] {
+  position: relative; width: 54px; height: 54px; min-width: 54px; min-height: 54px; padding: 0;
+  border-radius: 50%; background: var(--green-deep); border: 2px solid var(--kraft);
+  box-shadow: 0 0 0 2px var(--ink), 0 6px 0 -2px rgba(20, 16, 10, .35);
+  color: var(--kraft-light);
+}
+.site-header .icon-btn[data-cart-open]:hover { background: var(--green); border-color: var(--kraft-light); }
+.site-header .icon-btn[data-cart-open] svg { width: 26px; height: 26px; color: var(--kraft-light); }
+.site-header .icon-btn[data-cart-open] svg [stroke] { stroke: currentColor; }
+.site-header .icon-btn[data-cart-open] .cart-count {
+  position: absolute; top: -7px; right: -7px; min-width: 23px; height: 23px; padding: 0 6px;
+  background: var(--rust); color: #fff6ec; border: 2px solid var(--kraft-light);
+  font-size: 12px;
+}
+
+/* ---------- 6) Filter auf dem Handy ausklappbar ---------- */
+.filters-m > summary { display: none; }
+@media (max-width: 1079px) {
+  .filters-m { display: block; margin: 0 0 14px; }
+  .filters-m > summary {
+    display: flex; align-items: center; gap: 10px; width: 100%;
+    min-height: 48px; padding: 12px 16px; cursor: pointer; list-style: none;
+    background: var(--kraft-2); border: 1.5px solid var(--sv-line); border-radius: 3px;
+    font: 700 13px/1 var(--font-body); letter-spacing: .12em; text-transform: uppercase; color: var(--ink);
+  }
+  .filters-m > summary::-webkit-details-marker { display: none; }
+  .filters-m > summary small {
+    font-size: 12px; font-weight: 600; letter-spacing: .02em; text-transform: none; color: #8a2a18;
+  }
+  .filters-m > summary svg { margin-left: auto; width: 18px; height: 18px; transition: transform .2s ease; }
+  .filters-m[open] > summary svg { transform: rotate(180deg); }
+  .filters-m:not([open]) > .filters { display: none; }
+  .filters-m[open] > .filters { display: block; position: static; max-height: none; }
+}
+
+/* ---------- 7) Warenkorb-Zeilen im Flyer-Look ---------- */
+#cartDrawer .cart-line img {
+  background: var(--kraft-light); border: 1.5px solid rgba(20, 16, 10, .22);
+  border-radius: 2px; padding: 4px; mix-blend-mode: multiply;
+}
+/* nur die Platte rechts bekommt Papier — der Container bleibt durchsichtig,
+   sonst liegt eine deckende Fläche über dem ganzen Shop */
+#cartDrawer { background: transparent; }
+#cartDrawer .cart-drawer__panel { background: var(--kraft-light); }
+#cartDrawer .cart-line h3 { font-family: var(--font-body); font-size: 15px; font-weight: 700; line-height: 1.3; }
+#cartDrawer .cart-subtotal { font-size: 17px; }
+
+/* ---------- 8) Ausverkaufte Produkte: ausgegraut, diagonaler Schriftzug, kein Preis ---------- */
+.p-card.is-out .p-card__media img { opacity: .55; filter: grayscale(1) contrast(.92); }
+.p-card.is-out .p-card__priceline { visibility: hidden; }  /* Platz bleibt */
+.p-card.is-out .p-card__cta { visibility: hidden; }      /* Andree 03.11.: nur das Produkt, kein Preis, kein Button */
+.p-card.is-out .p-card__media { position: relative; }
+.p-card.is-out .p-card__media { overflow: hidden; }
+.p-card.is-out .p-card__media::after {
+  content: var(--ob-sold-label, "AUSVERKAUFT");
+  position: absolute; left: -30%; top: 50%; width: 160%;
+  transform: translateY(-50%) rotate(-30deg);
+  padding: 9px 0; text-align: center; white-space: nowrap;
+  font: 800 17px/1 var(--font-body); letter-spacing: .20em; text-transform: uppercase;
+  color: rgba(247, 236, 214, .82);
+  background: rgba(20, 16, 10, .70);
+  border-top: 1px solid rgba(247, 236, 214, .22);
+  border-bottom: 1px solid rgba(247, 236, 214, .22);
+  pointer-events: none;
+}
+@media (max-width: 720px) {
+  .p-card.is-out .p-card__media::after { font-size: 14px; letter-spacing: .12em; padding: 8px 0; }
+}
+
+/* ---------- 9) Bewegung: Sektionen blenden beim Scrollen ein ---------- */
+[data-ob-anim] { opacity: 1; }
+.ob-js [data-ob-anim].ob-anim-ready {
+  opacity: 0;
+  transition:
+    opacity var(--ob-dur, .5s) cubic-bezier(.22, .75, .25, 1) var(--ob-delay, 0s),
+    transform var(--ob-dur, .5s) cubic-bezier(.22, .75, .25, 1) var(--ob-delay, 0s);
+  will-change: opacity, transform;
+}
+/* nach dem Einblenden keine GPU-Ebene mehr festhalten (spart Speicher) */
+.ob-js [data-ob-anim].ob-anim-ready.is-in { will-change: auto; }
+/* Tastaturfokus darf nie in einem unsichtbaren Bereich landen */
+.ob-js [data-ob-anim]:focus-within { opacity: 1 !important; transform: none !important; transition: none !important; }
+[data-ob-anim="fade"].ob-anim-ready { transform: none; }
+[data-ob-anim="rise"].ob-anim-ready { transform: translateY(22px); }
+[data-ob-anim="zoom"].ob-anim-ready { transform: scale(.975); }
+[data-ob-anim="left"].ob-anim-ready { transform: translateX(-24px); }
+.ob-js [data-ob-anim].ob-anim-ready.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-ob-anim], .ob-js [data-ob-anim].ob-anim-ready { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ---------- 10) Zweite Pflanze im Bereich „Gemeinsam aufgebaut" ---------- */
+.ob-partners { position: relative; overflow: hidden; }
+.ob-partners .page { position: relative; z-index: 1; }
+.ob-partners__plant {
+  position: absolute; left: 34%; bottom: -18%; height: 150%;
+  z-index: 0; pointer-events: none;
+  transform: rotate(-14deg); transform-origin: bottom center;
+  opacity: .30; mix-blend-mode: multiply;
+  filter: sepia(.3) saturate(.65) contrast(.95) brightness(1.03);
+  -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,.55) 16%, #000 46%);
+  mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,.55) 16%, #000 46%);
+}
+.ob-partners__plant img { height: 100%; width: auto; display: block; }
+@media (max-width: 720px) { .ob-partners__plant { display: none; } }

@@ -1,0 +1,82 @@
+/* Konto-Seiten — gleiche Sprache wie der Shop: Papier, Tinte, Rost, Anton. */
+
+.ob-acc { padding: clamp(28px, 5vw, 76px) 0 clamp(40px, 6vw, 90px); background: var(--kraft-light); }
+.ob-acc__card { max-width: 880px; margin: 0 auto; }
+.ob-acc--narrow .ob-acc__card { max-width: 520px; }
+
+.ob-acc__eyebrow {
+  margin: 0 0 6px; font-size: 11px; font-weight: 700; letter-spacing: .22em;
+  text-transform: uppercase; color: #8a2a18;
+}
+.ob-acc__title {
+  margin: 0 0 8px; font-family: var(--font-display); font-weight: 400;
+  font-size: clamp(26px, 4vw, 48px); line-height: 1; text-transform: uppercase; color: var(--ink);
+}
+.ob-acc__intro { margin: 0 0 24px; font-size: 15px; line-height: 1.55; color: rgba(20,16,10,.78); max-width: 52ch; }
+
+/* Felder */
+.ob-acc__field { margin-bottom: 14px; }
+.ob-acc__field label { display: block; margin-bottom: 5px; font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: rgba(20,16,10,.7); }
+.ob-acc__field input,
+.ob-acc__field select {
+  width: 100%; padding: 12px 14px; font: inherit; font-size: 15px; color: var(--ink);
+  background: #fffdf7; border: 2px solid var(--ink); border-radius: 4px;
+}
+.ob-acc__field input:focus,
+.ob-acc__field select:focus { outline: 3px solid rgba(224,79,26,.35); outline-offset: 1px; }
+.ob-acc__row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ob-acc__hint { margin: 6px 0 0; font-size: 12px; color: rgba(20,16,10,.6); }
+.ob-acc__hint a { color: #8a2a18; }
+
+/* Knöpfe */
+.ob-acc__btn {
+  display: inline-block; margin-top: 6px; padding: 13px 26px;
+  font-size: 13px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  color: #fff6ec; background: var(--rust, #a63a22); border: 2px solid var(--ink);
+  border-radius: 4px; cursor: pointer; box-shadow: 3px 3px 0 rgba(20,16,10,.28);
+  transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+}
+.ob-acc__btn:hover { background: #7d2a17; transform: translate(-1px, -1px); box-shadow: 4px 4px 0 rgba(20,16,10,.32); }
+.ob-acc__btn:active { transform: translate(1px, 1px); box-shadow: 2px 2px 0 rgba(20,16,10,.3); }
+.ob-acc__btn--ghost { background: transparent; color: var(--ink); box-shadow: none; }
+.ob-acc__btn--ghost:hover { background: rgba(20,16,10,.06); color: var(--ink); }
+.ob-acc__btn--sm { padding: 9px 16px; font-size: 11px; }
+
+.ob-acc__alt { margin: 14px 0 0; font-size: 14px; }
+.ob-acc__alt a, .ob-acc__legal a, .ob-acc__panel a { color: #8a2a18; }
+
+/* Einwilligungen */
+.ob-acc__check { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 12px; font-size: 13px; line-height: 1.5; cursor: pointer; }
+.ob-acc__check input { margin-top: 3px; width: 18px; height: 18px; accent-color: #a63a22; flex: 0 0 auto; }
+.ob-acc__check em { color: rgba(20,16,10,.6); font-style: normal; }
+.req { color: #a63a22; font-weight: 700; }
+
+/* Panels & Tabellen */
+.ob-acc__grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; }
+.ob-acc__panel { padding: 20px; margin-bottom: 18px; background: #fffdf7; border: 2px solid var(--ink); border-radius: 4px; box-shadow: 5px 5px 0 rgba(20,16,10,.12); }
+.ob-acc__panel h2 { margin: 0 0 10px; font-family: var(--font-display); font-weight: 400; font-size: clamp(18px, 2vw, 24px); text-transform: uppercase; }
+.ob-acc__small { font-size: 12.5px; line-height: 1.6; color: rgba(20,16,10,.7); }
+.ob-acc__tag { display: inline-block; margin: 0 0 8px; padding: 2px 8px; font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; background: var(--rust, #a63a22); color: #fff6ec; border-radius: 2px; }
+.ob-acc__table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.ob-acc__table th { text-align: left; padding: 8px 6px; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; border-bottom: 2px solid var(--ink); }
+.ob-acc__table td { padding: 9px 6px; border-bottom: 1px solid rgba(20,16,10,.14); vertical-align: top; }
+.ob-acc__total td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: none; }
+.ob-acc__actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
+.ob-acc__link-danger { margin-top: 12px; padding: 0; font-size: 12px; color: #8a2a18; background: none; border: none; border-bottom: 1px solid currentColor; cursor: pointer; }
+
+/* Fuß */
+.ob-acc__nav { display: flex; gap: 18px; margin-top: 26px; padding-top: 16px; border-top: 2px solid rgba(20,16,10,.16); }
+.ob-acc__nav a { font-size: 12px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); text-decoration: none; }
+.ob-acc__nav a:hover { color: #8a2a18; }
+.ob-acc__legal { margin: 12px 0 0; font-size: 11.5px; color: rgba(20,16,10,.6); }
+.ob-acc__ok { padding: 10px 12px; font-size: 13px; background: rgba(31,233,171,.18); border-left: 3px solid #0b2418; }
+.ob-acc__recover { margin-top: 32px; padding-top: 22px; border-top: 2px solid rgba(20,16,10,.16); }
+.ob-acc__recover h2 { margin: 0 0 6px; font-family: var(--font-display); font-weight: 400; font-size: 22px; text-transform: uppercase; }
+.ob-acc .errors, .ob-acc ul.errors { padding: 12px 14px; font-size: 13px; color: #7d2a17; background: rgba(166,58,34,.1); border-left: 3px solid #a63a22; list-style: none; }
+
+@media (max-width: 760px) {
+  .ob-acc__grid { grid-template-columns: 1fr; }
+  .ob-acc__row { grid-template-columns: 1fr; }
+  .ob-acc__table { font-size: 13px; }
+  .ob-acc__table th:nth-child(2), .ob-acc__table td:nth-child(2) { display: none; }
+}

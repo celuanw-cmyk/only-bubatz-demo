@@ -1,0 +1,169 @@
+/* Only Bubatz — Hero-Bühne „Apothekerschrank“ (sections/hero-split.liquid, Regal-Art = cabinet).
+   Größen in cqw: alles skaliert mit der Breite der Bühne. */
+.ob-hero__stage--cab { background: transparent !important; clip-path: none !important; overflow: visible !important; height: auto !important; min-height: 0 !important; display: flex; align-items: center; }
+.ob-hero__stage--cab::before, .ob-hero__stage--cab::after { display: none !important; }
+.ob-cabw { container-type: inline-size; width: 100%; padding: 10px 14px 18px; }
+.ob-cab {
+  --ink: #14100a; --cream: #f7ecd6; --rust: #a63a22; --green: #0b2418;
+  --brass: #b8893a; --brass2: #e2c27a; --brassd: #5d4214;
+  --w1: #5a3a20; --w2: #3f2814; --w3: #2a1a0c;
+  position: relative; color: var(--ink);
+}
+.ob-cab__wood {
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .08) 0 1px, transparent 1px 23px),
+    linear-gradient(180deg, var(--w1), var(--w2));
+}
+.ob-cab__crown {
+  position: relative; height: clamp(44px, 8cqw, 66px); margin: 0 -1.8cqw; border: 2px solid var(--ink); border-radius: 6px 6px 2px 2px;
+  box-shadow: inset 0 -10px 0 rgba(0, 0, 0, .25), inset 0 6px 0 rgba(255, 255, 255, .08), 0 6px 0 rgba(20, 16, 10, .35);
+}
+.ob-cab__crown::after { content: ""; position: absolute; left: 1.4cqw; right: 1.4cqw; bottom: -12px; height: 12px; border: 2px solid var(--ink); border-top: 0; background: linear-gradient(var(--w2), var(--w3)); }
+.ob-cab__sign {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-1.5deg); white-space: nowrap;
+  background: var(--green); color: var(--cream); font: 400 clamp(13px, 2.7cqw, 21px)/1 Anton, Impact, sans-serif; letter-spacing: .2em; text-transform: uppercase;
+  padding: clamp(8px, 1.5cqw, 12px) clamp(14px, 2.9cqw, 22px); border: 2px solid var(--ink); border-radius: 8px;
+  box-shadow: inset 0 0 0 3px var(--green), inset 0 0 0 4.5px var(--cream), 4px 4px 0 rgba(20, 16, 10, .75);
+}
+.ob-cab__body { position: relative; display: grid; grid-template-columns: clamp(12px, 2.6cqw, 22px) 1fr clamp(12px, 2.6cqw, 22px); border: 2px solid var(--ink); border-top: 0; margin-top: 12px; }
+.ob-cab__post:first-child { border-right: 2px solid var(--ink); }
+.ob-cab__post:last-child { border-left: 2px solid var(--ink); }
+.ob-cab__inner {
+  position: relative; overflow: hidden; min-width: 0;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(20, 16, 10, .10) 1.2px, transparent 1.6px) 0 0 / 22px 22px,
+    repeating-linear-gradient(90deg, rgba(20, 16, 10, .05) 0 2px, transparent 2px 28px),
+    linear-gradient(180deg, #efdfba, #e3cd9c);
+}
+.ob-cab__inner::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; z-index: 3;
+  background: radial-gradient(120% 90% at 50% 30%, transparent 50%, rgba(40, 24, 8, .38)),
+              linear-gradient(90deg, rgba(0, 0, 0, .25), transparent 9%, transparent 91%, rgba(0, 0, 0, .25));
+}
+.ob-cab__leafbg { position: absolute; left: 50%; top: 6%; width: 62%; height: auto; transform: translateX(-50%) rotate(-6deg); opacity: .16; pointer-events: none; }
+
+.ob-cab__row { position: relative; z-index: 2; display: flex; align-items: flex-end; justify-content: space-around; gap: 2cqw; padding: 3cqw 4% 0; height: clamp(150px, 30cqw, 240px); }
+.ob-cab__item { position: relative; display: flex; align-items: flex-end; justify-content: center; height: 100%; flex: 0 1 auto; min-width: 0; text-decoration: none; }
+.ob-cab__item img {
+  display: block; height: 78%; width: auto; max-width: 100%; object-fit: contain; object-position: 50% 100%;
+  filter: sepia(.12) drop-shadow(0 8px 6px rgba(30, 18, 6, .35)); transition: transform .3s ease;
+}
+.ob-cab__item img.is-photo { mix-blend-mode: multiply; filter: sepia(.12) contrast(1.03); }
+.ob-cab__item--big img { height: 92%; }
+.ob-cab__item::after { content: ""; position: absolute; bottom: -4px; left: 12%; right: 12%; height: 12px; border-radius: 50%; background: radial-gradient(closest-side, rgba(20, 10, 0, .45), transparent); z-index: -1; }
+.ob-cab__item:hover img, .ob-cab__item:focus-visible img { transform: translateY(-4px); }
+.ob-cab__stamp {
+  position: absolute; z-index: 6; top: 4%; left: -1.5cqw; transform: rotate(14deg); white-space: nowrap;
+  font: 400 clamp(10px, 1.7cqw, 13px)/1 Anton, Impact, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: var(--rust);
+  border: 2px solid var(--rust); border-radius: 4px; padding: 5px 7px; background: rgba(247, 236, 214, .88); box-shadow: 0 0 0 2px rgba(247, 236, 214, .88);
+}
+.ob-cab__board {
+  position: relative; z-index: 4; display: flex; align-items: center; justify-content: space-around; gap: 1cqw; padding: 4px 4%; min-height: 38px;
+  border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);
+  box-shadow: inset 0 3px 0 rgba(255, 255, 255, .12), inset 0 -6px 0 rgba(0, 0, 0, .25), 0 10px 14px -4px rgba(20, 10, 0, .55);
+}
+.ob-cab__tag {
+  position: relative; display: flex; align-items: center; gap: 8px; padding: 3px 12px; border-radius: 3px; white-space: nowrap; min-width: 0;
+  background: linear-gradient(180deg, var(--brass2), var(--brass)); border: 1.5px solid var(--brassd);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 255, 255, .5);
+}
+.ob-cab__tag::before, .ob-cab__tag::after { content: ""; position: absolute; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%; background: var(--brassd); }
+.ob-cab__tag::before { left: 4px; } .ob-cab__tag::after { right: 4px; }
+.ob-cab__tag b { display: block; font: 400 clamp(12px, 2cqw, 15px)/1 Anton, Impact, sans-serif; letter-spacing: .04em; color: #2a1d08; text-shadow: 0 1px 0 rgba(255, 255, 255, .45); }
+.ob-cab__tag s { font: 10px ui-monospace, "Courier New", monospace; opacity: .7; margin-left: 5px; text-shadow: none; }
+.ob-cab__tag i {
+  display: block; overflow: hidden; text-overflow: ellipsis; max-width: 18cqw;
+  font: normal 400 clamp(8px, 1.35cqw, 10px)/1.2 ui-monospace, "Courier Prime", "Courier New", monospace; letter-spacing: .1em; text-transform: uppercase;
+  color: #2a1d08; background: var(--cream); padding: 4px 7px; border: 1px solid var(--brassd);
+}
+.ob-cab__tag.is-deal { background: linear-gradient(180deg, #c9543a, var(--rust)); border-color: #4a1408; }
+.ob-cab__tag.is-deal b { color: var(--cream); text-shadow: 0 1px 0 rgba(0, 0, 0, .4); }
+.ob-cab__tag.is-deal i { background: var(--rust); color: var(--cream); border-color: #4a1408; }
+.ob-cab__board + .ob-cab__row { margin-top: 0; }
+.ob-cab__drawers { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 26px; border-top: 2px solid var(--ink); position: relative; z-index: 4; }
+.ob-cab__drawer {
+  position: relative; display: block; height: clamp(64px, 12cqw, 96px); border-right: 2px solid var(--ink); text-decoration: none;
+  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, .18), inset 0 0 0 6px rgba(255, 255, 255, .06);
+}
+.ob-cab__drawer:last-child { border-right: 0; }
+.ob-cab__lbl {
+  position: absolute; left: 50%; top: 24%; transform: translateX(-50%); min-width: 60%; max-width: 90%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-align: center;
+  font: clamp(8px, 1.4cqw, 10px)/1 ui-monospace, "Courier Prime", "Courier New", monospace; letter-spacing: .14em; text-transform: uppercase;
+  background: var(--cream); color: #2a1d08; padding: 5px 6px; border: 2px solid var(--brass); outline: 1px solid var(--brassd); border-radius: 2px;
+}
+.ob-cab__knob {
+  position: absolute; left: 50%; bottom: 18%; width: 30px; height: 10px; transform: translateX(-50%); border-radius: 0 0 12px 12px;
+  background: linear-gradient(180deg, var(--brass2), var(--brass)); border: 1.5px solid var(--brassd); box-shadow: 0 2px 0 rgba(0, 0, 0, .45); transition: transform .2s ease;
+}
+.ob-cab__drawer:hover .ob-cab__knob, .ob-cab__drawer:focus-visible .ob-cab__knob { transform: translateX(-50%) translateY(2px); }
+.ob-cab__drawer:focus-visible, .ob-cab__item:focus-visible { outline: 3px solid var(--rust); outline-offset: -3px; }
+.ob-cab__plinth { height: 16px; margin: 0 -1cqw; border: 2px solid var(--ink); border-top: 0; border-radius: 0 0 4px 4px; }
+
+/* schmale Bühne (Handy): Preisschild zweizeilig */
+@container (max-width: 520px) {
+  .ob-cab__row { height: 150px; padding-top: 16px; }
+  .ob-cab__board { min-height: 46px; padding: 4px 2%; }
+  .ob-cab__tag { flex-direction: column; gap: 2px; padding: 3px 6px; }
+  .ob-cab__tag s { display: none; }
+  .ob-cab__tag i { max-width: 26cqw; letter-spacing: .04em; padding: 2px 4px; }
+  .ob-cab__lbl { letter-spacing: .06em; }
+}
+@media (prefers-reduced-motion: reduce) { .ob-cab__item img, .ob-cab__knob { transition: none; } }
+/* Meta-Zeile („seit …“) unter dem Schrank statt darüber */
+.ob-hero__stage--cab { flex-direction: column; align-items: stretch; }
+.ob-hero__stage--cab .ob-hero__meta { position: static !important; inset: auto !important; padding: 0 14px 6px !important; margin: 0; color: var(--ink-soft, #4a3d2b) !important; background: none !important; }
+
+/* ==========================================================================
+   Ladentisch (schräg) mit Vintage-Holzregal-Hintergrund — nur Hintergrund,
+   Produkte, Anhänger und Schräge bleiben wie sie sind.
+   ========================================================================== */
+.ob-shelf--wood { --wd1: #5a3a20; --wd2: #3f2814; --wd3: #2a1a0c; --br: #b8893a; --br2: #e2c27a; }
+/* Rückwand: Tapete in einem Holzrahmen (Krone oben, Pfosten rechts) */
+.ob-hero .ob-shelf--wood .ob-shelf__wall {
+  inset: 0 0 34% 0;
+  background:
+    radial-gradient(120% 95% at 55% 35%, transparent 52%, rgba(40, 24, 8, .42)),
+    radial-gradient(circle at 50% 50%, rgba(20, 16, 10, .10) 1.2px, transparent 1.6px) 0 0 / 22px 22px,
+    repeating-linear-gradient(90deg, rgba(20, 16, 10, .05) 0 2px, transparent 2px 28px),
+    linear-gradient(180deg, #efdfba, #e0c995);
+  box-shadow: inset 0 -14px 18px -8px rgba(20, 10, 0, .45);
+}
+.ob-shelf--wood::before { /* Krone */
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: clamp(26px, 6%, 44px); z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .08), transparent 30%, rgba(0, 0, 0, .3)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, var(--wd1), var(--wd2));
+  border-bottom: 2px solid #14100a; box-shadow: 0 8px 0 -2px var(--wd3), 0 8px 0 0 #14100a, 0 14px 16px rgba(20, 10, 0, .35);
+}
+.ob-shelf--wood::after { /* Pfosten rechts */
+  content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: clamp(14px, 2.2%, 24px); z-index: 4;
+  background: repeating-linear-gradient(0deg, rgba(255, 255, 255, .03) 0 2px, transparent 2px 11px), linear-gradient(90deg, var(--wd2), var(--wd1) 40%, var(--wd3));
+  border-left: 2px solid #14100a;
+}
+/* Regalbrett mit Vorderkante */
+.ob-hero .ob-shelf--wood .ob-shelf__board {
+  height: 24px; top: calc(66% - 4px);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .14), transparent 30%, rgba(0, 0, 0, .28)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .04) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(90deg, rgba(0, 0, 0, .08) 0 1px, transparent 1px 23px),
+    linear-gradient(180deg, var(--wd1), var(--wd2));
+  border-top: 2px solid #14100a; border-bottom: 2px solid #14100a;
+  box-shadow: 0 12px 16px -4px rgba(20, 10, 0, .55);
+}
+/* Unterschrank: Apotheker-Schubladen mit Messinggriff */
+.ob-hero .ob-shelf--wood .ob-shelf__table {
+  top: calc(66% + 20px);
+  background:
+    radial-gradient(14px 6px at 50% 64%, var(--br2) 0 45%, var(--br) 55%, #5d4214 70%, transparent 74%) 0 0 / 25% 50%,
+    repeating-linear-gradient(90deg, transparent 0 calc(25% - 2px), #14100a calc(25% - 2px) 25%),
+    repeating-linear-gradient(0deg, transparent 0 calc(50% - 2px), #14100a calc(50% - 2px) 50%),
+    linear-gradient(180deg, rgba(0, 0, 0, .25), transparent 18%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, #4f331b, var(--wd3));
+  border-top: 2px solid #14100a;
+}
+.ob-shelf--wood .ob-shelf__leaf { opacity: .16; z-index: 0; top: 4%; }
+.ob-shelf--wood .ob-shelf__sign { z-index: 3; top: calc(clamp(26px, 6%, 44px) + 4%); }

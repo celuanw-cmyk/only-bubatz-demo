@@ -1,0 +1,661 @@
+/* ob-vintage.css — ein Vintage-System für die ganze Seite (03.11.2026).
+   Gleiche Sprache wie Partner-Kacheln und Newsletter-Postkarte:
+   2 px Tinte · 12 px Rundung · Versatz-Schatten · gestrichelte Innenkante · Mono-Etiketten.
+   Wird als letzte Theme-CSS geladen und überschreibt nur Aussehen, nie Aufbau. */
+
+:root {
+  --vt-line: 2px solid var(--ink);
+  --vt-radius: 12px;
+  --vt-shadow: 5px 5px 0 rgba(20, 16, 10, .88);
+  --vt-shadow-sm: 3px 3px 0 rgba(20, 16, 10, .8);
+  --vt-dash: 1px dashed rgba(20, 16, 10, .34);
+  --vt-mono: ui-monospace, "Courier Prime", "Courier New", monospace;
+  --vt-paper: var(--kraft-light);
+}
+
+/* ---------- Bausteine ---------- */
+.vt-card,
+.template-product .accordion details,
+.template-cart .cart-line,
+.template-collection .filters,
+.content-grid > :first-child,
+.callout {
+  position: relative;
+  background: var(--vt-paper);
+  border: var(--vt-line);
+  border-radius: var(--vt-radius);
+  box-shadow: var(--vt-shadow);
+}
+
+/* Etiketten (kleine Zeilen über Überschriften) überall gleich */
+.eyebrow {
+  font-family: var(--vt-mono) !important;
+  font-weight: 400 !important;
+  letter-spacing: .22em !important;
+}
+
+/* Buttons: überall Pille, Tinte-Kante, kleiner Druck-Schatten, Hover hebt an */
+.btn {
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  box-shadow: var(--vt-shadow-sm);
+  transition: transform 140ms ease, background-color 140ms linear, color 140ms linear;
+}
+.btn:hover, .btn:focus-visible { transform: translate(-1px, -2px); }
+.btn:active { transform: translate(2px, 2px); box-shadow: 0 0 0 rgba(0, 0, 0, 0); }
+.on-dark .btn { box-shadow: 3px 3px 0 rgba(0, 0, 0, .45); }
+
+/* Eingabefelder: Papier, Tinte-Kante, Rost im Fokus */
+input[type="email"], input[type="text"], input[type="search"], input[type="tel"], input[type="number"], select, textarea {
+  border-radius: 10px;
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible {
+  outline: 2px solid var(--rust); outline-offset: 2px;
+}
+
+/* ---------- Unterseiten-Kopf (Über uns, Rechtstexte, Sessions …) ---------- */
+.page-hero { position: relative; overflow: hidden; }
+.page-hero::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 8px;
+  background: repeating-linear-gradient(-45deg, #f7ecd6 0 12px, var(--ink) 12px 24px, #f7ecd6 24px 36px, var(--rust) 36px 48px);
+  border-top: 2px solid var(--ink);
+}
+
+/* ---------- Textseiten (AGB, Datenschutz, Impressum, Widerruf, Versand …) ---------- */
+.content-grid > :first-child {
+  padding: clamp(24px, 3.6vw, 48px);
+  max-width: 78ch;
+}
+.content-grid > :first-child::before {
+  content: ""; position: absolute; inset: 8px; pointer-events: none;
+  border: var(--vt-dash); border-radius: 7px;
+}
+.content-grid h2 { font-size: clamp(24px, 2.4vw, 32px); }
+.content-grid h3 { font-size: clamp(19px, 1.7vw, 22px); }
+.content-grid h2, .content-grid h3 { text-wrap: balance; }
+.content-grid h2::before {
+  content: ""; display: block; width: 44px; height: 3px; margin-bottom: 12px; background: var(--rust);
+}
+.content-grid a:not(.btn) { color: var(--rust); text-decoration: underline; text-underline-offset: 3px; }
+.content-grid strong { color: var(--ink); }
+.content-grid hr { border: 0; border-top: var(--vt-dash); margin: 28px 0; }
+.content-grid table { width: 100%; border-collapse: collapse; margin: 18px 0; font-size: 15px; }
+.content-grid th, .content-grid td { border: 1px solid rgba(20, 16, 10, .25); padding: 8px 10px; text-align: left; vertical-align: top; }
+.content-grid p, .content-grid li { overflow-wrap: anywhere; }
+.callout { border-left: 8px solid var(--rust); box-shadow: var(--vt-shadow-sm); }
+.sticky-card { border-radius: var(--vt-radius); box-shadow: var(--vt-shadow); }
+
+/* ---------- Produktseite ---------- */
+.template-product .pdp-thumbs > * {
+  border: var(--vt-line) !important; border-radius: 10px !important; overflow: hidden;
+  box-shadow: var(--vt-shadow-sm);
+}
+.template-product .pdp-title { text-wrap: balance; }
+.template-product .pdp-price { font-family: var(--vt-mono); }
+.template-product .qty { border-radius: 999px !important; overflow: hidden; }
+.template-product .accordion { display: grid; gap: 14px; margin-top: 28px; }
+.template-product .accordion details { padding: 0; overflow: hidden; box-shadow: var(--vt-shadow-sm); }
+.template-product .accordion summary {
+  padding: 16px 20px; cursor: pointer; list-style: none;
+  font-family: var(--font-display); font-size: 20px; letter-spacing: .03em; text-transform: uppercase;
+}
+.template-product .accordion summary::-webkit-details-marker { display: none; }
+.template-product .accordion summary::after { content: "+"; float: right; font-family: var(--vt-mono); color: var(--rust); }
+.template-product .accordion details[open] summary { border-bottom: var(--vt-dash); }
+.template-product .accordion details[open] summary::after { content: "−"; }
+.template-product .acc-body { padding: 18px 20px 22px; max-width: 72ch; }
+.template-product .acc-body p, .template-product .acc-body li { font-size: 16.5px; line-height: 1.7; }
+
+/* ---------- Warenkorb ---------- */
+.template-cart .cart-line { padding: 14px 16px; margin-bottom: 14px; box-shadow: var(--vt-shadow-sm); align-items: center; }
+.template-cart .cart-line img { border: 1.5px solid var(--ink); border-radius: 8px; background: #fff; }
+
+/* ---------- Sortiment ---------- */
+.template-collection .filters { padding: 18px 18px 22px; box-shadow: var(--vt-shadow-sm); }
+.template-collection .filters h3, .template-collection .filters .lbl {
+  font-family: var(--vt-mono); letter-spacing: .18em; text-transform: uppercase; font-size: 11px;
+}
+
+/* ---------- Footer: Luftpost-Kante oben ---------- */
+.site-footer, footer.footer { position: relative; }
+
+@media (max-width: 760px) {
+  .content-grid > :first-child { padding: 22px 18px; }
+  .content-grid > :first-child::before { inset: 6px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .btn:hover, .btn:focus-visible, .btn:active { transform: none; }
+}
+
+/* =====================================================================
+   Startseite Bereich für Bereich (03.11.2026, 2. Durchgang)
+   ===================================================================== */
+
+/* ---------- Ankündigung: Schreibmaschine, Sterne als Trenner ---------- */
+.announce {
+  font-family: var(--vt-mono); font-weight: 400; letter-spacing: .2em;
+  border-bottom: 1px dashed rgba(247, 236, 214, .35);
+}
+
+/* ---------- Header: doppelte Druckkante unten ---------- */
+.site-header { box-shadow: 0 3px 0 var(--rust), 0 5px 0 var(--ink); }
+
+/* ---------- USP-Leiste: Band mit Luftpost-Kanten ---------- */
+.usp { position: relative; border-block: 0; }
+.usp::before, .usp::after {
+  content: ""; position: absolute; left: 0; right: 0; height: 6px;
+  background: repeating-linear-gradient(-45deg, #f7ecd6 0 10px, var(--ink) 10px 20px);
+}
+.usp::before { top: 0; }
+.usp::after { bottom: 0; }
+.usp .page { padding-block: 20px; }
+.usp-item { font-family: var(--vt-mono); font-weight: 400; font-size: 13px; letter-spacing: .18em; }
+.usp-item + .usp-item::before {
+  content: "✦"; margin-right: clamp(10px, 2vw, 26px); color: #f7ecd6; opacity: .7; font-size: 11px;
+}
+@media (max-width: 760px) { .usp-item + .usp-item::before { display: none; } }
+
+/* ---------- Vertrauen: Zusagen als Gutschein mit Stempel ---------- */
+.ob-trust .trust-grid { gap: clamp(16px, 2vw, 26px); }
+.ob-trust .trust-item {
+  position: relative; display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 40px 22px 26px; border-radius: var(--vt-radius); box-shadow: var(--vt-shadow);
+  transition: transform 140ms ease;
+}
+.ob-trust .trust-item::before {
+  content: ""; position: absolute; inset: 7px; pointer-events: none;
+  border: var(--vt-dash); border-radius: 7px;
+}
+.ob-trust .trust-item:hover { transform: translateY(-3px); }
+.ob-trust .trust-no {
+  position: absolute; top: 16px; left: 50%; transform: translateX(-50%); white-space: nowrap;
+  font: 400 10px/1 var(--vt-mono); font-style: normal; letter-spacing: .22em; text-transform: uppercase; color: var(--rust);
+}
+.ob-trust .trust-seal {
+  display: grid; place-items: center; width: 66px; height: 66px; margin: 6px 0 14px;
+  border: 2px solid var(--rust); border-radius: 50%;
+  box-shadow: inset 0 0 0 4px var(--kraft-light), inset 0 0 0 5.5px var(--rust);
+  transform: rotate(-8deg); color: var(--rust);
+}
+.ob-trust .trust-seal svg { width: 28px; height: 28px; margin: 0; }
+.ob-trust .trust-item h3 { font-size: clamp(20px, 1.7vw, 23px); letter-spacing: .03em; margin-bottom: 8px; }
+.ob-trust .trust-item p {
+  padding-top: 10px; border-top: 1px solid rgba(20, 16, 10, .2); font-size: 15px;
+}
+
+@media (max-width: 560px) {
+  .ob-trust .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .ob-trust .trust-item { padding: 32px 10px 16px; box-shadow: var(--vt-shadow-sm); }
+  .ob-trust .trust-item::before { inset: 5px; }
+  .ob-trust .trust-no { top: 13px; font-size: 9px; letter-spacing: .16em; }
+  .ob-trust .trust-seal { width: 50px; height: 50px; margin: 4px 0 10px; }
+  .ob-trust .trust-seal svg { width: 22px; height: 22px; }
+  .ob-trust .trust-item h3 { font-size: 17px; }
+  .ob-trust .trust-item p { font-size: 13px; line-height: 1.45; }
+}
+
+/* ---------- Abschnitts-Köpfe: Etikett mit Linie ---------- */
+.section-head .eyebrow { display: inline-flex; align-items: center; gap: 12px; }
+.section-head .eyebrow::after { content: ""; width: 42px; height: 1px; background: currentColor; opacity: .6; }
+
+/* ---------- Instagram: Polaroids mit Klebestreifen ---------- */
+.ob-insta .ob-insta__tile {
+  aspect-ratio: auto; padding: 10px 10px 38px; overflow: visible;
+  background: #fbf4e4; border: 1.5px solid rgba(20, 16, 10, .55); border-radius: 4px;
+  box-shadow: 4px 5px 0 rgba(20, 16, 10, .22);
+  transform: rotate(-1.4deg); transition: transform 180ms ease;
+}
+.ob-insta .ob-insta__tile:nth-child(even) { transform: rotate(1.2deg); }
+.ob-insta .ob-insta__tile:nth-child(3n) { transform: rotate(-.4deg); }
+.ob-insta .ob-insta__tile:hover { transform: rotate(0) translateY(-4px); }
+.ob-insta .ob-insta__tile::before {
+  content: ""; position: absolute; z-index: 2; top: -11px; left: 50%; width: 84px; height: 22px;
+  transform: translateX(-50%) rotate(-3deg);
+  background: rgba(233, 214, 170, .78); border-inline: 1px dashed rgba(20, 16, 10, .18);
+}
+.ob-insta .ob-insta__tile img { aspect-ratio: 1 / 1; height: auto; border: 1px solid rgba(20, 16, 10, .3); }
+.ob-insta .ob-insta__tile:hover img { transform: none; }
+.ob-insta .ob-insta__cap {
+  top: auto; bottom: 0; padding: 11px 12px; background: none; color: var(--ink);
+  font-family: var(--vt-mono); font-weight: 400; letter-spacing: .14em; text-align: center;
+}
+.ob-insta .ob-insta__track { padding-block: 18px 10px; }
+.ob-insta .ob-insta__btn { border-radius: 999px; box-shadow: var(--vt-shadow-sm); }
+
+/* ---------- Footer: Luftpost-Kante, Stempel-Zahlarten ---------- */
+.site-footer { position: relative; }
+.site-footer::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 8px;
+  background: repeating-linear-gradient(-45deg, #f7ecd6 0 12px, var(--ink) 12px 24px, #f7ecd6 24px 36px, var(--rust) 36px 48px);
+  border-bottom: 2px solid var(--ink);
+}
+.foot-col h3 { font-family: var(--vt-mono); font-weight: 400; font-size: 12px; letter-spacing: .24em; }
+.foot-col h3::after { content: ""; display: block; width: 32px; height: 1px; margin-top: 10px; background: currentColor; opacity: .6; }
+.foot-pay span { border-style: dashed !important; border-radius: 4px !important; font-family: var(--vt-mono); letter-spacing: .12em; }
+.foot-bottom { border-top-style: dashed !important; font-family: var(--vt-mono); font-size: 12px; letter-spacing: .06em; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-trust .trust-item, .ob-insta .ob-insta__tile { transition: none; }
+}
+
+/* ---------- Sortiment: Kategorie wechseln (Register-Leiste + Filter-Liste) ---------- */
+.shopcats--rail {
+  display: flex; gap: 8px; overflow-x: auto; scrollbar-width: thin;
+  margin: 18px 0 6px; padding: 4px 2px 12px;
+  border-bottom: 2px solid var(--ink);
+}
+.shopcats--rail .shopcat {
+  flex: 0 0 auto; padding: 10px 16px 9px; white-space: nowrap; text-decoration: none; color: var(--ink);
+  font: 400 12px/1 var(--vt-mono); letter-spacing: .14em; text-transform: uppercase;
+  background: var(--vt-paper); border: 1.5px solid var(--ink); border-radius: 10px 10px 0 0;
+  box-shadow: 2px 2px 0 rgba(20, 16, 10, .55);
+  transition: transform 140ms ease, background-color 140ms linear;
+}
+.shopcats--rail .shopcat:hover { transform: translateY(-2px); background: #fbf3e2; }
+.shopcats--rail .shopcat.is-current {
+  background: var(--ink); color: #f7ecd6; box-shadow: 2px 2px 0 var(--rust);
+}
+.shopcats--list { display: grid; gap: 2px; margin-bottom: 6px; }
+.shopcats--list .shopcat {
+  display: flex; align-items: center; gap: 10px; padding: 7px 8px; border-radius: 6px;
+  color: var(--ink); text-decoration: none; font-size: 14.5px;
+}
+.shopcats--list .shopcat::before {
+  content: ""; width: 9px; height: 9px; flex: 0 0 auto; border: 1.5px solid var(--rust); transform: rotate(45deg);
+}
+.shopcats--list .shopcat:hover { background: rgba(166, 58, 34, .08); }
+.shopcats--list .shopcat.is-current { font-weight: 700; }
+.shopcats--list .shopcat.is-current::before { background: var(--rust); }
+.fcat-block[hidden] { display: none !important; }
+@media (min-width: 900px) { .shopcats--rail { flex-wrap: wrap; overflow: visible; } }
+
+/* ---------- Hintergrund: Strich-Hanfblätter über die ganze Seite (Motiv „leafart“) ----------
+   Positionen in % der Seitenhöhe, damit kurze (Shop) und lange Seiten (Start) gleich verteilt sind.
+   Abwechselnd rechts/links, angeschnitten, jede anders gedreht und groß. */
+.ob-leaves img.ob-bgleaf { position: absolute; height: auto; max-width: none; mix-blend-mode: multiply; pointer-events: none; }
+.ob-bgleaf--1  { --s: 1.15; right: -9%;  top: 3%;  transform: rotate(18deg); }
+.ob-bgleaf--2  { --s: .8;   left: -7%;   top: 14%; transform: rotate(-26deg) scaleX(-1); }
+.ob-bgleaf--3  { --s: .55;  left: 44%;   top: 27%; transform: rotate(-9deg); opacity: calc(var(--ob-o, 1) * .8); }
+.ob-bgleaf--4  { --s: 1;    right: -12%; top: 38%; transform: rotate(32deg) scaleX(-1); }
+.ob-bgleaf--5  { --s: .9;   left: -10%;  top: 52%; transform: rotate(-14deg); }
+.ob-bgleaf--6  { --s: .6;   right: 18%;  top: 64%; transform: rotate(24deg); }
+.ob-bgleaf--7  { --s: 1.05; left: -6%;   top: 76%; transform: rotate(-34deg) scaleX(-1); }
+.ob-bgleaf--8  { --s: .75;  right: -8%;  top: 86%; transform: rotate(12deg); }
+.ob-bgleaf--9  { --s: .5;   left: 30%;   top: 92%; transform: rotate(-20deg); }
+.ob-bgleaf--10 { --s: .85;  right: 30%;  top: 46%; transform: rotate(-40deg) scaleX(-1); }
+@media (max-width: 1099px) {
+  .ob-bgleaf--3, .ob-bgleaf--6, .ob-bgleaf--9, .ob-bgleaf--10 { display: none; }
+  .ob-bgleaf--1, .ob-bgleaf--4, .ob-bgleaf--8 { right: -38%; }
+  .ob-bgleaf--2, .ob-bgleaf--5, .ob-bgleaf--7 { left: -36%; }
+}
+
+/* ---------- Produktkarten (Start + Shop): Vintage-Rahmen, kein Weiß hinter dem Foto ----------
+   Rahmen: 2 px Tinte, Druck-Schatten, gestrichelte Innenkante (outline nach innen).
+   Bildmodus „papermix“ (Standard): Original-Fotos mit weißem Grund werden per multiply aufs Papier gelegt. */
+.ob-cards-window .p-card__media,
+.ob-cards-window .shop-v28 .card .ph {
+  padding: 12px; background: var(--vt-paper);
+  border: 2px solid var(--ink); border-radius: var(--vt-radius);
+  box-shadow: var(--vt-shadow-sm);
+  outline: 1px dashed rgba(20, 16, 10, .3); outline-offset: -7px;
+}
+.ob-cards-window .p-card:hover .p-card__media,
+.ob-cards-window .shop-v28 .card:hover .ph { transform: translate(-1px, -3px); box-shadow: var(--vt-shadow); }
+.ob-img-papermix.ob-cards-window .p-card__media img,
+.ob-img-papermix.ob-cards-window .shop-v28 .card .ph img,
+.ob-img-papermix .p-card__media img,
+.ob-img-papermix .shop-v28 .card .ph img { background: transparent; mix-blend-mode: multiply; }
+.ob-img-papermix .p-card__media,
+.ob-img-papermix .shop-v28 .card .ph { background: var(--vt-paper); }
+.ob-cards-window .shop-v28 .pricerow b, .ob-cards-window .p-card__price { font-family: var(--vt-mono); }
+
+/* ---------- Filter-Spalte im Shop: Karteikarte ---------- */
+.template-collection .filters { outline: 1px dashed rgba(20, 16, 10, .3); outline-offset: -7px; }
+.template-collection .filters h4 {
+  font-family: var(--vt-mono) !important; font-weight: 400 !important; font-size: 11px !important;
+  letter-spacing: .22em !important; text-transform: uppercase; color: var(--rust);
+}
+.template-collection .filters .pricebox { background: transparent; border: 1.5px dashed rgba(20, 16, 10, .35); border-radius: 8px; }
+.template-collection .filters .marklink { border-radius: 999px; box-shadow: var(--vt-shadow-sm); }
+.template-collection .filters .fcat-block label .cnt { font-family: var(--vt-mono); }
+.template-collection .filters.ob-f-nocount .cnt { display: none; }
+.template-collection .filters.ob-f-plain { background: transparent; border: 0; box-shadow: none; outline: 0; padding-inline: 0; }
+.template-collection .filters [hidden] { display: none !important; }
+
+/* ---------- Kategorien als Setzkasten: Fächer mit Tiefe + Messing-Schild ---------- */
+.cat-grid--cabinet {
+  padding: clamp(12px, 1.4vw, 18px); gap: clamp(12px, 1.4vw, 18px) !important;
+  background: linear-gradient(180deg, #caa66a, #b88f52);
+  border: 2px solid var(--ink); border-radius: var(--vt-radius);
+  box-shadow: var(--vt-shadow), inset 0 0 0 4px rgba(255, 240, 205, .18);
+}
+.ob-cards-window .cat-grid--cabinet .cat-tile {
+  display: flex; flex-direction: column; align-items: center; text-align: center;
+  padding: 10px 10px 16px; background: #efdcb4;
+  border: 1.5px solid rgba(20, 16, 10, .75); border-radius: 8px;
+  box-shadow: inset 3px 4px 0 rgba(20, 16, 10, .18), inset -2px -2px 0 rgba(255, 246, 225, .5);
+}
+.ob-cards-window .cat-grid--cabinet .cat-win {
+  width: 100%; background: var(--vt-paper);
+  border: 1.5px solid rgba(20, 16, 10, .55); border-radius: 6px;
+  box-shadow: inset 0 8px 14px -6px rgba(20, 16, 10, .35);
+}
+.ob-cards-window .cat-grid--cabinet .cat-win img { background: transparent; mix-blend-mode: multiply; }
+.ob-cards-window .cat-grid--cabinet .cat-tile:hover .cat-win { transform: translateY(-3px); }
+/* Messing-Schild mit zwei Schrauben */
+.cat-grid--cabinet .cat-plate {
+  position: relative; display: inline-flex; flex-direction: column; align-items: center; gap: 3px;
+  margin: 14px 0 8px; padding: 8px 22px 7px;
+  background: linear-gradient(180deg, #ecd28c 0%, #c9a24a 55%, #b48a35 100%);
+  border: 1.5px solid #4a3512; border-radius: 4px;
+  box-shadow: 0 2px 0 rgba(20, 16, 10, .45), inset 0 1px 0 rgba(255, 250, 220, .7);
+}
+.cat-grid--cabinet .cat-plate::before, .cat-grid--cabinet .cat-plate::after {
+  content: ""; position: absolute; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff3c4, #6b4e1c 70%);
+}
+.cat-grid--cabinet .cat-plate::before { left: 7px; }
+.cat-grid--cabinet .cat-plate::after { right: 7px; }
+.cat-grid--cabinet .cat-no {
+  font: 400 9px/1 var(--vt-mono); font-style: normal; letter-spacing: .22em; text-transform: uppercase; color: #3a2a0e;
+}
+.ob-cards-window .cat-grid--cabinet .cat-tile h3 { margin: 0 !important; font-size: clamp(16px, 1.5vw, 21px); color: #1c1407; }
+.ob-cards-window .cat-grid--cabinet .cat-tile p { margin: 0 0 8px; font-size: 14px; }
+.ob-cards-window .cat-grid--cabinet .cat-tile .cat-count { margin-top: auto; }
+@media (max-width: 600px) {
+  .cat-grid--cabinet .cat-plate { padding: 7px 16px 6px; }
+  .ob-cards-window .cat-grid--cabinet .cat-tile p { font-size: 12.5px; }
+}
+.ob-cards-window .cat-grid--cabinet .cat-win { aspect-ratio: 1 / 1; overflow: hidden; }
+.ob-cards-window .cat-grid--cabinet .cat-win img { width: 100%; height: 100%; object-fit: contain; }
+
+/* ---------- Hanfblätter in einzelnen Bereichen (Produktraster „Acht Griffe“) ---------- */
+.ob-pgrid-sec { position: relative; overflow: hidden; isolation: isolate; }
+.ob-pgrid-sec > .page { position: relative; z-index: 1; }
+.ob-sec-leaves { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.ob-sec-leaves .ob-sl { position: absolute; height: auto; opacity: var(--ob-pl-op, .22); mix-blend-mode: multiply; }
+.ob-sec-leaves .ob-sl--1 { width: clamp(280px, 28vw, 460px); left: -9%; top: 34%; transform: rotate(-22deg) scaleX(-1); }
+.ob-sec-leaves .ob-sl--2 { width: clamp(240px, 22vw, 360px); right: -5%; top: 26%; transform: rotate(24deg); }
+.ob-sec-leaves .ob-sl--3 { width: clamp(150px, 12vw, 210px); left: 46%; bottom: -6%; transform: rotate(-10deg); opacity: calc(var(--ob-pl-op, .22) * .8); }
+.ob-sec-leaves .ob-sl--4 { width: clamp(170px, 14vw, 240px); right: 26%; top: -8%; transform: rotate(38deg) scaleX(-1); opacity: calc(var(--ob-pl-op, .22) * .8); }
+@media (max-width: 760px) {
+  .ob-sec-leaves .ob-sl--3, .ob-sec-leaves .ob-sl--4 { display: none; }
+  .ob-sec-leaves .ob-sl--1 { width: 230px; left: -22%; top: 0; }
+  .ob-sec-leaves .ob-sl--2 { width: 210px; right: -24%; top: 45%; }
+}
+
+/* ---------- Hero „Vintage-Feinschliff“ (Hero → Vintage-Feinschliff) ---------- */
+.ob-hero--vintage .ob-hero__copy { position: relative; }
+.ob-hero--vintage .ob-hero__rule { width: 64px; height: 6px; background: none; border-block: 2px solid var(--rust); border-bottom-color: var(--ink); }
+.ob-hero--vintage .ob-hero__eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--vt-mono); font-weight: 400; letter-spacing: .26em; color: var(--rust);
+}
+.ob-hero--vintage .ob-hero__eyebrow::before, .ob-hero--vintage .ob-hero__eyebrow::after { content: "✦"; font-size: 10px; color: var(--ink); }
+/* Druckversatz: Schrift wie im Buchdruck leicht verschoben */
+.ob-hero--vintage .ob-hero__title { text-shadow: 3px 3px 0 rgba(166, 58, 34, .22); }
+.ob-hero--vintage .ob-hero__title em { text-shadow: 3px 3px 0 rgba(20, 16, 10, .9); }
+.ob-hero--vintage .ob-hero__proof {
+  align-self: flex-start; margin-top: auto; padding: 10px 14px; border: 1.5px dashed rgba(20, 16, 10, .45); border-radius: 6px;
+}
+.ob-hero__stamp {
+  position: absolute; z-index: 3; top: clamp(18px, 4vw, 56px); right: clamp(4px, 2vw, 34px);
+  width: clamp(96px, 8.4vw, 128px); color: var(--rust); transform: rotate(-12deg); opacity: .9;
+  font-family: var(--vt-mono); pointer-events: none;
+}
+.ob-hero__stamp svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ob-hero__stamp text { fill: currentColor; font-family: inherit; }
+/* Bühne: Tapete, Emaille-Schild, Holzmaserung, Kraftpapier-Anhänger */
+.ob-hero--vintage .ob-shelf__wall {
+  background:
+    radial-gradient(circle at 50% 50%, rgba(166, 58, 34, .10) 0 2px, transparent 2.5px) 0 0 / 26px 26px,
+    repeating-linear-gradient(90deg, #e6d4a8 0 24px, #dec98f 24px 26px);
+  box-shadow: inset 0 -10px 0 #cdb37b, inset 0 -12px 0 var(--ink);
+}
+.ob-hero--vintage .ob-shelf__sign {
+  background: var(--green-deep, #0b2418); color: #f3e8cf; border: 0; outline: 0; border-radius: 8px;
+  box-shadow: 0 0 0 3px #f3e8cf, 0 0 0 5px var(--green-deep, #0b2418), 5px 7px 0 5px rgba(20, 16, 10, .35);
+}
+.ob-hero--vintage .ob-shelf__board {
+  background: repeating-linear-gradient(90deg, #6e4a2a 0 60px, #75502e 60px 64px, #6a4627 64px 150px);
+  border-top: 2px solid var(--ink);
+}
+.ob-hero--vintage .ob-shelf__table {
+  background:
+    linear-gradient(180deg, rgba(255, 230, 180, .16), transparent 40%),
+    repeating-linear-gradient(90deg, transparent 0 118px, rgba(20, 16, 10, .45) 118px 120px),
+    repeating-linear-gradient(0deg, #8a5d35 0 7px, #84582f 7px 9px, #8d6038 9px 16px);
+  border-top: 2px solid var(--ink);
+}
+.ob-hero--vintage .ob-shelf__tag {
+  background: #e9d4a4; border-radius: 3px 3px 3px 3px;
+  box-shadow: 2px 3px 0 rgba(20, 16, 10, .35);
+}
+@media (max-width: 879px) {
+  .ob-hero__stamp { width: 70px; top: 6px; right: 6px; }
+  .ob-hero--vintage .ob-hero__eyebrow { max-width: calc(100% - 70px); }
+}
+
+/* ---------- Session-Flyer ohne weißen Rahmen: Flyer direkt mit Klebestreifen an die Wand ---------- */
+.session-flyer .sf__media--bare,
+.ob-cards-window .session-flyer .sf__media--bare,
+.ob-cards-window .session-flyer .sf__media--bare:hover,
+.ob-cards-window .session-flyer .sf__media--bare:focus-visible {
+  padding: 0; background: transparent; border: 0;
+}
+.ob-cards-window .session-flyer .sf__media--bare { box-shadow: 0 16px 30px rgba(43, 33, 20, .34), 0 2px 4px rgba(43, 33, 20, .25); }
+.ob-cards-window .session-flyer .sf__media--bare img { border-radius: 3px; display: block; }
+.ob-cards-window .session-flyer .sf__media--bare .sf__tape { top: -14px; }
+
+/* ---------- Deal der Woche: Schaufenster-Plakat ----------
+   Doppelte Creme-Rahmenlinie, Polaroid mit Tinte-Kante + zwei Streifen, Strich-Blatt im Hintergrund,
+   Druckversatz-Titel, Preis als Kraftpapier-Anhänger mit Loch, Dringlichkeit als Gummistempel. */
+.ob-cards-window .ob-deal { position: relative; isolation: isolate;
+  background: radial-gradient(120% 90% at 30% 40%, #123522 0%, #0a2416 60%, #071a10 100%); }
+.ob-cards-window .ob-deal::before {
+  content: ""; position: absolute; z-index: -1; right: -6%; top: -12%; width: clamp(320px, 34vw, 560px); aspect-ratio: 1000 / 1100;
+  background: url("ob-leaf-art.svg") center / contain no-repeat; filter: invert(1) sepia(.4); opacity: .07; transform: rotate(22deg);
+}
+.ob-cards-window .ob-deal .page { position: relative; }
+.ob-cards-window .ob-deal__inner {
+  position: relative; padding: clamp(26px, 3.4vw, 50px);
+  border: 1.5px solid rgba(243, 232, 207, .55); outline: 1px solid rgba(243, 232, 207, .3); outline-offset: 6px;
+}
+/* Polaroid = der Link selbst; Foto liegt per multiply auf dem Papier (kein weißer Kasten) */
+.ob-cards-window .ob-deal__media {
+  display: block; padding: 9%; background: var(--deal-paper, #e9d9b0); border: 2px solid var(--ink); border-radius: 4px;
+  box-shadow: 6px 7px 0 rgba(0, 0, 0, .45), 0 18px 40px rgba(0, 0, 0, .35); isolation: isolate;
+}
+.ob-cards-window .ob-deal__media img {
+  padding: 0; border: 0; background: transparent; box-shadow: none; mix-blend-mode: multiply;
+  aspect-ratio: 1 / 1; object-fit: contain; width: 100%; height: auto;
+}
+.ob-cards-window .ob-deal__tape--r { display: block; left: auto; right: -20px; top: auto; bottom: -10px; transform: rotate(-24deg); }
+.ob-cards-window .ob-deal__copy .eyebrow::before { content: "✦"; color: #b08c3f; font-size: 10px; }
+.ob-cards-window .ob-deal__copy h2 { color: #f3e8cf; text-shadow: 3px 3px 0 rgba(166, 58, 34, .55); }
+/* Preis-Anhänger */
+.ob-cards-window .ob-deal__price { align-items: center; flex-wrap: wrap; }
+.ob-cards-window .ob-deal__price .now {
+  position: relative; display: inline-block; padding: 12px 22px 12px 38px; color: var(--ink);
+  background: #e9d4a4; border: 2px solid var(--ink); border-radius: 6px 14px 14px 6px;
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, .45); transform: rotate(-2deg);
+}
+.ob-cards-window .ob-deal__price .now::before {
+  content: ""; position: absolute; left: 13px; top: 50%; width: 11px; height: 11px; margin-top: -5.5px;
+  border-radius: 50%; background: #0a2416; box-shadow: 0 0 0 2px var(--ink);
+}
+.ob-cards-window .ob-deal__price .was { color: rgba(243, 232, 207, .7); }
+/* Gummistempel */
+.ob-cards-window .ob-deal__urgent {
+  display: inline-block; padding: 7px 12px; border: 2px solid rgba(232, 132, 104, .85); border-radius: 4px;
+  color: #f0a58d; text-transform: uppercase; letter-spacing: .14em; font-size: 12.5px; transform: rotate(-2.5deg);
+}
+.ob-cards-window .ob-deal__urgent.is-hot { color: #ffd9c9; border-color: #ffd9c9; }
+.ob-cards-window .ob-deal__cta { box-shadow: 3px 3px 0 rgba(0, 0, 0, .55); }
+.ob-cards-window .ob-deal__fine { font-family: var(--vt-mono); letter-spacing: .06em; color: rgba(243, 232, 207, .6); }
+@media (max-width: 720px) {
+  .ob-cards-window .ob-deal__inner { padding: 22px 16px 26px; outline-offset: 4px; }
+  .ob-cards-window .ob-deal__price .now { padding: 10px 16px 10px 32px; }
+  .ob-cards-window .ob-deal__price .now::before { left: 11px; }
+}
+
+/* ---------- Ausverkauft: „Benachrichtigen, wenn wieder da“ (Postkarte wie Newsletter) ---------- */
+.restock {
+  position: relative; margin: 22px 0 6px; padding: 22px 22px 18px;
+  background: var(--vt-paper); border: 2px solid var(--ink); border-radius: var(--vt-radius); box-shadow: var(--vt-shadow);
+}
+.restock::before { content: ""; position: absolute; inset: 7px; pointer-events: none; border: var(--vt-dash); border-radius: 7px; }
+.restock__kicker { margin: 0 0 6px; font: 400 10px/1 var(--vt-mono); letter-spacing: .22em; text-transform: uppercase; color: var(--rust); }
+.restock__title { margin: 0 0 14px; font-family: var(--font-display); font-size: clamp(20px, 1.9vw, 25px); line-height: 1.1; text-transform: uppercase; }
+.restock__row { position: relative; display: flex; flex-wrap: wrap; gap: 10px; }
+.restock__row input[type="email"] {
+  flex: 1 1 200px; min-height: 48px; padding: 10px 14px; background: #fbf4e4;
+  border: 2px solid var(--ink); border-radius: 10px; font-family: var(--vt-mono); font-size: 16px;
+}
+.restock__row .btn { min-height: 48px; background: var(--ink); color: #f7ecd6; }
+.restock__consent { position: relative; display: flex; gap: 10px; align-items: flex-start; margin-top: 12px; font-size: 13px; line-height: 1.45; color: var(--ink-soft); }
+.restock__consent input { margin-top: 3px; width: 18px; height: 18px; flex: 0 0 auto; accent-color: var(--rust); }
+.restock__consent a { color: var(--rust); text-decoration: underline; }
+.restock__ok { position: relative; margin: 0; padding: 12px 14px; border: 2px solid var(--rust); border-radius: 8px; color: var(--rust); font-weight: 600; transform: rotate(-1deg); }
+.restock__err { position: relative; margin: 10px 0 0; color: #a3271a; font-size: 14px; }
+
+/* ---------- Ausverkauft in Karten: „Benachrichtigen“ statt totem Knopf ---------- */
+.p-card.is-out .p-card__cta:has(.ob-notify) { visibility: visible; }
+.ob-notify {
+  display: inline-flex; align-items: center; justify-content: center; gap: 7px; text-decoration: none;
+  background: #f7ecd6 !important; color: var(--ink) !important;
+  border: 1.5px dashed var(--ink) !important; box-shadow: 2px 2px 0 rgba(20, 16, 10, .55) !important;
+}
+.ob-notify:hover, .ob-notify:focus-visible { background: var(--ink) !important; color: #f7ecd6 !important; border-style: solid !important; }
+.ob-notify svg { flex: 0 0 auto; display: inline-block !important; width: 15px; height: 15px; color: var(--rust); }
+.ob-notify:hover svg, .ob-notify:focus-visible svg { color: #f7ecd6; }
+
+/* =====================================================================
+   BUTTONS · Emaille-Schild (Andree 04.11.2026: „B Emaille-Schild“)
+   Ein Stil für die ganze Seite. Eckig (8 px), doppelter Rand, Anton, Druck-Schatten.
+   Haupt = Rost · Zweit = Waldgrün · Karte = klein grün · Benachrichtigen = Papier mit Rost-Ring
+   Link = Anton rost mit Pfeil · auf dunklem Grund: Rand creme, Zweit invertiert.
+   ===================================================================== */
+:root { --vb-rust: #a63a22; --vb-green: #0b2418; --vb-paper: #f7ecd6; }
+
+/* --- Grundform (alle Knöpfe) --- */
+.btn, .ob-hero__btn, .mxb-panel__cta, .ob-insta__btn, .marklink, .mega__cta, .loadmore,
+.shop-v28 .card .add, .ob-notify {
+  --vb-bg: var(--vb-rust); --vb-fg: var(--vb-paper); --vb-ring: var(--vb-paper); --vb-sh: var(--ink);
+  display: inline-flex !important; align-items: center; justify-content: center; gap: 10px;
+  min-height: 50px; padding: 0 24px !important; text-decoration: none !important;
+  border: 2px solid var(--ink) !important; border-radius: 8px !important;
+  background: var(--vb-bg) !important; color: var(--vb-fg) !important;
+  box-shadow: inset 0 0 0 3px var(--vb-bg), inset 0 0 0 4.5px var(--vb-ring), 4px 4px 0 var(--vb-sh) !important;
+  font-family: var(--font-display) !important; font-weight: 400 !important; font-size: 17px !important;
+  line-height: 1 !important; letter-spacing: .08em !important; text-transform: uppercase !important;
+  white-space: normal; text-align: center; max-width: 100%; cursor: pointer;
+  transition: transform 140ms ease, box-shadow 140ms ease !important;
+}
+.btn svg, .ob-hero__btn svg, .ob-insta__btn svg, .marklink svg, .mega__cta svg, .shop-v28 .card .add svg, .ob-notify svg {
+  width: 16px; height: 16px; flex: 0 0 auto;
+}
+/* Hover hebt an, Klick drückt in den Schatten */
+.btn:hover, .ob-hero__btn:hover, .mxb-panel__cta:hover, .ob-insta__btn:hover, .marklink:hover, .mega__cta:hover,
+.loadmore:hover, .shop-v28 .card .add:hover, .ob-notify:hover,
+.btn:focus-visible, .ob-hero__btn:focus-visible, .ob-notify:focus-visible {
+  transform: translate(-1px, -2px);
+  box-shadow: inset 0 0 0 3px var(--vb-bg), inset 0 0 0 4.5px var(--vb-ring), 5px 6px 0 var(--vb-sh) !important;
+}
+.btn:active, .ob-hero__btn:active, .mxb-panel__cta:active, .ob-insta__btn:active, .marklink:active, .mega__cta:active,
+.loadmore:active, .shop-v28 .card .add:active, .ob-notify:active {
+  transform: translate(3px, 3px);
+  box-shadow: inset 0 0 0 3px var(--vb-bg), inset 0 0 0 4.5px var(--vb-ring), 1px 1px 0 var(--vb-sh) !important;
+}
+
+/* --- Zweit-Button: Waldgrün --- */
+.btn--ghost, .btn--light, .ob-insta__btn, .marklink, .mega__cta, .loadmore { --vb-bg: var(--vb-green); --vb-fg: var(--vb-paper); --vb-ring: var(--vb-paper); }
+
+/* --- Klein in Karten: grün, kompakt --- */
+.p-card__cta .btn, .shop-v28 .card .add {
+  --vb-bg: var(--vb-green); min-height: 40px; padding: 0 14px !important; font-size: 14px !important;
+  box-shadow: inset 0 0 0 2.5px var(--vb-bg), inset 0 0 0 3.5px var(--vb-ring), 2px 2px 0 var(--vb-sh) !important;
+}
+.p-card__cta .btn:hover, .shop-v28 .card .add:hover {
+  box-shadow: inset 0 0 0 2.5px var(--vb-bg), inset 0 0 0 3.5px var(--vb-ring), 3px 4px 0 var(--vb-sh) !important;
+}
+
+/* --- Benachrichtigen: Papier mit Rost-Ring --- */
+.ob-notify, .p-card__cta .btn.ob-notify, .shop-v28 .card .add.ob-notify {
+  --vb-bg: var(--vb-paper); --vb-fg: var(--ink); --vb-ring: var(--vb-rust); border-style: solid !important;
+}
+.ob-notify svg { color: var(--vb-rust) !important; }
+
+/* --- Gesperrt (z. B. Variante ausverkauft, Bundle unvollständig) --- */
+.btn:disabled, .btn[aria-disabled="true"], .mxb-panel__cta:disabled, .shop-v28 .card .add:disabled {
+  --vb-bg: #d9c7a0; --vb-fg: #6b5a3e; --vb-ring: #efe2c4; --vb-sh: rgba(20, 16, 10, .25);
+  cursor: not-allowed; transform: none !important;
+}
+
+/* --- Auf dunklem Grund (Deal, Footer, Sessions-Karte) --- */
+:is(.on-dark, .site-footer, .ob-deal, .sticky-card) :is(.btn, .ob-insta__btn) { border-color: var(--vb-paper) !important; --vb-sh: rgba(0, 0, 0, .6); }
+:is(.on-dark, .site-footer, .ob-deal, .sticky-card) :is(.btn--ghost, .btn--light) { --vb-bg: var(--vb-paper); --vb-fg: var(--vb-green); --vb-ring: var(--vb-green); }
+
+/* --- Text-Links: Anton, rost, Pfeil --- */
+.ob-hero__link, .ob-deal__link, .text-link, .ob-loc__link {
+  display: inline-flex; align-items: center; gap: 6px; padding: 2px 0 !important; border: 0 !important;
+  background: none !important; box-shadow: none !important; text-decoration: none !important;
+  font-family: var(--font-display) !important; font-weight: 400 !important; font-size: 17px !important;
+  letter-spacing: .06em !important; text-transform: uppercase; color: var(--vb-rust) !important;
+}
+.ob-hero__link::after, .ob-deal__link::after, .text-link::after, .ob-loc__link::after { content: "\2192"; transition: transform 140ms ease; }
+.ob-hero__link:hover::after, .ob-deal__link:hover::after, .text-link:hover::after, .ob-loc__link:hover::after { transform: translateX(4px); }
+:is(.on-dark, .ob-deal, .site-footer) :is(.ob-deal__link, .text-link) { color: #e8a08a !important; }
+
+@media (max-width: 600px) {
+  .btn, .ob-hero__btn, .mxb-panel__cta { min-height: 46px; font-size: 16px !important; padding: 0 18px !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn, .ob-hero__btn, .ob-notify, .shop-v28 .card .add { transition: none !important; transform: none !important; }
+}
+/* Suche: Feld + Knopf dürfen auf schmalen Handys umbrechen */
+.template-search form[role="search"] { flex-wrap: wrap; }
+.template-search form[role="search"] input[type="search"] { flex: 1 1 200px; min-width: 0; }
+/* Karten-Knöpfe größer (Andree 04.11.: „ein bisschen zu klein“) — schlägt ob-v30 min-height:0 */
+.ob-cards-window .p-card__cta .btn, .p-card__cta .btn, .shop-v28 .card .add, .ob-cards-window .shop-v28 .card .add {
+  min-height: 46px !important; height: auto !important; padding: 0 22px !important;
+  font-size: 16px !important; letter-spacing: .07em !important;
+}
+@media (max-width: 600px) {
+  .ob-cards-window .p-card__cta .btn, .p-card__cta .btn, .shop-v28 .card .add, .ob-cards-window .shop-v28 .card .add {
+    min-height: 42px !important; padding: 0 12px !important; font-size: 14px !important; letter-spacing: .04em !important;
+  }
+}
+
+/* ---------- Produktseite: Bild-Karte kleiner + Vintage (04.11.2026) ----------
+   Karteikarte auf Papier statt großer weißer Kasten. Bild höchstens ~520 px, Info-Spalte bekommt mehr Platz. */
+.template-product .pdp > div:first-child { max-width: 500px; width: 100%; justify-self: center; }
+@media (min-width: 901px) {
+  .template-product .pdp { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+  .template-product .pdp > div:first-child { position: sticky; top: calc(var(--hdr, 76px) + 18px); }
+}
+.template-product .pdp-media {
+  position: relative; padding: clamp(14px, 2vw, 22px);
+  background: var(--vt-paper, #f7ecd6) !important;
+  border: var(--vt-line) !important; border-radius: var(--vt-radius, 12px) !important;
+  box-shadow: var(--vt-shadow) !important;
+}
+.template-product .pdp-media::before {          /* gestrichelte Innenlinie wie bei den Karten */
+  content: ""; position: absolute; inset: 7px; border: var(--vt-dash); border-radius: 8px; pointer-events: none;
+}
+.template-product .pdp-media img {
+  max-height: min(52vh, 420px); aspect-ratio: 1 / 1; width: 100%; object-fit: contain;
+}
+.ob-img-papermix.template-product .pdp-media img,
+.ob-img-papermix.template-product .pdp-thumbs img { mix-blend-mode: multiply; background: transparent !important; }
+.template-product .pdp-thumbs { gap: 8px; margin-top: 14px; grid-template-columns: repeat(auto-fill, minmax(64px, 1fr)); }
+.template-product .pdp-thumbs img { height: auto; background: var(--vt-paper, #f7ecd6) !important; border-color: rgba(20, 16, 10, .35) !important; }
+.template-product .pdp-thumbs img.is-active { border-color: var(--rust) !important; box-shadow: 0 0 0 2px var(--rust) !important; }
+@media (max-width: 900px) {
+  .template-product .pdp > div:first-child { max-width: 480px; }
+  .template-product .pdp-media img { max-height: min(78vw, 420px); }
+}
+
+/* ---------- Knöpfe mit zwei Zeilen: Luft zwischen den Zeilen ---------- */
+.btn, .ob-hero__btn, .mxb-panel__cta { line-height: 1.15 !important; padding-top: 10px !important; padding-bottom: 10px !important; }

@@ -1,0 +1,40 @@
+/* ==========================================================================
+   Pflanzen im Hintergrund (Andree, 31.10.: „Seite im Hintergrund paar
+   weedpflanzen wie DesignImage")
+   Die Einstellungen (deco_plant_*) werden im Liquid als Inline-Werte gesetzt —
+   hier stehen nur Position, Grundform und der Papier-Blend.
+   Deckkraft kommt aus dem Theme-Editor: 6-12 % ist der ruhige Bereich.
+   ========================================================================== */
+
+.ob-leaves img.l1,
+.ob-leaves img.l3 {
+  position: absolute;
+  width: auto;
+  max-width: none;
+  height: auto;                 /* Höhe kommt inline aus deco_plant_height */
+  mix-blend-mode: multiply;     /* Grün legt sich aufs Papier, kein Kasten */
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ob-leaves img.l1 { left: 76%; top: 92vh; }
+.ob-leaves img.l3 {
+  left: -8%;
+  top: 250vh;
+  height: clamp(320px, 52vh, 560px);   /* ohne feste Hoehe rendert die Datei in Originalgroesse */
+  opacity: var(--ob-plant3-o, 8%);
+  transform: rotate(-12deg);
+}
+
+/* zweite, kleinere Pflanze etwas versetzt — kein Muster, keine Reihe */
+.ob-leaves img.l3:nth-of-type(3) { left: auto; right: -10%; top: 330vh; transform: rotate(14deg); }
+
+@media (max-width: 879px) {
+  .ob-leaves img.l1 { left: 40%; top: 78vh; }
+  .ob-leaves img.l3 { left: -26%; top: 210vh; }
+  .ob-leaves img.l3:nth-of-type(3) { right: -34%; top: 300vh; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-leaves img { animation: none !important; }
+}

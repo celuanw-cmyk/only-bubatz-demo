@@ -1,0 +1,503 @@
+/* ==========================================================================
+   Hero „Split" — v29 (Punkt 2)
+   Bildfläche rechts randlos, linke Kante schräg, ruhiger Drift.
+   Werte kommen als CSS-Variablen aus sections/hero-split.liquid:
+     --ob-slant   8–16 %   (Default 13)
+     --ob-drift-d 20–60 s  (Default 30)
+     --ob-drift-s 1.03–1.14 (Default 1.10)
+   Gemessen 31.10.: 1920 = Bühne 1037 × 700 · 1440 = 778 × 666 · 390 = 390 × 304
+   ========================================================================== */
+
+.ob-hero {
+  --ob-slant: 13%;
+  --ob-slant-far: 30%;
+  position: relative;
+  background: var(--kraft);
+  border-bottom: 1px solid rgba(20, 16, 10, .16);
+}
+
+.ob-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 46fr) minmax(0, 54fr);
+  align-items: stretch;
+  min-height: clamp(540px, 74vh, 700px);
+}
+
+/* ---------- Text links ---------- */
+.ob-hero__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(34px, 5vw, 74px) clamp(18px, 3.4vw, 56px) clamp(34px, 5vw, 64px) var(--pad);
+  padding-left: max(var(--pad), calc((100vw - var(--page-max)) / 2 + var(--pad)));
+}
+
+.ob-hero__rule {
+  display: block;
+  width: 46px;
+  height: 2px;
+  background: var(--rust);
+  margin-bottom: 22px;
+}
+
+.ob-hero__eyebrow {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.ob-hero__title {
+  margin: 14px 0 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--fs-h1);
+  line-height: .92;
+  letter-spacing: -.005em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.ob-hero__title em {
+  display: block;
+  font-style: normal;
+  color: var(--rust);
+}
+
+.ob-hero__lead {
+  margin: 22px 0 0;
+  max-width: 34ch;
+  font-size: var(--fs-lead);
+  line-height: 1.5;
+  color: var(--ink-soft);
+}
+
+.ob-hero__cta {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 28px;
+  flex-wrap: wrap;
+}
+
+.ob-hero__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 52px;
+  padding: 0 26px;
+  background: var(--green-deep);
+  color: var(--cream-text);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: background 140ms linear, transform 140ms ease;
+}
+.ob-hero__btn:hover { background: var(--green); }
+.ob-hero__btn:active { transform: translateY(1px); }
+.ob-hero__btn svg {
+  width: 17px; height: 17px;
+  fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: square;
+}
+
+.ob-hero__link {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(20, 16, 10, .34);
+  transition: border-color 140ms linear, color 140ms linear;
+}
+.ob-hero__link:hover { border-color: var(--rust); color: var(--rust); }
+
+.ob-hero__proof {
+  margin: auto 0 0;
+  padding-top: 34px;
+  font-family: ui-monospace, "Courier Prime", "Courier New", monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---------- Bildfläche rechts ---------- */
+.ob-hero__stage {
+  position: relative;
+  overflow: hidden;
+  background: var(--green-deep);
+  clip-path: polygon(var(--ob-slant) 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.ob-hero__media {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Der Bildausschnitt folgt dem Winkel: die schräge Kante frisst links im
+     Schnitt 0–`slant`, im Mittel also slant/2. Diese Hälfte wird nach rechts
+     geschoben, damit das Motiv in der sichtbaren Fläche mittig sitzt —
+     gemessen bei 13 %: sichtbar 19–81 % der Bildbreite (50 %) bzw. 22–84 % (58 %).
+     Statt fester 58 % rechnet die CSS-Variable mit, wenn Andree den Winkel zieht. */
+  object-position: calc(50% + var(--ob-slant) / 2) 50%;
+}
+
+.ob-hero__stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(96deg, rgba(11, 36, 24, .55) 0%, rgba(11, 36, 24, .10) 34%, rgba(11, 36, 24, 0) 60%),
+    linear-gradient(0deg, rgba(11, 36, 24, .42), rgba(11, 36, 24, 0) 42%);
+}
+
+.ob-hero__meta {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  z-index: 2;
+  margin: 0;
+  padding: 0 0 clamp(20px, 3vw, 34px) clamp(46px, 7vw, 90px);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-family: ui-monospace, "Courier Prime", "Courier New", monospace;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: #eddfc2;
+}
+.ob-hero__meta i {
+  display: block;
+  width: 26px;
+  height: 1px;
+  background: var(--gold);
+}
+
+/* ---------- Bewegung ---------- */
+/* Der Schnitt ist eine feste Kante, keine Animation — Chrome hat
+   polygon() in Keyframes mit Variablen nicht interpoliert (gemessen 31.10.:
+   Wert blieb auf dem Startwert stehen). Stattdessen setzt sich das Bild
+   900 ms von scale(1.07) auf 1.0, danach übernimmt der Drift. */
+@keyframes obHeroIn {
+  from { transform: scale(1.07); }
+  to   { transform: scale(1); }
+}
+
+@keyframes obHeroDrift {
+  from { transform: scale(1) translate3d(0, 0, 0); }
+  to   { transform: scale(var(--ob-drift-s)) translate3d(-1.4%, -1.2%, 0); }
+}
+
+/* Eine Variable für Intro-Dauer UND Drift-Start (Video-Befund: mit dieser Kurve ist
+   das Intro bei ~597 ms optisch fertig, der Drift wartete aber 900 ms -> ~300 ms
+   Stillstand). Jetzt 600 ms Intro, Drift startet exakt danach. */
+.ob-hero__media {
+  --ob-intro: 600ms;
+  animation: obHeroIn var(--ob-intro) cubic-bezier(.22, .61, .36, 1) both;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ob-hero__stage--drift .ob-hero__media {
+    animation:
+      obHeroIn var(--ob-intro) cubic-bezier(.22, .61, .36, 1) both,
+      obHeroDrift var(--ob-drift-d) ease-in-out var(--ob-intro) infinite alternate;
+    will-change: transform;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ob-hero__media { animation: none !important; }
+}
+
+/* Schalter „Bewegung aus“ aus den Theme-Einstellungen */
+.ob-motion-off .ob-hero__stage,
+.ob-motion-off .ob-hero__media { animation: none !important; }
+
+/* ---------- Mobil: Bild unter dem Text, Oberkante schräg ---------- */
+@media (max-width: 879px) {
+  .ob-hero__grid {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+  .ob-hero__copy {
+    padding: 30px var(--pad);
+  }
+  .ob-hero__lead { margin-top: 16px; }
+  .ob-hero__cta { margin-top: 24px; gap: 16px; }
+  .ob-hero__btn { flex: 1; justify-content: center; }
+  .ob-hero__proof { margin-top: 24px; padding-top: 0; font-size: 11px; }
+
+  .ob-hero__stage {
+    height: min(78vw, 420px);
+    clip-path: polygon(0 calc(var(--ob-slant) * .7) , 100% 0, 100% 100%, 0 100%);
+  }
+  .ob-hero__meta { padding: 0 0 16px 20px; }
+  /* mobil liegt die Schräge oben und die Fläche ist breiter als 3:2 —
+     beschnitten wird nur waagerecht, also kein Versatz nötig */
+  .ob-hero__media { object-position: 50% 50%; }
+}
+
+/* ==========================================================================
+   v30h — Bühne „Ladentisch“: eure Produkte auf Regal + Tisch, Preis-Anhänger
+   Block 1 vorn auf dem Tisch, Block 2–5 im Regal. Nur transform/opacity.
+   ========================================================================== */
+.ob-hero__stage--shelf { background: #e2cfa3; }
+.ob-hero__stage--shelf::after { display: none; }
+.ob-shelf { position: absolute; inset: 0; }
+.ob-shelf__wall { position: absolute; inset: 0 0 34% 0; background: #e6d4a8; }
+.ob-shelf__leaf { position: absolute; right: 4%; top: -10%; width: 52%; height: auto; opacity: .13; transform: rotate(14deg); mix-blend-mode: multiply; pointer-events: none; }
+.ob-shelf__board {
+  position: absolute; left: 0; right: 0; top: 66%; height: 14px; background: #6e4a2a;
+  box-shadow: 0 6px 0 #4f331b, 0 18px 30px rgba(43, 33, 20, .25);
+}
+.ob-shelf__table {
+  position: absolute; left: 0; right: 0; top: calc(66% + 20px); bottom: 0;
+  background: repeating-linear-gradient(90deg, #8a5d35 0 120px, #82572f 120px 240px);
+}
+.ob-shelf__sign {
+  position: absolute; left: calc(var(--ob-slant) + 18%); top: 9%; z-index: 2;
+  padding: 10px 18px; background: #f3e8cf; color: var(--ink);
+  border: 2px solid var(--ink); outline: 1px solid var(--ink); outline-offset: 4px;
+  font-family: var(--font-display); font-size: clamp(15px, 1.25vw, 20px); letter-spacing: .2em; text-transform: uppercase;
+  transform: rotate(-2deg);
+}
+.ob-shelf__item {
+  position: absolute; bottom: 34%; z-index: 2; display: block; text-decoration: none; color: var(--ink);
+  filter: drop-shadow(0 14px 10px rgba(43, 33, 20, .35));
+  transition: transform 220ms cubic-bezier(.22, .75, .25, 1);
+}
+.ob-shelf__item:hover { transform: translateY(-6px); }
+.ob-shelf__item img { display: block; width: 100%; height: auto; max-height: 30vh; object-fit: contain; object-position: bottom; }
+.ob-shelf__item img.is-photo { mix-blend-mode: multiply; filter: none; }
+/* Plätze: Regal links → rechts, ab der schrägen Kante */
+.ob-shelf__item--2 { left: calc(var(--ob-slant) + 6%);  width: 13%; }
+.ob-shelf__item--3 { left: calc(var(--ob-slant) + 23%); width: 18%; }
+.ob-shelf__item--4 { left: calc(var(--ob-slant) + 45%); width: 15%; }
+.ob-shelf__item--5 { left: calc(var(--ob-slant) + 64%); width: 15%; }
+.ob-shelf__item--1 { left: calc(var(--ob-slant) + 26%); width: 24%; bottom: 4%; z-index: 3; }
+.ob-shelf__item--1 img { max-height: 26vh; }
+/* Preis-Anhänger an der Schnur */
+.ob-shelf__tag {
+  position: absolute; left: 50%; bottom: calc(100% + 34px); z-index: 2; white-space: nowrap;
+  transform: translateX(-50%) rotate(-4deg);
+  padding: 6px 10px 5px; background: #f3e8cf; border: 1.5px solid var(--ink); border-radius: 3px;
+  font-family: ui-monospace, "Courier Prime", "Courier New", monospace; font-size: 14px; font-weight: 700; line-height: 1.2;
+  box-shadow: 0 3px 6px rgba(43, 33, 20, .2);
+}
+.ob-shelf__tag::before { content: ""; position: absolute; left: 50%; top: -24px; width: 1px; height: 24px; background: var(--ink); }
+.ob-shelf__tag::after { content: ""; position: absolute; left: calc(50% - 4px); top: -28px; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink); background: #f3e8cf; }
+.ob-shelf__tag s { margin-left: 6px; font-size: 11px; font-weight: 400; color: #6b5d45; }
+.ob-shelf__tag small { display: block; font-family: var(--font-body); font-size: 10px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.ob-shelf__tag.is-deal { background: var(--rust); border-color: var(--rust); color: #f3e8cf; }
+.ob-shelf__tag.is-deal s { color: #f0c9bd; }
+.ob-shelf__tag.is-deal::after { background: var(--rust); }
+/* vorn auf dem Tisch: Anhänger liegt rechts daneben statt oben */
+.ob-shelf__item--1 .ob-shelf__tag { left: auto; right: -18%; bottom: 8%; transform: rotate(6deg); }
+.ob-shelf__item--1 .ob-shelf__tag::before, .ob-shelf__item--1 .ob-shelf__tag::after { display: none; }
+/* ruhiges Schweben, nur wenn Drift an */
+.ob-hero__stage--drift .ob-shelf__item img { animation: ob-shelf-float 6s ease-in-out infinite alternate; }
+.ob-hero__stage--drift .ob-shelf__item--2 img { animation-delay: -1.5s; }
+.ob-hero__stage--drift .ob-shelf__item--3 img { animation-delay: -3s; }
+.ob-hero__stage--drift .ob-shelf__item--4 img { animation-delay: -4.5s; }
+@keyframes ob-shelf-float { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+@media (prefers-reduced-motion: reduce) { .ob-shelf__item img { animation: none !important; } }
+@media (max-width: 879px) {
+  .ob-hero__stage--shelf { height: min(96vw, 460px); }
+  .ob-shelf__sign { left: 6%; top: 12%; font-size: 12px; padding: 6px 10px; }
+  .ob-shelf__item--2 { left: 4%; width: 17%; }
+  .ob-shelf__item--3 { left: 24%; width: 23%; }
+  .ob-shelf__item--4 { left: 51%; width: 20%; }
+  .ob-shelf__item--5 { left: 75%; width: 20%; }
+  .ob-shelf__item--1 { left: 30%; width: 34%; }
+  .ob-shelf__tag { font-size: 11px; padding: 4px 6px 3px; bottom: calc(100% + 26px); }
+  .ob-shelf__tag small { font-size: 8px; letter-spacing: .08em; }
+  .ob-shelf__tag::before { top: -18px; height: 18px; } .ob-shelf__tag::after { top: -22px; }
+  .ob-shelf__item--1 .ob-shelf__tag { right: -40%; }
+}
+
+/* v30i: Produkte nach Höhe statt Breite — hohe Freisteller (Dosen, Boxen) wachsen sonst über das Regal */
+.ob-shelf__item { width: auto !important; }
+.ob-shelf__item img { width: auto; max-width: none; height: var(--ob-h, 150px); max-height: none; }
+.ob-shelf__item--2 { --ob-h: clamp(70px, 8.6vw, 160px); }
+.ob-shelf__item--3 { --ob-h: clamp(74px, 9.2vw, 170px); }
+.ob-shelf__item--4 { --ob-h: clamp(64px, 7.8vw, 145px); }
+.ob-shelf__item--5 { --ob-h: clamp(56px, 6.8vw, 125px); }
+.ob-shelf__item--1 { --ob-h: clamp(96px, 11.5vw, 215px); }
+.ob-shelf__item--1 img { max-height: none; }
+@media (max-width: 879px) {
+  .ob-shelf__item--2 { --ob-h: 17vw; } .ob-shelf__item--3 { --ob-h: 18vw; }
+  .ob-shelf__item--4 { --ob-h: 15vw; } .ob-shelf__item--5 { --ob-h: 13vw; } .ob-shelf__item--1 { --ob-h: 25vw; }
+}
+
+/* ---------- Text füllt die linke Seite ganz (Einstellung „copy_fill“) ---------- */
+@media (min-width: 880px) {
+  .ob-hero--fill .ob-hero__copy {
+    padding-left: clamp(28px, 5.5vw, 150px);
+    padding-right: clamp(40px, 6vw, 150px);
+  }
+  .ob-hero--fill .ob-hero__title { font-size: clamp(44px, 6.3vw, 190px); }
+  .ob-hero--fill .ob-hero__lead { font-size: clamp(18px, 1.4vw, 34px); max-width: 40ch; }
+  .ob-hero--fill .ob-hero__eyebrow { font-size: clamp(11px, .72vw, 17px); }
+  .ob-hero--fill .ob-hero__rule { margin-bottom: clamp(22px, 1.6vw, 40px); }
+  .ob-hero--fill .ob-hero__cta { margin-top: clamp(28px, 2.2vw, 56px); gap: clamp(22px, 1.6vw, 40px); }
+  .ob-hero--fill .ob-hero__btn { min-height: clamp(52px, 3.5vw, 82px); padding: 0 clamp(26px, 1.9vw, 46px) !important; font-size: clamp(17px, 1.15vw, 26px) !important; gap: .6em; }
+  .ob-hero--fill .ob-hero__btn svg { width: .95em; height: .95em; }
+  .ob-hero--fill .ob-hero__link { font-size: clamp(17px, 1.15vw, 26px) !important; }
+  .ob-hero--fill .ob-hero__proof { font-size: clamp(11px, .72vw, 17px); }
+}
+
+/* ---------- Größe des Textes links (Einstellung „copy_zoom“) ---------- */
+@media (min-width: 880px) { .ob-hero__copy > * { zoom: var(--ob-copy-zoom, 1); } }
+
+/* ---------- Geheimschubladen: untere Reihe des Unterschranks (Einstellung „deal_drawer“, Snippet ob-geheimfach) ----------
+   Raster 4 × 2 wie die Schrank-Fronten; obere Reihe bleibt frei. Maus drüber / Fokus (Handy: Antippen) = Lade fährt auf. */
+.ob-faecher { position: absolute; left: 0; right: 0; bottom: 0; height: calc((34% - 20px) / 2); z-index: 5; pointer-events: none; }
+.ob-fach { position: absolute; top: 0; bottom: 0; width: 25%; pointer-events: auto; }
+.ob-fach--1 { left: 0; } .ob-fach--2 { left: 25%; } .ob-fach--3 { left: 50%; } .ob-fach--4 { left: 75%; }
+.ob-fach--leer { pointer-events: none; }
+.ob-dealbox { outline: none; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 1; }
+.ob-dealbox:is(:hover, :focus-within) { z-index: 3; }
+.ob-dealbox__cavity {
+  position: absolute; inset: 0; z-index: 0;
+  background: radial-gradient(80% 120% at 50% 0%, rgba(255, 196, 110, .55), rgba(255, 170, 70, .12) 45%, transparent 70%), #120b05;
+  box-shadow: inset 0 10px 18px rgba(0, 0, 0, .8);
+  opacity: 0; transition: opacity .35s ease;
+}
+.ob-dealbox .ob-dealbox__item {
+  position: absolute; left: 50%; bottom: calc(46% + var(--fach-lift, 40px)); z-index: 1; --ob-h: calc(clamp(78px, 9vw, 175px) * var(--fach-scale, 1));
+  transform: translate(-50%, calc(85% + var(--fach-lift, 40px))) scale(.55); opacity: 0; pointer-events: none;
+  transition: transform var(--fach-t, .6s) cubic-bezier(.2, 1.35, .35, 1) .08s, opacity .25s ease .08s;
+}
+.ob-dealbox .ob-dealbox__item .ob-shelf__tag {
+  left: auto; right: -34%; bottom: 6%; transform: rotate(18deg) translateY(-8px); opacity: 0;
+  transition: opacity .25s ease, transform .5s cubic-bezier(.2, 1.5, .4, 1);
+}
+.ob-fach--4 .ob-dealbox__item .ob-shelf__tag { right: auto; left: -34%; }
+.ob-dealbox .ob-dealbox__item .ob-shelf__tag::before, .ob-dealbox .ob-dealbox__item .ob-shelf__tag::after { display: none; }
+.ob-dealbox__front {
+  position: absolute; inset: 0; z-index: 2; display: block;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, .10), transparent 22%, rgba(0, 0, 0, .28)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .035) 0 2px, transparent 2px 9px),
+    linear-gradient(180deg, #5a3a20, #3f2814);
+  border: 2px solid #14100a;
+  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, .18), inset 0 0 0 6px rgba(255, 255, 255, .06);
+  transform-origin: 50% 100%;
+  transition: transform calc(var(--fach-t, .6s) * .75) cubic-bezier(.3, 1.3, .5, 1), box-shadow .45s ease;
+}
+.ob-dealbox__front::before {
+  content: ""; position: absolute; left: 8%; right: 8%; top: -3px; height: 3px; border-radius: 2px;
+  background: linear-gradient(90deg, transparent, rgba(255, 205, 120, .95), transparent);
+  filter: blur(1px); opacity: .5; animation: ob-fach-glimmer 3.2s ease-in-out var(--fach-d, 0s) infinite;
+}
+.ob-dealbox__plate {
+  position: absolute; left: 50%; top: 20%; transform: translateX(-50%); max-width: 86%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font: 400 clamp(9px, .75vw, 14px)/1 var(--font-display), Anton, Impact, sans-serif; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--plate-fg, #f3e8cf); background: var(--plate-bg, var(--rust)); padding: 5px 9px 4px;
+  border: 2px solid #e2c27a; outline: 1px solid #5d4214; border-radius: 2px; box-shadow: 0 2px 0 rgba(0, 0, 0, .45);
+}
+.ob-fach__sticker {
+  position: absolute; right: 6%; top: -14%; z-index: 3; display: grid; place-items: center;
+  width: clamp(30px, 2.8vw, 50px); aspect-ratio: 1; border-radius: 50%; transform: rotate(12deg);
+  background: #f3e8cf; color: var(--rust); border: 2px dashed var(--rust); box-shadow: 0 0 0 3px #f3e8cf, 0 3px 6px rgba(0, 0, 0, .4);
+  font: 400 clamp(9px, .72vw, 13px)/1 var(--font-display), Anton, Impact, sans-serif; letter-spacing: .02em;
+}
+.ob-dealbox__knob {
+  position: absolute; left: 50%; bottom: 16%; width: clamp(26px, 2.4vw, 44px); height: clamp(9px, .8vw, 14px);
+  transform: translateX(-50%); border-radius: 0 0 14px 14px;
+  background: linear-gradient(180deg, #e2c27a, #b8893a); border: 1.5px solid #5d4214; box-shadow: 0 2px 0 rgba(0, 0, 0, .5);
+}
+/* geschlossen: Laden rütteln nacheinander, als wäre etwas drin */
+.ob-dealbox:not(:hover):not(:focus-within) .ob-dealbox__front { animation: ob-fach-rattle 9s ease-in-out var(--fach-d, 2.5s) infinite; }
+/* offen */
+.ob-dealbox:is(:hover, :focus-within) .ob-dealbox__cavity { opacity: 1; }
+.ob-dealbox:is(:hover, :focus-within) .ob-dealbox__front {
+  transform: translateY(var(--fach-pull, 42%)) scale(1.07);
+  box-shadow: inset 0 0 0 5px rgba(0, 0, 0, .18), inset 0 0 0 6px rgba(255, 255, 255, .06), 0 18px 22px -6px rgba(10, 5, 0, .7);
+}
+.ob-dealbox:is(:hover, :focus-within) .ob-dealbox__front::before { opacity: 0; }
+.ob-dealbox:is(:hover, :focus-within) .ob-dealbox__item { transform: translate(-50%, 0) scale(1); opacity: 1; pointer-events: auto; }
+.ob-dealbox:is(:hover, :focus-within) .ob-dealbox__item .ob-shelf__tag { opacity: 1; transform: rotate(6deg); transition-delay: .35s; }
+.ob-dealbox:is(:hover, :focus-within) .ob-dealbox__item:hover { transform: translate(-50%, -6px) scale(1.02); }
+.ob-dealbox:focus-visible .ob-dealbox__front { outline: 3px solid var(--rust); outline-offset: 3px; }
+@keyframes ob-fach-rattle {
+  0%, 90%, 100% { transform: translate(0, 0); }
+  92% { transform: translate(-1px, 2px); } 94% { transform: translate(1px, 1px); }
+  96% { transform: translate(-1px, 3px); } 98% { transform: translate(0, 1px); }
+}
+@keyframes ob-fach-glimmer { 0%, 100% { opacity: .3; } 50% { opacity: .8; } }
+@media (max-width: 879px) {
+  .ob-dealbox .ob-dealbox__item { --ob-h: 22vw; }
+  .ob-dealbox__plate { letter-spacing: .06em; padding: 3px 5px; font-size: 8px; }
+  .ob-dealbox .ob-dealbox__item .ob-shelf__tag { right: -50%; }
+  .ob-fach--4 .ob-dealbox__item .ob-shelf__tag { left: -50%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ob-dealbox__front, .ob-dealbox__front::before { animation: none !important; }
+  .ob-dealbox .ob-dealbox__item, .ob-dealbox__front { transition-duration: .01s !important; }
+}
+/* Schubladen-Schalter aus dem Editor */
+.ob-faecher--ruhig .ob-dealbox .ob-dealbox__front { animation: none !important; }
+.ob-faecher--dunkel .ob-dealbox__front::before { display: none; }
+.ob-faecher--dunkel .ob-dealbox__cavity { background: #120b05; }
+.ob-faecher--ohne-preis .ob-dealbox__item .ob-shelf__tag { display: none; }
+/* Stempel sitzt im Titel: immer oben rechts am Ende von Zeile 1 („SESSION“), egal wie breit die Spalte ist */
+.ob-hero__title { position: relative; width: fit-content; max-width: 100%; }
+.ob-hero__title > .ob-hero__stamp { top: -.62em; right: -.78em; width: 1.32em; }
+@media (max-width: 879px) { .ob-hero__title { position: static; } .ob-hero__title > .ob-hero__stamp { top: 6px; right: 6px; width: 70px; } }
+
+/* ---------- Regal: „Nur noch X“ und Schnellkauf-Knopf (Einstellungen shelf_low, shelf_quick) ---------- */
+.ob-low {
+  display: block; margin-top: 4px; padding: 2px 6px 1px; font-style: normal;
+  font-family: var(--font-display), Anton, Impact, sans-serif; font-size: 11px; letter-spacing: .1em; text-transform: uppercase;
+  background: #14100a; color: #f3e8cf; border-radius: 2px; text-align: center;
+  animation: ob-low-puls 2.4s ease-in-out infinite;
+}
+@keyframes ob-low-puls { 0%, 100% { opacity: 1; } 50% { opacity: .65; } }
+.ob-quick {
+  position: absolute; left: 50%; bottom: -16px; z-index: 6; white-space: nowrap; cursor: pointer;
+  transform: translate(-50%, 8px); opacity: 0; pointer-events: none;
+  padding: 8px 14px 7px; border-radius: 999px; border: 2px solid #14100a;
+  background: var(--green-deep, #12352a); color: #f3e8cf; box-shadow: 0 3px 0 #14100a, 0 10px 18px rgba(0, 0, 0, .35);
+  font: 400 13px/1 var(--font-display), Anton, Impact, sans-serif; letter-spacing: .08em; text-transform: uppercase;
+  transition: opacity .2s ease, transform .25s cubic-bezier(.2, 1.4, .4, 1), background .15s ease;
+}
+.ob-shelf__item:is(:hover, :focus-within) .ob-quick { opacity: 1; transform: translate(-50%, 0); pointer-events: auto; }
+.ob-quick:hover, .ob-quick:focus-visible { background: var(--rust); outline: none; }
+.ob-quick[disabled] { opacity: .7 !important; pointer-events: none; }
+/* ohne Maus (Handy/Tablet): kleiner runder Knopf, immer sichtbar */
+@media (hover: none) {
+  .ob-shelf .ob-quick {
+    opacity: 1; pointer-events: auto; left: auto; right: -6px; bottom: -6px; transform: none;
+    width: 32px; height: 32px; padding: 0; display: grid; place-items: center; font-size: 0; letter-spacing: 0;
+  }
+  .ob-shelf .ob-quick::before { content: "+"; font-size: 20px; line-height: 1; }
+  .ob-dealbox:not(:focus-within) .ob-quick { opacity: 0; pointer-events: none; }
+}
+@media (prefers-reduced-motion: reduce) { .ob-low { animation: none; } }
+
+/* ---------- Abstand Knöpfe zu Versandzeile: nie aneinander kleben ---------- */
+.ob-hero__cta { margin-bottom: clamp(26px, 2.6vw, 56px); }
+
+/* ---------- Handy: Regal-Preisschilder versetzt, damit sie sich nicht überlappen ---------- */
+@media (max-width: 879px) {
+  .ob-shelf__item:not(.ob-dealbox__item) .ob-shelf__tag s { display: none; }
+  .ob-shelf__item--3 .ob-shelf__tag, .ob-shelf__item--5 .ob-shelf__tag { bottom: calc(100% + 58px); }
+  .ob-shelf__item--3 .ob-shelf__tag::before, .ob-shelf__item--5 .ob-shelf__tag::before { top: -50px; height: 50px; }
+  .ob-shelf__item--3 .ob-shelf__tag::after, .ob-shelf__item--5 .ob-shelf__tag::after { top: -54px; }
+}

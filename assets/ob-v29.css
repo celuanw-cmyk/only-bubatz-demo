@@ -1,0 +1,119 @@
+
+/* ==========================================================================
+   v29 (31.10.2026) — Ausverkauft-Regel, Partner, Warenkorb, Bewegung
+   Andreess sieben Punkte. Alles über Theme-Einstellungen schaltbar:
+
+/* ---------- Punkt 5: ein Bildmaß für alle Karten (1:1) ---------- */
+/* Das height="480"-Attribut am <img> wirkt als CSS-Höhe und schlägt aspect-ratio —
+   deshalb Rahmen 1:1 + Bild height:100% (gemessen 31.10.: 259×482 -> 259×259).
+   Bildmodus kommt aus dem Theme-Editor (Produktbilder): normalisierte Fotos haben
+   Papier IM Bild, dann kein multiply — sonst #e7d3a8 statt #f3e8cf. */
+.p-card__media {
+  aspect-ratio: 1 / 1; overflow: hidden;
+  background: var(--ob-card-img-bg, #f3e8cf);
+}
+.p-card__media img { width: 100%; height: 100%; aspect-ratio: 1 / 1; object-fit: contain; }
+.ob-img-paper .p-card__media img { padding: 0; mix-blend-mode: normal; }
+.ob-img-white .p-card__media { background: #fff; }
+.ob-img-white .p-card__media img { mix-blend-mode: multiply; }
+.ob-img-alpha .p-card__media { background: transparent; }
+.ob-img-alpha .p-card__media img { padding: 0; mix-blend-mode: multiply; }
+.p-card__noimg {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  height: 100%; aspect-ratio: 1 / 1; padding: 18px; text-align: center;
+  background: var(--ob-card-img-bg, #f3e8cf);
+  font-family: ui-monospace, "Courier Prime", "Courier New", monospace;
+  font-size: 11px; line-height: 1.5; letter-spacing: .12em; text-transform: uppercase;
+  color: rgba(20, 16, 10, .55);
+}
+.p-card__noimg-mark {
+  font-family: var(--font-display); font-size: clamp(16px, 1.6vw, 22px); line-height: 1.05;
+  letter-spacing: .02em; text-transform: uppercase; color: rgba(20, 16, 10, .34);
+}
+.p-card__noimg-note { font-size: 10.5px; letter-spacing: .13em; color: rgba(20, 16, 10, .55); }
+/* dieselben Modi für die Sortimentskarte (v28) */
+.ob-img-paper .shop-v28 .card .ph { background: var(--ob-card-img-bg, #f3e8cf); }
+.ob-img-paper .shop-v28 .card .ph img { mix-blend-mode: normal; }
+.ob-img-white .shop-v28 .card .ph { background: #fff; }
+.ob-img-alpha .shop-v28 .card .ph { background: transparent; }
+
+/* ---------- Punkt 3: ausverkauft — Ware bleibt erahnbar, Preis/Button weg ---------- */
+
+.p-card__priceline { position: relative; margin-top: auto; padding-top: 8px; }
+.p-card__priceline .p-card__price { margin-top: 0; padding-top: 0; }
+.p-card__sold {
+  position: absolute; left: 0; bottom: 0;
+  font-family: ui-monospace, "Courier Prime", "Courier New", monospace;
+  font-size: 12px; line-height: 1; letter-spacing: .14em; text-transform: uppercase;
+  color: rgba(20, 16, 10, .72);
+}
+
+/* dieselbe Regel für das Sortiment (v28-Karte) */
+
+/* ---------- Punkt 4: Partner direkt über dem Newsletter ---------- */
+.ob-partners { border-top: 1px solid rgba(20, 16, 10, .18); padding-block: clamp(38px, 4.6vw, 64px); }
+.ob-partners__grid {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(12px, 1.6vw, 22px); margin-top: clamp(18px, 2.4vw, 30px);
+}
+.ob-partners__tile {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+  min-height: clamp(104px, 11vw, 138px); padding: 16px 26px; text-align: center; text-decoration: none;
+  background: var(--kraft-light); border: 1px solid rgba(20, 16, 10, .16); border-radius: var(--radius-sm);
+  transition: border-color var(--m-mid) linear, background var(--m-mid) linear;
+}
+.ob-partners__tile img {
+  max-height: 38px; width: auto; max-width: 100%; object-fit: contain;
+  mix-blend-mode: multiply; opacity: .66; filter: grayscale(.35);
+  transition: opacity var(--m-mid) linear, filter var(--m-mid) linear;
+}
+.ob-partners__tile strong {
+  font-family: var(--font-display); font-weight: 400; font-size: clamp(17px, 1.9vw, 23px);
+  line-height: 1; letter-spacing: .02em; text-transform: uppercase;
+  color: rgba(20, 16, 10, .55); transition: color var(--m-mid) linear;
+}
+.ob-partners__tile span {
+  font-family: ui-monospace, "Courier Prime", "Courier New", monospace;
+  font-size: 11px; line-height: 1.35; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink); transition: color var(--m-mid) linear;
+}
+.ob-partners__tile:hover { border-color: var(--rust); background: #fbf3e2; }
+.ob-partners__tile:hover img { opacity: 1; filter: none; }
+.ob-partners__tile:hover strong { color: var(--ink); }
+.ob-partners__tile:hover span { color: rgba(20, 16, 10, .72); }
+@media (max-width: 760px) {
+  .ob-partners__grid { grid-template-columns: 1fr; }
+  .ob-partners__tile { min-height: 92px; }
+}
+
+/* ---------- Punkt 1: Warenkorb neutral 220/180 ms (kein Blatt, kein Fade-Loop) ---------- */
+.cart-drawer { visibility: hidden; pointer-events: none; transition: visibility 0s linear var(--m-mid); }
+.cart-drawer.is-open { visibility: visible; pointer-events: auto; transition-delay: 0s; }
+.cart-drawer__scrim { opacity: 0; transition: opacity 180ms linear; }
+.cart-drawer.is-open .cart-drawer__scrim { opacity: 1; }
+.cart-drawer__panel {
+  width: var(--ob-drawer-w);
+  transform: translateX(100%);
+  transition: transform var(--m-mid) cubic-bezier(.22, .75, .25, 1);
+}
+.cart-drawer.is-open .cart-drawer__panel { transform: none; }
+
+/* ---------- Punkt 7: dezente Bewegung, nur opacity + transform ---------- */
+.ob-motion.ob-reveal-ready [data-reveal] { opacity: 0; transform: translateY(12px); }
+.ob-motion [data-reveal].is-in {
+  opacity: 1; transform: none;
+  transition: opacity var(--m-slow) ease-out, transform var(--m-slow) cubic-bezier(.22, .75, .25, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ob-motion .cart-drawer, .ob-motion .cart-drawer__scrim,
+  .ob-motion .cart-drawer__panel { transition: none !important; }
+  .ob-motion.ob-reveal-ready [data-reveal],
+  .ob-motion [data-reveal].is-in { opacity: 1; transform: none; transition: none !important; }
+}
+
+/* v30-Kartenstil überschreibt die Papierfläche sonst mit #fff (Spezifität) */
+.ob-cards-window .p-card__noimg {
+  background: var(--ob-card-img-bg, #f3e8cf);
+  aspect-ratio: 1 / 1;
+  border: 0;
+}

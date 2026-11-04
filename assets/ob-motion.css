@@ -1,0 +1,90 @@
+/* ============================================================
+   Bewegung — 10 Stile, je Bereich einstellbar.
+   Alles läuft über CSS-Variablen, die das Snippet setzt.
+   Ohne .ob-anim-ready (also ohne JS) ist alles sichtbar.
+   ============================================================ */
+
+/* Kurven */
+:root {
+  --ob-e-smooth: cubic-bezier(.22, 1, .36, 1);      /* weich ausrollend */
+  --ob-e-spring: cubic-bezier(.34, 1.56, .64, 1);    /* leicht nachfedern */
+  --ob-e-linear: linear;
+}
+
+[data-ob-anim] {
+  --ob-dur: .7s;
+  --ob-delay: 0s;
+  --ob-dist: 32px;
+  --ob-ease: var(--ob-e-smooth);
+}
+
+/* Grundzustand: nur wenn JS bereit ist, wird versteckt */
+.ob-js [data-ob-anim].ob-anim-ready {
+  will-change: transform, opacity, filter, clip-path;
+  transition:
+    opacity var(--ob-dur) var(--ob-ease) var(--ob-delay),
+    transform var(--ob-dur) var(--ob-ease) var(--ob-delay),
+    filter var(--ob-dur) var(--ob-ease) var(--ob-delay),
+    clip-path var(--ob-dur) var(--ob-ease) var(--ob-delay);
+}
+
+/* ---------- 1 · Von unten hochschieben ---------- */
+.ob-js [data-ob-anim="rise"].ob-anim-ready        { opacity: 0; transform: translate3d(0, var(--ob-dist), 0); }
+/* ---------- 2 · Nur einblenden ---------- */
+.ob-js [data-ob-anim="fade"].ob-anim-ready        { opacity: 0; }
+/* ---------- 3 · Leicht aufzoomen ---------- */
+.ob-js [data-ob-anim="zoom"].ob-anim-ready        { opacity: 0; transform: scale(.93); }
+/* ---------- 4 · Aus der Unschärfe ---------- */
+.ob-js [data-ob-anim="blur"].ob-anim-ready        { opacity: 0; filter: blur(16px); transform: translate3d(0, calc(var(--ob-dist) * .5), 0); }
+/* ---------- 5 · Vorhang von unten (clip) ----------
+   Wichtig: geklippt wird das INNERE Element, nicht der Beobachter selbst.
+   Ein auf Null geklipptes Element hat keine Fläche mehr — der IntersectionObserver
+   sieht es dann nie und die Blende würde nie aufgehen. */
+.ob-js [data-ob-anim="clip"].ob-anim-ready > *    { clip-path: inset(100% 0 0 0); opacity: 0; }
+/* ---------- 6 · Wisch-Blende von links ---------- */
+.ob-js [data-ob-anim="mask"].ob-anim-ready > *    { clip-path: inset(0 100% 0 0); }
+/* ---------- 7 · Von links ---------- */
+.ob-js [data-ob-anim="left"].ob-anim-ready        { opacity: 0; transform: translate3d(calc(var(--ob-dist) * -1.4), 0, 0); }
+/* ---------- 8 · Von rechts ---------- */
+.ob-js [data-ob-anim="right"].ob-anim-ready       { opacity: 0; transform: translate3d(calc(var(--ob-dist) * 1.4), 0, 0); }
+/* ---------- 9 · Kippen (3D) ---------- */
+.ob-js [data-ob-anim="flip"].ob-anim-ready        { opacity: 0; transform: perspective(900px) rotateX(9deg) translate3d(0, calc(var(--ob-dist) * .6), 0); transform-origin: 50% 0; }
+/* ---------- 10 · Gestaffelt (Kinder nacheinander) ---------- */
+/* Kinder, die selbst animiert werden (clip/mask/stagger), brauchen den Übergang */
+.ob-js [data-ob-anim="clip"].ob-anim-ready > *,
+.ob-js [data-ob-anim="mask"].ob-anim-ready > * {
+  transition:
+    clip-path var(--ob-dur) var(--ob-ease) var(--ob-delay),
+    opacity var(--ob-dur) var(--ob-ease) var(--ob-delay);
+}
+.ob-js [data-ob-anim="stagger"].ob-anim-ready .ob-stagger-item {
+  opacity: 0; transform: translate3d(0, var(--ob-dist), 0);
+  will-change: transform, opacity;
+  transition:
+    opacity var(--ob-dur) var(--ob-ease) var(--ob-delay, 0s),
+    transform var(--ob-dur) var(--ob-ease) var(--ob-delay, 0s);
+}
+
+/* ---------- Zielzustand ---------- */
+.ob-js [data-ob-anim].ob-anim-ready.is-in { opacity: 1; transform: none; filter: none; clip-path: inset(0 0 0 0); }
+.ob-js [data-ob-anim="stagger"].ob-anim-ready .ob-stagger-item.is-in { opacity: 1; transform: none; }
+.ob-js [data-ob-anim="clip"].ob-anim-ready.is-in > * { clip-path: inset(0 0 0 0); opacity: 1; }
+.ob-js [data-ob-anim="mask"].ob-anim-ready.is-in > * { clip-path: inset(0 0 0 0); }
+.ob-js [data-ob-anim].ob-anim-ready.is-in { will-change: auto; }
+
+/* Tastaturfokus darf nie unsichtbar sein */
+.ob-js [data-ob-anim]:focus-within { opacity: 1 !important; transform: none !important; clip-path: none !important; filter: none !important; }
+.ob-js [data-ob-anim="stagger"]:focus-within .ob-stagger-item { opacity: 1 !important; transform: none !important; }
+
+/* Systemschalter und Druck: keine Bewegung */
+@media (prefers-reduced-motion: reduce) {
+  .ob-js [data-ob-anim].ob-anim-ready,
+  .ob-js [data-ob-anim="stagger"].ob-anim-ready .ob-stagger-item {
+    opacity: 1 !important; transform: none !important;
+    filter: none !important; clip-path: none !important;
+    transition: none !important;
+  }
+}
+@media print {
+  [data-ob-anim], [data-ob-anim] * { opacity: 1 !important; transform: none !important; filter: none !important; clip-path: none !important; }
+}
