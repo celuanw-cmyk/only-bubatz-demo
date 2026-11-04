@@ -2,13 +2,11 @@
 
 Eine ansehbare Demo des Shopify-Themes **„Only Bubatz — Session 2026“**: Vintage-Headshop-Design mit Regal, Geheimschubladen, Kategorie-Filtern, Mengen-Staffeln, Versand-Countdown und Session-Seite.
 
-## So öffnest du die Demo
+## Demo ansehen
 
-1. Oben auf **Code → Download ZIP** klicken.
-2. ZIP entpacken.
-3. **`index.html`** doppelklicken – die Seite öffnet sich im Browser.
+**https://celuanw-cmyk.github.io/only-bubatz-demo/**
 
-Kein Server und keine Installation nötig. Am besten in Chrome, Edge oder Firefox ansehen, gern auch im Handy-Format (Entwicklertools → Gerät).
+Einfach den Link öffnen, am PC oder Handy. Alternativ: **Code → Download ZIP**, entpacken, `index.html` doppelklicken.
 
 ## Seiten
 
