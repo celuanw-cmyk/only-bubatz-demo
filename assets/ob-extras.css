@@ -144,7 +144,7 @@ html.ob-hdr-hidden .shop-v28 .brandbar.is-fixed { top: 0; }
 /* ---------- 8) Ausverkaufte Produkte: ausgegraut, diagonaler Schriftzug, kein Preis ---------- */
 .p-card.is-out .p-card__media img { opacity: .55; filter: grayscale(1) contrast(.92); }
 .p-card.is-out .p-card__priceline { visibility: hidden; }  /* Platz bleibt */
-.p-card.is-out .p-card__cta { visibility: hidden; }      /* Andree 03.11.: nur das Produkt, kein Preis, kein Button */
+.p-card.is-out .p-card__cta { visibility: hidden; }      
 .p-card.is-out .p-card__media { position: relative; }
 .p-card.is-out .p-card__media { overflow: hidden; }
 .p-card.is-out .p-card__media::after {

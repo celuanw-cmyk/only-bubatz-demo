@@ -2,13 +2,15 @@
 
 <html lang="de">
 
-<head><meta name="robots" content="noindex, nofollow"><script>
+<head><script>
 /* Demo: kein echter Shop dahinter – Warenkorb-Anfragen freundlich beantworten */
-(function(){var f=window.fetch;window.fetch=function(u,o){u=String(u||'');
+(function(){var f=window.fetch;window.fetch=function(u,o){u=String(u&&u.url?u.url:u||'');
  if(/cart\/(add|change|update|clear)/.test(u))return Promise.resolve(new Response(JSON.stringify({description:'Demo – der Warenkorb ist hier abgeschaltet'}),{status:422,headers:{'Content-Type':'application/json'}}));
  if(/cart\.js/.test(u))return Promise.resolve(new Response(JSON.stringify({item_count:0,items:[],total_price:0}),{headers:{'Content-Type':'application/json'}}));
- return f?f.apply(this,arguments):Promise.reject();};})();
-</script>
+ return f?f.apply(this,arguments):Promise.reject();};
+ document.addEventListener('submit',function(e){var fm=e.target;if(!e.defaultPrevented&&fm&&/post/i.test(fm.method||'')){e.preventDefault();alert('Demo – hier wird nichts abgeschickt (Warenkorb, Kasse und Formulare sind abgeschaltet).');}});
+})();
+</script><meta name="robots" content="noindex, nofollow">
 
   <script>document.documentElement.classList.add('ob-js');</script>
 
@@ -18,32 +20,33 @@
 
   <meta name="theme-color" content="#0b2418">
 
-  <link rel="canonical" href="https://onlybubatz.de/"><title>Warenkorb — Only Bubatz</title><meta name="description" content="Dein Warenkorb bei Only Bubatz."><meta property="og:site_name" content="">
-<meta property="og:url" content="">
-<meta property="og:title" content="">
+  <link rel="canonical" href="https://onlybubatz.de/cart"><title>Warenkorb — Only Bubatz</title><meta name="description" content="Dein Warenkorb bei Only Bubatz."><meta property="og:site_name" content="Only Bubatz">
+<meta property="og:url" content="https://onlybubatz.de/cart">
+<meta property="og:title" content="Warenkorb — Only Bubatz">
 <meta property="og:type" content="website">
-<meta property="og:locale" content="de_DE"><meta name="twitter:card" content="summary">
-<meta name="twitter:title" content=""><script type="application/ld+json">
+<meta property="og:locale" content="de_DE"><meta property="og:description" content="Dein Warenkorb bei Only Bubatz."><meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Warenkorb — Only Bubatz"><meta name="twitter:description" content="Dein Warenkorb bei Only Bubatz."><script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "OnlineStore",
-      "@id": "#shop",
+      "@id": "/#shop",
       "name": "Only Bubatz",
-      "url": "",
+      "url": "/",
+      "description": "Premium Cannabis Gear — Papes, Filter, Grinder, Aufbewahrung.",
       "sameAs": ["https://www.instagram.com/onlybubatz"]
     },
     {
       "@type": "WebSite",
-      "@id": "#website",
+      "@id": "/#website",
       "name": "Only Bubatz",
-      "url": "",
+      "url": "/",
       "inLanguage": "de-DE",
-      "publisher": { "@id": "#shop" },
+      "publisher": { "@id": "/#shop" },
       "potentialAction": {
         "@type": "SearchAction",
-        "target": "?q={search_term_string}",
+        "target": "/search?q={search_term_string}",
         "query-input": "required name=search_term_string"
       }
     }
@@ -75,12 +78,12 @@
   <link rel="stylesheet" href="assets/ob-v30.css">
   <link rel="stylesheet" href="assets/ob-flora.css"><link rel="stylesheet" href="assets/ob-vintage.css"><style>
 
-    :root {--ob-sold-dim: 0.62;
+    :root {--kraft: #ecd9b6;--kraft-light: #f7ecd6;--ink: #14100a;--rust: #a63a22;--green-deep: #0b2418;--ob-sold-dim: 0.62;
 
       --ob-drawer-w: min(460px, 92vw);
 
       --ob-card-img-bg: #f3e8cf;
-      --ob-sold-label: "Verkauft";
+      --ob-sold-label: "Mail bei Restock";
 
       --page-max: 1440px;
 
@@ -137,9 +140,9 @@
       .ob-leaves .l1 {
         height: 84vh;
         left: 76%;
-        transform: translate(-50%, -100%) rotate(10deg);
+        transform: translate(-50%, -100%) rotate(22deg);
       }.ob-partners__plant {
-        opacity: 0.09;
+        opacity: 0.3;
         transform: rotate(-14deg);
       }</style>
 
@@ -150,7 +153,55 @@
     --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
   </style>
-  
+  <style>
+    @media (hover: hover) and (pointer: fine) {
+      html, body, body * {
+        cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-2%20-2%2036%2036%22%3E%3Cg%20transform%3D%22rotate(-35%2016%2016)%22%3E%3Cpath%20fill%3D%22rgba(20%2C16%2C10%2C.25)%22%20transform%3D%22translate(1.2%201.2)%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3Cpath%20fill%3D%22%23f7ecd6%22%20stroke%3D%22%23246343%22%20stroke-width%3D%221.7%22%20stroke-linejoin%3D%22round%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 8 5, auto !important;
+      }
+      body a, body a *, body button, body button *, body [role="button"], body [role="button"] *,
+      body label, body summary, body select, body .p-card, body .p-card *, body .cat-tile, body .cat-tile * {
+        cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-2%20-2%2036%2036%22%3E%3Cg%20transform%3D%22rotate(-35%2016%2016)%22%3E%3Cpath%20fill%3D%22rgba(20%2C16%2C10%2C.25)%22%20transform%3D%22translate(1.2%201.2)%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3Cpath%20fill%3D%22%23a63a22%22%20stroke%3D%22%2314100a%22%20stroke-width%3D%221.7%22%20stroke-linejoin%3D%22round%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 8 5, pointer !important;
+      }
+      body input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+      body textarea,
+      body [contenteditable="true"],
+      body [contenteditable="true"] * { cursor: text !important; }
+      body button:disabled, body input:disabled, body select:disabled, body textarea:disabled,
+      body [aria-disabled="true"], body [aria-disabled="true"] * { cursor: not-allowed !important; }
+    }
+    .ob-cursor-bit {
+      position: fixed; left: 0; top: 0; z-index: 9997; pointer-events: none;
+      width: 18px; height: 18px; margin: -9px 0 0 -9px;
+    }
+    .ob-cursor-bit svg { width: 100%; height: 100%; display: block; }
+  </style>
+  <template id="obCursorBit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#f7ecd6" stroke="#246343" stroke-width="1.7" stroke-linejoin="round" d="M16 1 L18 8 L17.5 10 L19 13 L18.5 17 L23 7 L23 12 L22 14 L23 14 L20 21 L29 15 L27 20 L25 21 L26 22 L20 25 L26 25 L23 28 L18 27 L16.8 26 L17 31 L15 31 L15.2 26 L14 27 L9 28 L6 25 L12 25 L6 22 L7 21 L5 20 L3 15 L12 21 L9 14 L10 14 L9 12 L9 7 L13.5 17 L13 13 L14.5 10 L14 8 Z"/></svg></template>
+  <script>
+  (function () {
+    /* Klick: 6 kleine Blätter fliegen auseinander und verblassen (700 ms, nur transform/opacity) */
+    var tpl = document.getElementById('obCursorBit');
+    if (!tpl || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bitSvg = tpl.innerHTML;
+    window.addEventListener('click', function (e) {
+      if (!document.body.animate) return;
+      for (var i = 0; i < 6; i++) {
+        var b = document.createElement('span');
+        b.className = 'ob-cursor-bit';
+        b.innerHTML = bitSvg;
+        document.body.appendChild(b);
+        var a = (Math.PI * 2 / 6) * i + Math.random() * .6;
+        var r = 26 + Math.random() * 22;
+        var rot = (Math.random() * 180 - 90).toFixed(0);
+        b.animate([
+          { transform: 'translate(' + e.clientX + 'px,' + e.clientY + 'px) scale(.6) rotate(0deg)', opacity: 1 },
+          { opacity: 1, offset: .55 },
+          { transform: 'translate(' + (e.clientX + Math.cos(a) * r).toFixed(1) + 'px,' + (e.clientY + Math.sin(a) * r).toFixed(1) + 'px) scale(1) rotate(' + rot + 'deg)', opacity: 0 }
+        ], { duration: 700, easing: 'cubic-bezier(.22,.75,.25,1)' }).onfinish = (function (n) { return function () { n.remove(); }; })(b);
+      }
+    }, { passive: true });
+  })();
+  </script>
 </head>
 
 <body class="template-cart ob-cards-window ob-img-papermix ob-soldout ob-motion"><div style="position:sticky;top:0;z-index:2147483000;background:#14100a;color:#f3e8cf;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:7px 12px;letter-spacing:.02em">Demo des Only-Bubatz-Shops · Beispieldaten · Warenkorb und Kasse sind abgeschaltet</div>
@@ -235,24 +286,24 @@
 
     <section class="section">
   <div class="page">
-    <h1>Warenkorb</h1><form action="cart.html" method="post" novalidate style="margin-top:28px"><div class="cart-line" style="grid-template-columns:96px 1fr auto"><img src="assets/img/d5167e3f8f92.webp" alt="" width="96" height="96" loading="lazy"><div>
-              <h3 style="font-family:var(--font-body);text-transform:none;font-size:18px;font-weight:700"><a href="product.html">Purize Aktivkohlefilter RAINBOW (100er Glas)</a></h3><p style="font-size:15px;color:var(--ink-soft)">Standard</p><p style="font-size:16px;font-weight:700;margin-top:6px">15,89 €</p>
+    <h1>Warenkorb</h1><form action="cart.html" method="post" novalidate style="margin-top:28px"><div class="cart-line" style="grid-template-columns:96px 1fr auto"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/mw-ts-1000.webp?v=1793701834&width=200" alt="" width="96" height="96" loading="lazy"><div>
+              <h3 style="font-family:var(--font-body);text-transform:none;font-size:18px;font-weight:700"><a href="products/mw-ts-1000-myweigh-tray-scale-1000g-digitalwaage-mit-drehtablett-einteilung-0-1g-0-01g.html">RAW MyWeigh Tray Scale 1000g Digitalwaage mit Drehtablett Einteilung 0,1g 0,01g</a></h3><p style="font-size:16px;font-weight:700;margin-top:6px">53,98 €</p>
             </div>
             <div style="text-align:right">
               <label class="visually-hidden" for="qty-1">Menge</label>
-              <input id="qty-1" type="number" name="updates[]" value="1" min="0" style="width:76px;min-height:44px;text-align:center;border:2px solid var(--ink);border-radius:var(--radius);background:var(--kraft-light)">
-              <p style="margin-top:8px;font-size:14px"><a class="text-link" href="">Entfernen</a></p>
+              <input id="qty-1" type="number" name="updates[]" value="2" min="0" style="width:76px;min-height:44px;text-align:center;border:2px solid var(--ink);border-radius:var(--radius);background:var(--kraft-light)">
+              <p style="margin-top:8px;font-size:14px"><a class="text-link" href="cart.html">Entfernen</a></p>
             </div>
-          </div><div class="cart-line" style="grid-template-columns:96px 1fr auto"><img src="assets/img/06a9fa193122.webp" alt="" width="96" height="96" loading="lazy"><div>
-              <h3 style="font-family:var(--font-body);text-transform:none;font-size:18px;font-weight:700"><a href="product.html">Granny´s Weed CNC Aluminium Grinder/Pollinator, ø 60mm</a></h3><p style="font-size:15px;color:var(--ink-soft)">Grinder + Papers Set</p><p style="font-size:16px;font-weight:700;margin-top:6px">19,10 €</p>
+          </div><div class="cart-line" style="grid-template-columns:96px 1fr auto"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-wz-02-250.webp?v=1793701751&width=200" alt="" width="96" height="96" loading="lazy"><div>
+              <h3 style="font-family:var(--font-body);text-transform:none;font-size:18px;font-weight:700"><a href="products/tip-wz-02-250-phil-trino-classic-smart-filter-250er-pack.html">WEEDLEZ Phil Trino Aktivkohlefilter 6mm, 250er</a></h3><p style="font-size:16px;font-weight:700;margin-top:6px">32,99 €</p>
             </div>
             <div style="text-align:right">
               <label class="visually-hidden" for="qty-2">Menge</label>
               <input id="qty-2" type="number" name="updates[]" value="1" min="0" style="width:76px;min-height:44px;text-align:center;border:2px solid var(--ink);border-radius:var(--radius);background:var(--kraft-light)">
-              <p style="margin-top:8px;font-size:14px"><a class="text-link" href="">Entfernen</a></p>
+              <p style="margin-top:8px;font-size:14px"><a class="text-link" href="cart.html">Entfernen</a></p>
             </div>
           </div><div style="display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center;margin-top:28px;padding-top:22px;border-top:2px solid var(--ink)">
-          <p style="font-size:20px;font-weight:800">Zwischensumme: 34,99 €</p>
+          <p style="font-size:20px;font-weight:800">Zwischensumme: 86,97 €</p>
           <div style="display:flex;gap:12px">
             <button class="btn btn--ghost" type="submit" name="update">Aktualisieren</button>
             <button class="btn" type="submit" name="checkout">Zur Kasse</button>
@@ -413,8 +464,8 @@
     </div>
     <div class="cart-drawer__foot" id="cartFoot"></div>
   </div>
-</div><script type="application/json" id="obUpsell">[]</script>
-  <script>window.OB_UPSELL_CFG = {"n": 3, "t": "Noch [betrag] bis versandkostenfrei – passt dazu:", "tf": ""};</script><div class="pdp-lightbox" id="pdpLightbox" hidden role="dialog" aria-modal="true" aria-label="Bild vergrößern">
+</div><script type="application/json" id="obUpsell">[{"v":51475632226634,"h":"pap-67-long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips","t":"Granny's Weed Long King Size Papers + Tips","p":179,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips-8850456.png?v=1773529107&width=160","u":"/products/pap-67-long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips"},{"v":51475646087498,"h":"pa-div-154-ethereal-gold-king-size-slim-ungebleicht","t":"RAW Ethereal Gold King Size Slim, 32 Blatt","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154.webp?v=1793701856&width=160","u":"/products/pa-div-154-ethereal-gold-king-size-slim-ungebleicht"},{"v":51475647332682,"h":"1050-x-pert-slim-fit-paper-ultra-thin-extra-fine-109x40mm-50er","t":"OCB X-Pert Silber Slim Fit Papers 109x40mm, ultra thin","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/1050.webp?v=1793701878&width=160","u":"/products/1050-x-pert-slim-fit-paper-ultra-thin-extra-fine-109x40mm-50er"},{"v":51475632685386,"h":"smo-red-ks-paper-108x37mm-50er","t":"Smoking Red King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-red-ks.webp?v=1793701713&width=160","u":"/products/smo-red-ks-paper-108x37mm-50er"},{"v":51475631309130,"h":"pap-62-long-king-size-extra-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips","t":"Granny´s Weed Granny's Weed Long King Size SLIM Paper & Tips","p":179,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pap-62.webp?v=1793701699&width=160","u":"/products/pap-62-long-king-size-extra-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips"},{"v":51475647365450,"h":"ocb-03-premium-slim-oro-gold-paper-109x44mm-50er","t":"OCB Gold „Oro“ Premium Slim Paper 109x44mm","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/ocb-03.webp?v=1793701881&width=160","u":"/products/ocb-03-premium-slim-oro-gold-paper-109x44mm-50er"},{"v":51475646906698,"h":"2000-schwarz-premium-long-slim-paper-109x44mm-50er-box-32-blatt","t":"OCB Schwarz Premium Long Slim Paper 109x44mm","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/2000.webp?v=1793701871&width=160","u":"/products/2000-schwarz-premium-long-slim-paper-109x44mm-50er-box-32-blatt"},{"v":51475641041226,"h":"pa-div-113-classic-black-ks-slim-papier-50er-box","t":"RAW Classic Black KS Slim Papier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-classic-black-ks-slim-papier-2220411.png?v=1776011905&width=160","u":"/products/pa-div-113-classic-black-ks-slim-papier-50er-box"},{"v":51475634127178,"h":"smo-kuk2-paper-kukuxumusu-k-s-slim-108x37mm-50er-box","t":"Smoking KUKUXUMUSU *New Collection* King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-kuk2.webp?v=1793701721&width=160","u":"/products/smo-kuk2-paper-kukuxumusu-k-s-slim-108x37mm-50er-box"},{"v":53449597976906,"h":"smo-bro-ce-brown-unbleached-creatons-edition-k-s-paper-50er-box","t":"Smoking BROWN Unbleached \"Creators Edition\" King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-bro-ce.webp?v=1793701718&width=160","u":"/products/smo-bro-ce-brown-unbleached-creatons-edition-k-s-paper-50er-box"},{"v":64154079461706,"h":"smoking-thinnest-rot-king-size-zigarettenpapier","t":"Smoking THINNEST (rot) King Size Zigarettenpapier","p":125,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=160","u":"/products/smoking-thinnest-rot-king-size-zigarettenpapier"},{"v":64154079396170,"h":"raw-ethereal-gold-king-size-slim-32-blatt-pro-heftchen","t":"RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=160","u":"/products/raw-ethereal-gold-king-size-slim-32-blatt-pro-heftchen"},{"v":64154079068490,"h":"juicy-jays-king-size-slim-aromat-papier-mello-mango","t":"Juicy Jays King Size Slim aromat. Papier, Mello Mango","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-mello-mango"},{"v":64154078970186,"h":"juicy-jays-king-size-slim-aromat-papier-cotton-candy","t":"Juicy Jays King Size Slim aromat. Papier, Cotton Candy","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-cotton-candy"},{"v":64154078937418,"h":"juicy-jays-king-size-slim-aromat-papier-liquorice","t":"Juicy Jays King Size Slim aromat. Papier, Liquorice","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-liquorice"},{"v":64154078445898,"h":"juicy-jays-king-size-slim-aromat-papier-coconut","t":"Juicy Jays King Size Slim aromat. Papier, Coconut","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-coconut"},{"v":64154077921610,"h":"juicy-jays-superfine-1-1-4-aromat-papier-greenleaf","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Greenleaf","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf"},{"v":64154077430090,"h":"juicy-jays-superfine-1-1-4-aromat-papier-candy-1-box","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Candy (1 Box)","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-candy-1-box"},{"v":64154076709194,"h":"juicy-jays-king-size-slim-aromat-papier-grape","t":"Juicy Jays King Size Slim aromat. Papier, Grape","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-grape"},{"v":64154076217674,"h":"juicy-jays-king-size-slim-aromat-papier-pineapple","t":"Juicy Jays King Size Slim aromat. Papier, Pineapple","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-pineapple"},{"v":64154075234634,"h":"juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate","t":"Juicy Jays King Size Slim aromat. Papier, Double Dutch Chocolate","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate-jj-ks-0_e03fd0e8-dceb-4d5d-beed-bfeefceb9fd1.webp?v=1793702643&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate"},{"v":64154074743114,"h":"juicy-jays-king-size-slim-aromat-papier-jamaican-rum","t":"Juicy Jays King Size Slim aromat. Papier, Jamaican Rum","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-jamaican-rum-jj-ks-07_bb88954d-1202-4092-b664-087ec8f41e31.webp?v=1793702640&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-jamaican-rum"},{"v":64154074218826,"h":"juicy-jays-superfine-1-1-4-aromat-papier-watermelon","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Watermelon","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-watermelon-jj-paf-03_6b50bc3c-5ad4-473c-908b-106886d31ce0.webp?v=1793702638&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-watermelon"},{"v":64154074186058,"h":"juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Black Berrylicious","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious-jj-paf-05_7df9f77e-5c08-4ca5-84af-e3c62ace0249.webp?v=1793702636&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious"},{"v":51475632357706,"h":"tip-239-aktivkohle-filter-6mm-50er-packung","t":"Granny's Hybrid Deluxe Aktivkohlefilter 6mm, 210er","p":798,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-239.webp?v=1793701708&width=160","u":"/products/tip-239-aktivkohle-filter-6mm-50er-packung"},{"v":51475635798346,"h":"tip-212-active-filter-slim-konisch-6-7mm-25er-beutel-6er-display","t":"GIZEH Active Filter Slim konisch 6-7mm 25er Beutel","p":745,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-212.webp?v=1793701763&width=160","u":"/products/tip-212-active-filter-slim-konisch-6-7mm-25er-beutel-6er-display"},{"v":51475646284106,"h":"9910-activ-tips-slim-aktivkohlefilter-7mm-50er-schachtel","t":"OCB Activ Tips Aktivkohlefilter 7mm 50er Schachtel","p":749,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/9910.webp?v=1793701864&width=160","u":"/products/9910-activ-tips-slim-aktivkohlefilter-7mm-50er-schachtel"},{"v":61373255287114,"h":"tip-wz02-50-cl-phil-trino-classic-smart-filter-50er-pack","t":"WEEDLEZ® Phil Trino 6mm CLASSIC 50er","p":799,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-wz02-50-cl.webp?v=1793701757&width=160","u":"/products/tip-wz02-50-cl-phil-trino-classic-smart-filter-50er-pack"},{"v":51475632456010,"h":"tip-236-premium-aktivkohlefilter-6-9mm-50er-packung","t":"Granny´s Weed Granny's Weed Premium Aktivkohlefilter (6.9mm, 50er)","p":790,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-236.webp?v=1793701711&width=160","u":"/products/tip-236-premium-aktivkohlefilter-6-9mm-50er-packung"},{"v":51475619873098,"h":"x-tyson-2-0-xtra-slim-5-9-mm-filter-33er-onlybubatz","t":"Purize x Tyson 2.0 Aktivkohlefilter (33er)","p":695,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-102.webp?v=1793702711&width=160","u":"/products/x-tyson-2-0-xtra-slim-5-9-mm-filter-33er-onlybubatz"},{"v":51475619283274,"h":"purize-019-aktivkohlefilter-xtra-slim-5-9mm-50er-packung-green","t":"Purize Aktivkohlefilter XTRA Slim (50er, GREEN)","p":798,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-019.webp?v=1793701682&width=160","u":"/products/purize-019-aktivkohlefilter-xtra-slim-5-9mm-50er-packung-green"}]</script>
+  <script>window.OB_UPSELL_CFG = {"n": 3, "t": "Noch [betrag] bis versandkostenfrei – passt dazu:", "tf": "Passt dazu"};</script><div class="pdp-lightbox" id="pdpLightbox" hidden role="dialog" aria-modal="true" aria-label="Bild vergrößern">
     <button class="pdp-lightbox__close" type="button" aria-label="Schließen">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
@@ -429,9 +480,9 @@
 
     window.OB_MONEY_FORMAT = "{{amount_with_comma_separator}} €";
     window.OB_FREE_FROM = 4900;
-    window.OB_SHIP = {"on": true, "cut": 14, "sat": false, "hol": "", "today": "Noch [zeit] bestellen – geht heute raus", "later": "Jetzt bestellen – geht [tag] raus", "cart": true };
+    window.OB_SHIP = {"on": true, "cut": 14, "sat": false, "hol": "25.12.2026, 26.12.2026, 01.01.2027, 26.03.2027, 29.03.2027, 01.05.2027, 06.05.2027, 17.05.2027, 27.05.2027, 03.10.2027, 01.11.2027, 25.12.2027, 26.12.2027", "today": "Noch [zeit] bestellen – geht heute raus", "later": "Jetzt bestellen – geht [tag] raus", "cart": true };
 
-    window.OB_CART_COUNT = 2;
+    window.OB_CART_COUNT = 3;
 
   </script>
 

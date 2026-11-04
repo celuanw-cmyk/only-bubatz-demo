@@ -1,0 +1,983 @@
+<!doctype html>
+
+<html lang="de">
+
+<head><script>
+/* Demo: kein echter Shop dahinter – Warenkorb-Anfragen freundlich beantworten */
+(function(){var f=window.fetch;window.fetch=function(u,o){u=String(u&&u.url?u.url:u||'');
+ if(/cart\/(add|change|update|clear)/.test(u))return Promise.resolve(new Response(JSON.stringify({description:'Demo – der Warenkorb ist hier abgeschaltet'}),{status:422,headers:{'Content-Type':'application/json'}}));
+ if(/cart\.js/.test(u))return Promise.resolve(new Response(JSON.stringify({item_count:0,items:[],total_price:0}),{headers:{'Content-Type':'application/json'}}));
+ return f?f.apply(this,arguments):Promise.reject();};
+ document.addEventListener('submit',function(e){var fm=e.target;if(!e.defaultPrevented&&fm&&/post/i.test(fm.method||'')){e.preventDefault();alert('Demo – hier wird nichts abgeschickt (Warenkorb, Kasse und Formulare sind abgeschaltet).');}});
+})();
+</script><meta name="robots" content="noindex, nofollow">
+
+  <script>document.documentElement.classList.add('ob-js');</script>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#0b2418">
+
+  <link rel="canonical" href="https://onlybubatz.de/pages/gdpr"><title>Datenschutzerklärung — Only Bubatz</title><meta name="description" content="Stand: 05.12.2025 I. Name und Kontaktdaten des Verantwortlichen Verantwortlicher im Sinne von Art. 4 Nr. 7 DSGVO ist die Only Bubatz GmbH Nordstr. 30 41236 Mönc"><meta property="og:site_name" content="Only Bubatz">
+<meta property="og:url" content="https://onlybubatz.de/pages/gdpr">
+<meta property="og:title" content="Datenschutzerklärung — Only Bubatz">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE"><meta property="og:description" content="Stand: 05.12.2025 I. Name und Kontaktdaten des Verantwortlichen Verantwortlicher im Sinne von Art. 4 Nr. 7 DSGVO ist die Only Bubatz GmbH Nordstr. 30 41236 Mönc"><meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Datenschutzerklärung — Only Bubatz"><meta name="twitter:description" content="Stand: 05.12.2025 I. Name und Kontaktdaten des Verantwortlichen Verantwortlicher im Sinne von Art. 4 Nr. 7 DSGVO ist die Only Bubatz GmbH Nordstr. 30 41236 Mönc"><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "OnlineStore",
+      "@id": "/#shop",
+      "name": "Only Bubatz",
+      "url": "/",
+      "description": "Premium Cannabis Gear — Papes, Filter, Grinder, Aufbewahrung.",
+      "sameAs": ["https://www.instagram.com/onlybubatz"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "/#website",
+      "name": "Only Bubatz",
+      "url": "/",
+      "inLanguage": "de-DE",
+      "publisher": { "@id": "/#shop" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script><style>
+    @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(../assets/font-anton-400.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(../assets/font-inter-400.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
+      src: url(../assets/font-inter-500.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap;
+      src: url(../assets/font-inter-600.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
+      src: url(../assets/font-inter-700.woff2) format('woff2'); }
+    @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(../assets/font-caveat-400.ttf) format('truetype'); }
+  </style>
+
+
+
+  <link rel="stylesheet" href="../assets/base.css">
+
+  <link rel="stylesheet" href="../assets/ob-extras.css">
+  <link rel="stylesheet" href="../assets/ob-account.css">
+
+  <link rel="stylesheet" href="../assets/ob-v29.css">
+  <link rel="stylesheet" href="../assets/ob-v30.css">
+  <link rel="stylesheet" href="../assets/ob-flora.css"><link rel="stylesheet" href="../assets/ob-vintage.css"><style>
+
+    :root {--kraft: #ecd9b6;--kraft-light: #f7ecd6;--ink: #14100a;--rust: #a63a22;--green-deep: #0b2418;--ob-sold-dim: 0.62;
+
+      --ob-drawer-w: min(460px, 92vw);
+
+      --ob-card-img-bg: #f3e8cf;
+      --ob-sold-label: "Mail bei Restock";
+
+      --page-max: 1440px;
+
+    }
+    @media (min-width: 1700px) { :root { --page-max: min(2000px, max(1440px, 72vw)); } }
+
+  </style>
+
+  
+
+  <style>
+
+    body { position: relative; }
+
+    /* Cannabisblätter im Hintergrund: feste Positionen, bleiben beim Scrollen stehen.
+
+       Motiv: gemeinfreier Stich 1887. Drei Blätter, nur auf großen Bildschirmen. */
+
+    .ob-leaves {
+
+      position: absolute; inset: 0; z-index: 0; overflow: hidden;   /* z-index -1 lag HINTER dem Body-Papier = unsichtbar (gemessen 03.11.) */
+
+      pointer-events: none;
+
+    }
+
+    .ob-leaves img {
+      position: absolute; height: auto; opacity: .34; mix-blend-mode: multiply;
+      filter: sepia(.3) saturate(.65) contrast(.95) brightness(1.03);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,.55) 14%, #000 42%);
+      mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,.55) 14%, #000 42%);
+    }
+
+    .ob-leaves .l1 {
+      left: 56%; top: 170vh; height: 96vh; width: auto;
+      transform: translate(-50%, -100%) rotate(22deg); transform-origin: bottom center;
+    }  /* Stiel nach außen */
+
+    /* Inhalt liegt über den Blättern; Kopfleiste immer im Vordergrund */
+    .shopify-section-group-header-group { position: relative; z-index: 100; }
+    #MainContent, footer, .site-footer { position: relative; z-index: 1; }
+
+    @media (max-width: 1099px) { .ob-leaves { display: none; } }
+    .ob-leaves img.ob-bgleaf {
+      opacity: 0.2;
+      width: calc(30vw * var(--s, 1));
+      filter: none; -webkit-mask-image: none; mask-image: none;
+    }
+    @media (max-width: 1099px) { .ob-leaves { display: block; } .ob-leaves img.ob-bgleaf { width: calc(30vw * 1.9 * var(--s, 1)); } }
+
+
+    /* ---- Werte aus dem Theme-Editor: Deko & Hintergrund ---- */.ob-leaves img { opacity: 0.1; }
+      .ob-leaves img.ob-leaf-art { opacity: 0.2; }
+      .ob-leaves .l1 {
+        height: 84vh;
+        left: 76%;
+        transform: translate(-50%, -100%) rotate(22deg);
+      }.ob-partners__plant {
+        opacity: 0.3;
+        transform: rotate(-14deg);
+      }</style>
+
+  <link rel="stylesheet" href="../assets/ob-motion.css">
+  <style>
+  :root {
+    --font-display: 'Anton', 'Arial Narrow', Impact, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  </style>
+  <style>
+    @media (hover: hover) and (pointer: fine) {
+      html, body, body * {
+        cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-2%20-2%2036%2036%22%3E%3Cg%20transform%3D%22rotate(-35%2016%2016)%22%3E%3Cpath%20fill%3D%22rgba(20%2C16%2C10%2C.25)%22%20transform%3D%22translate(1.2%201.2)%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3Cpath%20fill%3D%22%23f7ecd6%22%20stroke%3D%22%23246343%22%20stroke-width%3D%221.7%22%20stroke-linejoin%3D%22round%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 8 5, auto !important;
+      }
+      body a, body a *, body button, body button *, body [role="button"], body [role="button"] *,
+      body label, body summary, body select, body .p-card, body .p-card *, body .cat-tile, body .cat-tile * {
+        cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-2%20-2%2036%2036%22%3E%3Cg%20transform%3D%22rotate(-35%2016%2016)%22%3E%3Cpath%20fill%3D%22rgba(20%2C16%2C10%2C.25)%22%20transform%3D%22translate(1.2%201.2)%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3Cpath%20fill%3D%22%23a63a22%22%20stroke%3D%22%2314100a%22%20stroke-width%3D%221.7%22%20stroke-linejoin%3D%22round%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 8 5, pointer !important;
+      }
+      body input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+      body textarea,
+      body [contenteditable="true"],
+      body [contenteditable="true"] * { cursor: text !important; }
+      body button:disabled, body input:disabled, body select:disabled, body textarea:disabled,
+      body [aria-disabled="true"], body [aria-disabled="true"] * { cursor: not-allowed !important; }
+    }
+    .ob-cursor-bit {
+      position: fixed; left: 0; top: 0; z-index: 9997; pointer-events: none;
+      width: 18px; height: 18px; margin: -9px 0 0 -9px;
+    }
+    .ob-cursor-bit svg { width: 100%; height: 100%; display: block; }
+  </style>
+  <template id="obCursorBit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#f7ecd6" stroke="#246343" stroke-width="1.7" stroke-linejoin="round" d="M16 1 L18 8 L17.5 10 L19 13 L18.5 17 L23 7 L23 12 L22 14 L23 14 L20 21 L29 15 L27 20 L25 21 L26 22 L20 25 L26 25 L23 28 L18 27 L16.8 26 L17 31 L15 31 L15.2 26 L14 27 L9 28 L6 25 L12 25 L6 22 L7 21 L5 20 L3 15 L12 21 L9 14 L10 14 L9 12 L9 7 L13.5 17 L13 13 L14.5 10 L14 8 Z"/></svg></template>
+  <script>
+  (function () {
+    /* Klick: 6 kleine Blätter fliegen auseinander und verblassen (700 ms, nur transform/opacity) */
+    var tpl = document.getElementById('obCursorBit');
+    if (!tpl || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bitSvg = tpl.innerHTML;
+    window.addEventListener('click', function (e) {
+      if (!document.body.animate) return;
+      for (var i = 0; i < 6; i++) {
+        var b = document.createElement('span');
+        b.className = 'ob-cursor-bit';
+        b.innerHTML = bitSvg;
+        document.body.appendChild(b);
+        var a = (Math.PI * 2 / 6) * i + Math.random() * .6;
+        var r = 26 + Math.random() * 22;
+        var rot = (Math.random() * 180 - 90).toFixed(0);
+        b.animate([
+          { transform: 'translate(' + e.clientX + 'px,' + e.clientY + 'px) scale(.6) rotate(0deg)', opacity: 1 },
+          { opacity: 1, offset: .55 },
+          { transform: 'translate(' + (e.clientX + Math.cos(a) * r).toFixed(1) + 'px,' + (e.clientY + Math.sin(a) * r).toFixed(1) + 'px) scale(1) rotate(' + rot + 'deg)', opacity: 0 }
+        ], { duration: 700, easing: 'cubic-bezier(.22,.75,.25,1)' }).onfinish = (function (n) { return function () { n.remove(); }; })(b);
+      }
+    }, { passive: true });
+  })();
+  </script>
+</head>
+
+<body class="template-page ob-cards-window ob-img-papermix ob-soldout ob-motion"><div style="position:sticky;top:0;z-index:2147483000;background:#14100a;color:#f3e8cf;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:7px 12px;letter-spacing:.02em">Demo des Only-Bubatz-Shops · Beispieldaten · Warenkorb und Kasse sind abgeschaltet</div>
+
+
+
+    <div class="ob-leaves" aria-hidden="true"><img class="ob-bgleaf ob-bgleaf--1" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async"><img class="ob-bgleaf ob-bgleaf--2" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async"><img class="ob-bgleaf ob-bgleaf--3" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--4" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--5" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--6" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--7" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"></div>
+
+
+
+<a class="skip-link" href="#MainContent">Zum Inhalt springen</a>
+
+
+
+  <div class="age-gate" id="ageGate" hidden role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+  <div class="age-gate__card">
+    <p class="eyebrow">18+ Zutritt</p>
+    <h2 id="ageGateTitle" class="display">Bist du volljährig?</h2>
+    <p>Unser Sortiment richtet sich ausschließlich an Erwachsene ab 18 Jahren. Bitte bestätige dein Alter, bevor du den Shop betrittst.</p>
+    <div class="age-gate__actions">
+      <button type="button" class="btn" id="ageGateYes">Ja, ich bin 18+</button>
+      <button type="button" class="btn btn--ghost" id="ageGateNo">Nein, ich bin unter 18</button>
+    </div>
+    <p class="age-gate__note">Mit „Ja“ bestätigst du dein Alter. Wir speichern diese Bestätigung nur lokal auf deinem Gerät — keine Datenübertragung.</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <main id="MainContent" role="main" tabindex="-1">
+
+    <section class="page-hero on-dark">
+  <div class="page page-hero__inner">
+    <div class="page-hero__copy"><p class="eyebrow">Only Bubatz</p><h1>Datenschutzerklärung</h1></div></div>
+</section><section class="section">
+  <div class="page">
+    <div class="content-grid">
+      <div><div style="max-width: 800px; margin: 0 auto; font-family: inherit; color: inherit;">
+<p style="margin-bottom: 20px; line-height: 1.6;"><strong>Stand:</strong> 05.12.2025</p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">I. Name und Kontaktdaten des Verantwortlichen</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Verantwortlicher im Sinne von Art. 4 Nr. 7 DSGVO ist die</p>
+<p style="margin-bottom: 15px; line-height: 1.6; border-left: 3px solid #ddd; padding-left: 15px;">Only Bubatz GmbH<br>Nordstr. 30<br>41236 Mönchengladbach<br>Deutschland<br><strong>Telefon:</strong> <a style="text-decoration: underline;" href="tel:+4921115808254">(+49) 211 15 80 82 54</a><br><strong>E-Mail:</strong> <a style="text-decoration: underline;" href="mailto:info@onlybubatz.de">info@onlybubatz.de</a><br><strong>Datenschutz-Kontakt:</strong> <a style="text-decoration: underline;" href="mailto:datenschutz@onlybubatz.de">datenschutz@onlybubatz.de</a> (ist kein MUSS!!!)</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Die Only Bubatz GmbH ist dafür verantwortlich, dass die Verarbeitung Ihrer personenbezogenen Daten auf dieser Website im Einklang mit den gesetzlichen Vorgaben erfolgt.</p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">II. Kontaktdaten des Datenschutzbeauftragten</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Ein Datenschutzbeauftragter ist derzeit nicht bestellt, da die gesetzlichen Voraussetzungen hierfür nach Art. 37 DSGVO, § 38 BDSG nicht vorliegen (keine systematische umfangreiche Überwachung, keine Verarbeitung besonderer Kategorien von Daten gemäß Art. 9 DSGVO und weniger als 20 ständig mit der automatisierten Verarbeitung beschäftigte Personen).</p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">III. Datenverarbeitungen auf der Website</h3>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">1. Besuch der Website (informatorische Nutzung)</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wenn Sie unsere Website rein informatorisch nutzen, also ohne Registrierung oder aktive Übermittlung von Informationen, verarbeiten wir nur diejenigen Daten, die Ihr Browser automatisch an unseren Server übermittelt. Diese sind insbesondere:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">IP-Adresse</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Datum und Uhrzeit der Anfrage</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Zeitzonendifferenz zur Greenwich Mean Time (GMT)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Inhalt der Anfrage (konkrete Seite/URL)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Zugriffsstatus / HTTP-Statuscode</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">jeweils übertragene Datenmenge</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Website, von der die Anfrage kommt (Referrer-URL)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">verwendeter Browser</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Betriebssystem und dessen Oberfläche</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Sprache und Version der Browsersoftware</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Diese Daten sind technisch erforderlich, um Ihnen unsere Website anzuzeigen und die Stabilität und Sicherheit zu gewährleisten. Die Daten werden in sogenannten Server-Logfiles gespeichert und nach 7 Tagen automatisch gelöscht, sofern keine längere Speicherung aus Sicherheitsgründen (z. B. zur Aufklärung von Missbrauchs- oder Betrugshandlungen) erforderlich ist.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der Sicherstellung eines stabilen und sicheren Betriebs der Website.<br><strong>Bereitstellungspflicht:</strong> Die Bereitstellung dieser Daten ist für den Betrieb der Website technisch erforderlich. Ohne diese Daten können wir Ihnen unseren Online-Shop nicht zur Verfügung stellen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Unsere Website wird über die Plattform Shopify (Shopify International Ltd., Victoria Buildings, 1–2 Haddington Road, Dublin 4, Irland) bereitgestellt. Shopify kann im Rahmen des Hostings ebenfalls Logdaten erheben. Nähere Informationen hierzu finden Sie in der Datenschutzerklärung von Shopify: <a style="text-decoration: underline;" href="https://www.shopify.com/legal/privacy" target="_blank">https://www.shopify.com/legal/privacy</a></p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Drittlandübermittlung:</strong> Shopify kann Daten außerhalb der EU/EWR verarbeiten, insbesondere in den USA und Kanada. Für diese Übermittlungen stützt sich Shopify auf die EU-Standardvertragsklauseln (SCC). Soweit Shopify unter den Angemessenheitsbeschluss der EU-Kommission für das EU-US Data Privacy Framework fällt, wird sich auf diesen gestützt. Wir weisen darauf hin, dass bei Übermittlungen in die USA das Risiko besteht, dass US-Behörden auf die übermittelten Daten zugreifen können, ohne dass hiergegen wirksame Rechtsmittel zur Verfügung stehen.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">1.1 Cookies</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zusätzlich kommen bei der Nutzung unserer Website Cookies zum Einsatz. Cookies sind kleine Textdateien, die auf Ihrem Endgerät gespeichert werden und von Ihrem Browser verwaltet werden.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Die Speicherung von Informationen auf Ihrem Endgerät oder der Zugriff darauf erfolgt auf Grundlage des § 25 Abs. 1 TTDSG, soweit die Cookies für den Betrieb unserer Website technisch notwendig sind. Für alle anderen Cookie-Kategorien (Funktion, Komfort, Analyse, Marketing) ist Ihre Einwilligung gemäß § 25 Abs. 1 TTDSG i.V.m. Art. 6 Abs. 1 lit. a DSGVO erforderlich.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wir setzen insbesondere folgende Arten von Cookies ein:</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>a) Technisch notwendige Cookies</strong><br>Diese sind erforderlich, um grundlegende Funktionen des Shops bereitstellen (z. B. Warenkorb, Login, Spracheinstellungen).<br>Beispiele: Session-Cookies für Warenkorb, Checkout-Prozess<br>Laufzeit: Bis zum Ende der Browsersitzung (Session-Cookies)</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>b) Funktionale &amp; Komfort-Cookies</strong><br>Sie erleichtern die Nutzung, z. B. durch das Wiedererkennen des Geräts oder das Merken bestimmter Einstellungen.<br>Beispiele: Spracheinstellung, Formulardaten<br>Laufzeit: 30 Tage bis 1 Jahr</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>c) Analyse- und Marketing-Cookies</strong><br>Diese dienen der Reichweitenmessung und Optimierung unseres Angebots sowie der Schaltung personalisierter Werbung.<br>Beispiele: Google Analytics, Meta Pixel, Google Ads<br>Laufzeit: 30 Tage bis 2 Jahre</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie können Ihre Cookie-Einstellungen jederzeit über unser Cookie-Banner anpassen oder widerrufen. Sie können Ihre Browser-Einstellungen so konfigurieren, dass keine Cookies gespeichert werden, nur bestimmte Cookies zugelassen werden oder bereits gespeicherte Cookies gelöscht werden. Bitte beachten Sie, dass bei Deaktivierung bestimmter Cookies unter Umständen nicht alle Funktionen unserer Website vollumfänglich nutzbar sind.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">2. Weitergabe von Daten an Auftragsverarbeiter</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zur Vertragserfüllung geben wir Ihre Daten an folgende mit uns verbundene Dienstleister weiter, die als Auftragsverarbeiter auf Grundlage vertraglicher Vereinbarungen im Sinne des Art. 28 DSGVO handeln:</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>a) Zahlungsdienstleister</strong><br>Um Zahlungen abzuwickeln, geben wir Ihre Zahlungsdaten an den von Ihnen gewählten Zahlungsanbieter weiter:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">PayPal (Europe) S.à r.l. et Cie, S.C.A. (Luxemburg)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Klarna Bank AB (Schweden) - für Sofortüberweisung und Ratenkauf</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Stripe Payments Europe, Ltd. (Irland) - für Kreditkartenzahlungen</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Apple/Google Pay - über entsprechende Anbieter</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Die Datenschutzerklärungen der Anbieter finden Sie auf deren Websites. Die Weitergabe erfolgt auf Rechtsgrundlage von Art. 6 Abs. 1 lit. b DSGVO zur Vertragserfüllung.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>b) Versanddienstleister</strong><br>Um Ihre Bestellung ausliefern zu können, geben wir Ihre Lieferadresse und Kontaktdaten (ggf. Telefonnummer für Sendungsbenachrichtigung) an unser Versandunternehmen weiter:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">Deutsche Post AG / DHL Paket GmbH</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Hermes Germany GmbH</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">DPD Deutschland GmbH</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">UPS Deutschland Inc. &amp; Co. OHG</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Die Weitergabe erfolgt auf Rechtsgrundlage von Art. 6 Abs. 1 lit. b DSGVO zur Vertragserfüllung.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>c) E-Mail-Marketing und Newsletter</strong><br>Zum Versand des Newsletters setzen wir einen externen Dienstleister (E-Mail-Marketing-Tool) als Auftragsverarbeiter ein, der ausschließlich in unserem Auftrag handelt.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">3. Verarbeitung personenbezogener Daten im Webshop (Bestellung &amp; Kundenkonto)</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wenn Sie in unserem Online-Shop Waren bestellen oder ein Kundenkonto anlegen, verarbeiten wir personenbezogene Daten, die für die Abwicklung der Bestellung erforderlich sind.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Verarbeitete Daten können insbesondere sein:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">Vor- und Nachname</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Rechnungs- und Lieferadresse</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">E-Mail-Adresse</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Telefonnummer (sofern für Lieferzwecke angegeben)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">gewählte Produkte</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Bestell- und Zahlungsdaten</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Kundennummer (automatisch generiert bei Kontoerstellung)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Geburtsdatum (zur Altersverifikation gemäß § 6 AGB)</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Die Datenverarbeitung dient:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">der Anbahnung und Durchführung von Kaufverträgen</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">der Abrechnung</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">der Lieferung der Ware</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">der Abwicklung von Rücksendungen und Gewährleistungsfällen</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">der gesetzlich erforderlichen Altersverifikation</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. b DSGVO (Vertrag und Vertragsanbahnung). Soweit wir gesetzlich zur Aufbewahrung bestimmter Daten verpflichtet sind (z. B. handels- und steuerrechtliche Pflichten), erfolgt die Verarbeitung zudem auf Grundlage von Art. 6 Abs. 1 S. 1 lit. c DSGVO.<br><strong>Bereitstellungspflicht:</strong> Die Bereitstellung Ihrer Daten ist vertraglich erforderlich bzw. Voraussetzung für den Vertragsschluss. Ohne diese Daten können wir keinen Vertrag mit Ihnen schließen und Ihre Bestellung nicht abwickeln.<br><strong>Speicherdauer:</strong> Bestelldaten werden für die Dauer der gesetzlichen Aufbewahrungsfristen (10 Jahre für Buchungsbelege, 6 Jahre für Geschäftsbriefe gemäß § 257 HGB, 147 AO) gespeichert und anschließend gelöscht.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Ein Kundenkonto kann freiwillig angelegt werden. In diesem Fall speichern wir die von Ihnen angegebenen Daten, bis Sie das Konto löschen oder wir es nach 3 Jahren Inaktivität deaktivieren. Sie können Ihr Kundenkonto jederzeit in Ihrem Kundenbereich oder auf Anfrage an uns löschen lassen.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">4. Altersverifikation</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Gemäß § 6 unserer AGB ist der Verkauf unserer Produkte ausschließlich an Personen ab 18 Jahren gestattet. Wir behalten uns vor, im Einzelfall eine Altersverifikation durch einen zugelassenen Dienstleister durchzuführen (z. B. Postident, Videoident). Hierbei werden folgende Daten verarbeitet:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">Vor- und Nachname</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Geburtsdatum</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Adressdaten</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Ausweisdokument-Daten (durch den Verifikationsdienstleister)</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Die durch den Verifikationsdienstleister erhobenen Ausweisdaten werden nach Abschluss der Altersprüfung unverzüglich gelöscht, sofern keine gesetzliche Aufbewahrungspflicht besteht. Die für die Bestellung erforderlichen Stammdaten (Name, Geburtsdatum, Adresse) werden gemäß den allgemeinen handels- und steuerrechtlichen Aufbewahrungsfristen gespeichert.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 lit. c DSGVO (Erfüllung gesetzlicher Verpflichtungen) i.V.m. dem Jugendschutzgesetz.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">5. Kontaktformular und E-Mail-Kontakt</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wenn Sie uns per Kontaktformular oder per E-Mail ansprechen, verarbeiten wir die von Ihnen angegebenen Daten (z. B. Name, E-Mail-Adresse, Inhalt der Nachricht), um Ihre Anfrage zu bearbeiten.<br>Pflichtfelder sind als solche gekennzeichnet; ohne diese können wir Ihre Anfrage eventuell nicht beantworten.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlagen:</strong> Art. 6 Abs. 1 S. 1 lit. f DSGVO (berechtigtes Interesse an der Beantwortung von Anfragen und Kundenbetreuung); Art. 6 Abs. 1 S. 1 lit. b DSGVO, sofern die Anfrage der Vertragsanbahnung oder -durchführung dient.<br><strong>Bereitstellungspflicht:</strong> Die Bereitstellung Ihrer Daten ist für die Beantwortung Ihrer Anfrage erforderlich. Ohne Angabe der Pflichtfelder können wir Ihre Anfrage nicht bearbeiten.<br><strong>Speicherdauer:</strong> Kontaktanfragen werden nach 3 Jahren seit der letzten Kommunikation gelöscht, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">6. Newsletter</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie können auf unserer Website einen E-Mail-Newsletter abonnieren. Hierfür benötigen wir Ihre E-Mail-Adresse. Weitere Angaben sind freiwillig.<br>Für die Anmeldung nutzen wir das sogenannte Double-Opt-In-Verfahren:<br>Sie melden sich mit Ihrer E-Mail-Adresse an. Sie erhalten anschließend eine E-Mail mit einem Bestätigungslink. Erst mit Klick auf diesen Link ist Ihre Anmeldung abgeschlossen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wir speichern dabei auch die von Ihnen angegebene E-Mail-Adresse, IP-Adresse sowie Zeitpunkt der Anmeldung und Bestätigung. Diese Verarbeitung dient dem Nachweis der Anmeldung und der Abwehr von Missbrauch.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. a DSGVO (Einwilligung).<br><strong>Bereitstellungspflicht:</strong> Die Bereitstellung Ihrer E-Mail-Adresse ist Voraussetzung für den Newsletterversand. Ohne diese können wir Ihnen keinen Newsletter zusenden.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie können Ihre Einwilligung in den Newsletterversand jederzeit mit Wirkung für die Zukunft widerrufen, z. B. über den Abmeldelink in jeder E-Mail oder per Nachricht an die oben genannten Kontaktdaten. Nach Widerruf löschen wir Ihre Daten aus dem Newsletter-Verteiler, sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">7. Kundenbewertungen</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wenn Sie Produkte auf unserer Website bewerten, verarbeiten wir die Daten, die Sie im Rahmen der Bewertung angeben:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">angezeigter Name oder Pseudonym</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Bewertungstext</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Sternebewertung</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Datum der Bewertung</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zur Sicherung unseres Systems können wir zusätzlich Ihre IP-Adresse temporär speichern. Diese wird nach 30 Tagen gelöscht.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt in der transparenten Darstellung von Kundenmeinungen zur Unterstützung der Kaufentscheidung anderer Nutzer sowie der Absicherung gegen missbräuchliche oder rechtswidrige Inhalte.<br>Wir behalten uns vor, Bewertungen zu entfernen, wenn sie rechtswidrige Inhalte enthalten oder von Dritten beanstandet werden.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">8. Social Media</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>a) Verlinkungen</strong><br>Auf unserer Website können Links zu unseren Auftritten bei Social-Media-Anbietern (z. B. Instagram, Facebook, TikTok, YouTube) integriert sein. Beim Anklicken eines solchen Links werden Sie auf die jeweilige Plattform weitergeleitet. Dort gelten die Datenschutzbestimmungen des jeweiligen Anbieters.<br>Solange Sie lediglich unsere Website besuchen und keinen Link anklicken, findet über diese Verlinkung keine Datenübertragung an den jeweiligen Anbieter statt.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>b) Social-Media-Fanpages</strong><br>Für die von uns betriebenen Social-Media-Fanpages sind wir gemeinsam mit dem jeweiligen Plattformbetreiber verantwortlich im Sinne von Art. 26 DSGVO. Näheres zu dieser gemeinsamen Verantwortung und zu Ihren Rechten entnehmen Sie bitte den Datenschutzhinweisen der jeweiligen Plattform.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">9. Webanalyse – Google Analytics</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Soweit Sie eingewilligt haben, setzen wir Google Analytics ein, einen Webanalysedienst der Google Ireland Ltd., Gordon House, Barrow Street, Dublin 4, Irland. Google Analytics verwendet Cookies, die eine Analyse der Nutzung unserer Website ermöglichen. Die durch das Cookie erzeugten Informationen werden in der Regel an einen Server von Google übertragen und dort gespeichert. Wir nutzen Google Analytics grundsätzlich mit aktivierter IP-Anonymisierung („anonymizeIp"), wodurch die IP-Adresse innerhalb der EU gekürzt wird.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zwecke der Verarbeitung:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">Auswertung der Nutzung der Website</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Erstellung von Reports über Website-Aktivitäten</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Verbesserung unseres Online-Angebots</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. a DSGVO (Einwilligung über Cookie-Banner).<br><strong>Drittlandübermittlung:</strong> Google kann Daten in die USA übertragen. Für diese Übermittlungen stützt sich Google auf die EU-Standardvertragsklauseln (SCC). Soweit Google unter den Angemessenheitsbeschluss der EU-Kommission für das EU-US Data Privacy Framework fällt, wird sich auf diesen gestützt. Wir weisen darauf hin, dass bei Übermittlungen in die USA das Risiko besteht, dass US-Behörden auf die übermittelten Daten zugreifen können, ohne dass hiergegen wirksame Rechtsmittel zur Verfügung stehen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie können:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">Ihre Einwilligung jederzeit über die Cookie-Einstellungen auf unserer Website widerrufen,</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">die Speicherung von Cookies in Ihrem Browser unterbinden,</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">ein Browser-Plugin zur Deaktivierung installieren (z. B. unter <a style="text-decoration: underline;" href="http://tools.google.com/dlpage/gaoptout" target="_blank">http://tools.google.com/dlpage/gaoptout</a>).</li>
+</ul>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">10. Online-Marketing – Google Ads / Remarketing</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Soweit Sie eingewilligt haben, nutzen wir Google Ads und damit verbundenes Conversion-Tracking oder Remarketing, um zielgerichtet Werbung für unsere Produkte zu schalten. Hierbei werden Cookies gesetzt, um nachvollziehen zu können, ob Nutzer nach Klick auf unsere Anzeige bestimmte Aktionen durchgeführt haben (z. B. Produktkauf). So können wir den Erfolg unserer Werbekampagnen messen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. a DSGVO (Einwilligung über Cookie-Banner).<br><strong>Hinweis zum Profiling:</strong> Hierbei kann es zu einer profilingartigen Verarbeitung Ihrer Daten kommen, um Ihnen interessenbezogene Werbung auszuspielen.<br><strong>Drittlandübermittlung:</strong> Google kann Daten in die USA übertragen. Für diese Übermittlungen stützt sich Google auf die EU-Standardvertragsklauseln (SCC). Soweit Google unter den Angemessenheitsbeschluss der EU-Kommission für das EU-US Data Privacy Framework fällt, wird sich auf diesen gestützt. Wir weisen darauf hin, dass bei Übermittlungen in die USA das Risiko besteht, dass US-Behörden auf die übermittelten Daten zugreifen können, ohne dass hiergegen wirksame Rechtsmittel zur Verfügung stehen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie können personalisierte Werbung über die Einstellungen bei Google deaktivieren: <a style="text-decoration: underline;" href="https://adssettings.google.com/" target="_blank">https://adssettings.google.com/</a></p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zusätzlich können Sie der Verarbeitung jederzeit über unser Cookie-Banner widersprechen.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">11. Meta/Facebook Conversion Tracking</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Soweit Sie eingewilligt haben, setzen wir das Meta Pixel (Facebook-Pixel) ein, um Besucher unserer Website im Rahmen des Meta-Werbenetzwerks (Facebook/Instagram) mit individualisierter Werbung anzusprechen. Hierbei wird nachvollzogen, ob Nutzer nach Kontakt mit einer Anzeige bestimmte Aktionen ausführen (z. B. Kauf). Meta erhält hierfür Informationen über Ihren Browser und Ihr Nutzungsverhalten; wir erhalten lediglich anonymisierte Auswertungen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. a DSGVO (Einwilligung).<br><strong>Hinweis zu Profiling:</strong> Hierbei kann es zu einer Profilbildung im Sinne von Art. 4 Nr. 4 DSGVO kommen. Eine automatisierte Entscheidung im Sinne von Art. 22 DSGVO findet in der Regel nicht statt.<br><strong>Drittlandübermittlung:</strong> Meta kann Daten in die USA übertragen. Für diese Übermittlungen stützt sich Meta auf die EU-Standardvertragsklauseln (SCC). Soweit Meta unter den Angemessenheitsbeschluss der EU-Kommission für das EU-US Data Privacy Framework fällt, wird sich auf diesen gestützt. Wir weisen darauf hin, dass bei Übermittlungen in die USA das Risiko besteht, dass US-Behörden auf die übermittelten Daten zugreifen können, ohne dass hiergegen wirksame Rechtsmittel zur Verfügung stehen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie können personalisierte Werbung in Ihren Facebook-/Instagram-Einstellungen deaktivieren.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">12. Google Fonts</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zur einheitlichen Darstellung von Schriftarten können Google Fonts eingebunden sein. Soweit diese lokal über Shopify bereitgestellt werden, findet keine Datenübertragung an Google statt. Wenn Google Fonts über einen externen Server geladen werden sollten, werden hierfür Verbindungsdaten (z. B. IP-Adresse) an Google übermittelt.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. f DSGVO (berechtigtes Interesse an einer einheitlichen Darstellung des Online-Auftritts).<br><strong>Drittlandübermittlung:</strong> Google kann Daten in die USA übertragen. Für diese Übermittlungen stützt sich Google auf die EU-Standardvertragsklauseln (SCC). Soweit Google unter den Angemessenheitsbeschluss der EU-Kommission für das EU-US Data Privacy Framework fällt, wird sich auf diesen gestützt. Wir weisen darauf hin, dass bei Übermittlungen in die USA das Risiko besteht, dass US-Behörden auf die übermittelten Daten zugreifen können, ohne dass hiergegen wirksame Rechtsmittel zur Verfügung stehen.</p>
+<h4 style="margin-top: 25px; margin-bottom: 10px; font-weight: bold; font-size: 1.2em;">13. Google reCAPTCHA</h4>
+<p style="margin-bottom: 15px; line-height: 1.6;">Zum Schutz unserer Formulare vor missbräuchlicher Nutzung (z. B. Bots) setzen wir Google reCAPTCHA ein. Google erfasst hierzu u. a.:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">IP-Adresse</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Browser- und Gerätedaten</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Mausbewegungen</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">ggf. Google-Account-Informationen, wenn Sie eingeloggt sind.</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>Rechtsgrundlage:</strong> Art. 6 Abs. 1 S. 1 lit. f DSGVO. Unser berechtigtes Interesse liegt im Schutz unserer Systeme vor automatisierten Angriffen und Missbrauch.<br><strong>Drittlandübermittlung:</strong> Google kann Daten in die USA übertragen. Für diese Übermittlungen stützt sich Google auf die EU-Standardvertragsklauseln (SCC). Soweit Google unter den Angemessenheitsbeschluss der EU-Kommission für das EU-US Data Privacy Framework fällt, wird sich auf diesen gestützt. Wir weisen darauf hin, dass bei Übermittlungen in die USA das Risiko besteht, dass US-Behörden auf die übermittelten Daten zugreifen können, ohne dass hiergegen wirksame Rechtsmittel zur Verfügung stehen.</p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">IV. SSL/TLS-Verschlüsselung</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Unsere Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung. Sie erkennen dies an „https://" und einem Schloss-Symbol in der Adressleiste Ihres Browsers. Durch die Verschlüsselung können Daten, die Sie an uns übermitteln, nicht von Dritten mitgelesen werden.</p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">V. Speicherdauer</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sofern in dieser Datenschutzerklärung nichts Abweichendes angegeben ist, speichern wir personenbezogene Daten nur so lange, wie es für den jeweiligen Zweck erforderlich ist. Anschließend werden die Daten gelöscht, sofern gesetzliche Aufbewahrungsfristen (z. B. nach HGB und AO) dem nicht entgegenstehen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Handels- und steuerrechtliche Aufbewahrungsfristen betragen in der Regel:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">6 Jahre (z. B. für Geschäftsbriefe gemäß § 257 Abs. 4 HGB)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">10 Jahre (z. B. für Buchungsbelege gemäß § 257 Abs. 4 HGB, § 147 Abs. 3 AO)</li>
+</ul>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">VI. Ihre Rechte als betroffene Person</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie haben uns gegenüber folgende Rechte hinsichtlich der Sie betreffenden personenbezogenen Daten:</p>
+<ul style="margin-bottom: 20px; padding-left: 20px; list-style-type: disc;">
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Auskunft (Art. 15 DSGVO)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Berichtigung unrichtiger Daten (Art. 16 DSGVO)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Löschung („Recht auf Vergessenwerden", Art. 17 DSGVO)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Einschränkung der Verarbeitung (Art. 18 DSGVO)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Datenübertragbarkeit (Art. 20 DSGVO)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Widerspruch gegen bestimmte Verarbeitungen (Art. 21 DSGVO)</li>
+<li style="margin-bottom: 5px; line-height: 1.5;">Recht auf Widerruf erteilter Einwilligungen (Art. 7 Abs. 3 DSGVO)</li>
+</ul>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wenden Sie sich zur Ausübung Ihrer Rechte an die oben genannten Kontaktdaten.</p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">VII. Ihr Beschwerderecht</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Sie haben das Recht, sich bei einer Datenschutzaufsichtsbehörde zu beschweren, wenn Sie der Auffassung sind, dass die Verarbeitung Ihrer personenbezogenen Daten gegen Datenschutzrecht verstößt (Art. 77 DSGVO).<br>Zuständig für uns ist insbesondere:</p>
+<p style="margin-bottom: 15px; line-height: 1.6; border-left: 3px solid #ddd; padding-left: 15px;">Landesbeauftragte für Datenschutz und Informationsfreiheit Nordrhein-Westfalen<br>Kavalleriestr. 2–4<br>40213 Düsseldorf<br>Telefon: 0211 / 38424-0<br>E-Mail: <a style="text-decoration: underline;" href="mailto:poststelle@ldi.nrw.de">poststelle@ldi.nrw.de</a><br>Website: <a style="text-decoration: underline;" href="https://www.ldi.nrw.de" target="_blank">https://www.ldi.nrw.de</a></p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">VIII. Informationen zu Ihrem Widerspruchsrecht nach Art. 21 DSGVO</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>1. Widerspruch gegen Datenverarbeitung auf Grundlage von Art. 6 Abs. 1 S. 1 lit. f DSGVO</strong><br>Sie haben das Recht, aus Gründen, die sich aus Ihrer besonderen Situation ergeben, jederzeit Widerspruch gegen die Verarbeitung personenbezogener Daten einzulegen, die auf Art. 6 Abs. 1 S. 1 lit. f DSGVO beruht (Datenverarbeitung auf Grundlage einer Interessenabwägung). Dies gilt auch für ein darauf gestütztes Profiling.<br>Wir verarbeiten die personenbezogenen Daten dann nicht mehr, es sei denn, wir können zwingende schutzwürdige Gründe nachweisen, die Ihre Interessen, Rechte und Freiheiten überwiegen oder die Verarbeitung dient der Geltendmachung, Ausübung oder Verteidigung von Rechtsansprüchen.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;"><strong>2. Widerspruch gegen Verarbeitung für Direktwerbung</strong><br>Werden personenbezogene Daten verarbeitet, um Direktwerbung zu betreiben, haben Sie das Recht, jederzeit Widerspruch gegen diese Verarbeitung einzulegen; dies gilt auch für Profiling, soweit es mit solcher Direktwerbung in Verbindung steht.<br>Widersprechen Sie der Verarbeitung für Zwecke der Direktwerbung, werden wir Ihre personenbezogenen Daten nicht mehr für diese Zwecke verarbeiten.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Der Widerspruch kann formfrei erfolgen und sollte gerichtet werden an:</p>
+<p style="margin-bottom: 15px; line-height: 1.6; border-left: 3px solid #ddd; padding-left: 15px;">Only Bubatz GmbH<br>Nordstr. 30<br>41236 Mönchengladbach<br>E-Mail: <a style="text-decoration: underline;" href="mailto:info@onlybubatz.de">info@onlybubatz.de</a></p>
+<h3 style="margin-top: 35px; margin-bottom: 15px; font-weight: bold; font-size: 1.4em; line-height: 1.3;">IX. Änderungen dieser Datenschutzerklärung</h3>
+<p style="margin-bottom: 15px; line-height: 1.6;">Wir behalten uns vor, diese Datenschutzerklärung anzupassen, um sie an geänderte Rechtslagen oder bei Änderungen des Dienstes sowie der Datenverarbeitung anzupassen. Die jeweils aktuelle Version finden Sie auf unserer Website unter <a style="text-decoration: underline;" href="https://www.onlybubatz.de/datenschutz" target="_blank">www.onlybubatz.de/datenschutz</a>.</p>
+<p style="margin-bottom: 15px; line-height: 1.6;">Diese Datenschutzerklärung wurde unter Berücksichtigung der Vorgaben der DSGVO, des BDSG, des TTDSG sowie der aktuellen Rechtsprechung erstellt. Sie ist Bestandteil unserer Allgemeinen Geschäftsbedingungen gemäß § 9 AGB.</p>
+</div>
+<div id="mttContainer" class="notranslate" aria-expanded="false" style="transform: translate(270px, 27px);"></div></div>
+
+      <aside class="sticky-card">
+        <h3>Auf einen Blick</h3>
+        <p></p></aside>
+    </div>
+  </div>
+</section>
+
+<script>
+  /* PDF-Links (Knopf und Text): Datei direkt herunterladen statt öffnen */
+  (function () {
+    if (window.__obPdfDl) return; window.__obPdfDl = true;
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a[href*=".pdf"]');
+      if (!a || e.ctrlKey || e.metaKey || e.shiftKey) return;
+      e.preventDefault();
+      var url = a.href, name = decodeURIComponent(url.split('?')[0].split('/').pop() || 'dokument.pdf');
+      a.setAttribute('aria-busy', 'true');
+      fetch(url, { mode: 'cors' }).then(function (r) { if (!r.ok) throw 0; return r.blob(); }).then(function (b) {
+        var u = URL.createObjectURL(new Blob([b], { type: 'application/pdf' })), t = document.createElement('a');
+        t.href = u; t.download = name; document.body.appendChild(t); t.click(); t.remove();
+        setTimeout(function () { URL.revokeObjectURL(u); }, 4000);
+      }).catch(function () { window.open(url, '_blank', 'noopener'); })
+        .then(function () { a.removeAttribute('aria-busy'); });
+    });
+  })();
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+
+
+
+  
+
+  <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Warenkorb" aria-hidden="true">
+  <div class="cart-drawer__scrim" data-cart-close></div>
+  <div class="cart-drawer__panel">
+    <div class="cart-drawer__head">
+      <h2 class="display">Warenkorb</h2>
+      <button type="button" class="icon-btn" id="cartClose" data-cart-close aria-label="Warenkorb schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="cart-drawer__body" id="cartBody">
+      <p class="cart-empty">Warenkorb wird geladen …</p>
+    </div>
+    <div class="cart-drawer__foot" id="cartFoot"></div>
+  </div>
+</div><script type="application/json" id="obUpsell">[{"v":51475632226634,"h":"pap-67-long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips","t":"Granny's Weed Long King Size Papers + Tips","p":179,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips-8850456.png?v=1773529107&width=160","u":"/products/pap-67-long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips"},{"v":51475646087498,"h":"pa-div-154-ethereal-gold-king-size-slim-ungebleicht","t":"RAW Ethereal Gold King Size Slim, 32 Blatt","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154.webp?v=1793701856&width=160","u":"/products/pa-div-154-ethereal-gold-king-size-slim-ungebleicht"},{"v":51475647332682,"h":"1050-x-pert-slim-fit-paper-ultra-thin-extra-fine-109x40mm-50er","t":"OCB X-Pert Silber Slim Fit Papers 109x40mm, ultra thin","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/1050.webp?v=1793701878&width=160","u":"/products/1050-x-pert-slim-fit-paper-ultra-thin-extra-fine-109x40mm-50er"},{"v":51475632685386,"h":"smo-red-ks-paper-108x37mm-50er","t":"Smoking Red King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-red-ks.webp?v=1793701713&width=160","u":"/products/smo-red-ks-paper-108x37mm-50er"},{"v":51475631309130,"h":"pap-62-long-king-size-extra-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips","t":"Granny´s Weed Granny's Weed Long King Size SLIM Paper & Tips","p":179,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pap-62.webp?v=1793701699&width=160","u":"/products/pap-62-long-king-size-extra-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips"},{"v":51475647365450,"h":"ocb-03-premium-slim-oro-gold-paper-109x44mm-50er","t":"OCB Gold „Oro“ Premium Slim Paper 109x44mm","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/ocb-03.webp?v=1793701881&width=160","u":"/products/ocb-03-premium-slim-oro-gold-paper-109x44mm-50er"},{"v":51475646906698,"h":"2000-schwarz-premium-long-slim-paper-109x44mm-50er-box-32-blatt","t":"OCB Schwarz Premium Long Slim Paper 109x44mm","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/2000.webp?v=1793701871&width=160","u":"/products/2000-schwarz-premium-long-slim-paper-109x44mm-50er-box-32-blatt"},{"v":51475641041226,"h":"pa-div-113-classic-black-ks-slim-papier-50er-box","t":"RAW Classic Black KS Slim Papier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-classic-black-ks-slim-papier-2220411.png?v=1776011905&width=160","u":"/products/pa-div-113-classic-black-ks-slim-papier-50er-box"},{"v":51475634127178,"h":"smo-kuk2-paper-kukuxumusu-k-s-slim-108x37mm-50er-box","t":"Smoking KUKUXUMUSU *New Collection* King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-kuk2.webp?v=1793701721&width=160","u":"/products/smo-kuk2-paper-kukuxumusu-k-s-slim-108x37mm-50er-box"},{"v":53449597976906,"h":"smo-bro-ce-brown-unbleached-creatons-edition-k-s-paper-50er-box","t":"Smoking BROWN Unbleached \"Creators Edition\" King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-bro-ce.webp?v=1793701718&width=160","u":"/products/smo-bro-ce-brown-unbleached-creatons-edition-k-s-paper-50er-box"},{"v":64154079461706,"h":"smoking-thinnest-rot-king-size-zigarettenpapier","t":"Smoking THINNEST (rot) King Size Zigarettenpapier","p":125,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=160","u":"/products/smoking-thinnest-rot-king-size-zigarettenpapier"},{"v":64154079396170,"h":"raw-ethereal-gold-king-size-slim-32-blatt-pro-heftchen","t":"RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=160","u":"/products/raw-ethereal-gold-king-size-slim-32-blatt-pro-heftchen"},{"v":64154079068490,"h":"juicy-jays-king-size-slim-aromat-papier-mello-mango","t":"Juicy Jays King Size Slim aromat. Papier, Mello Mango","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-mello-mango"},{"v":64154078970186,"h":"juicy-jays-king-size-slim-aromat-papier-cotton-candy","t":"Juicy Jays King Size Slim aromat. Papier, Cotton Candy","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-cotton-candy"},{"v":64154078937418,"h":"juicy-jays-king-size-slim-aromat-papier-liquorice","t":"Juicy Jays King Size Slim aromat. Papier, Liquorice","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-liquorice"},{"v":64154078445898,"h":"juicy-jays-king-size-slim-aromat-papier-coconut","t":"Juicy Jays King Size Slim aromat. Papier, Coconut","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-coconut"},{"v":64154077921610,"h":"juicy-jays-superfine-1-1-4-aromat-papier-greenleaf","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Greenleaf","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf"},{"v":64154077430090,"h":"juicy-jays-superfine-1-1-4-aromat-papier-candy-1-box","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Candy (1 Box)","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-candy-1-box"},{"v":64154076709194,"h":"juicy-jays-king-size-slim-aromat-papier-grape","t":"Juicy Jays King Size Slim aromat. Papier, Grape","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-grape"},{"v":64154076217674,"h":"juicy-jays-king-size-slim-aromat-papier-pineapple","t":"Juicy Jays King Size Slim aromat. Papier, Pineapple","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-pineapple"},{"v":64154075234634,"h":"juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate","t":"Juicy Jays King Size Slim aromat. Papier, Double Dutch Chocolate","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate-jj-ks-0_e03fd0e8-dceb-4d5d-beed-bfeefceb9fd1.webp?v=1793702643&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate"},{"v":64154074743114,"h":"juicy-jays-king-size-slim-aromat-papier-jamaican-rum","t":"Juicy Jays King Size Slim aromat. Papier, Jamaican Rum","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-jamaican-rum-jj-ks-07_bb88954d-1202-4092-b664-087ec8f41e31.webp?v=1793702640&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-jamaican-rum"},{"v":64154074218826,"h":"juicy-jays-superfine-1-1-4-aromat-papier-watermelon","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Watermelon","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-watermelon-jj-paf-03_6b50bc3c-5ad4-473c-908b-106886d31ce0.webp?v=1793702638&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-watermelon"},{"v":64154074186058,"h":"juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Black Berrylicious","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious-jj-paf-05_7df9f77e-5c08-4ca5-84af-e3c62ace0249.webp?v=1793702636&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious"},{"v":51475632357706,"h":"tip-239-aktivkohle-filter-6mm-50er-packung","t":"Granny's Hybrid Deluxe Aktivkohlefilter 6mm, 210er","p":798,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-239.webp?v=1793701708&width=160","u":"/products/tip-239-aktivkohle-filter-6mm-50er-packung"},{"v":51475635798346,"h":"tip-212-active-filter-slim-konisch-6-7mm-25er-beutel-6er-display","t":"GIZEH Active Filter Slim konisch 6-7mm 25er Beutel","p":745,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-212.webp?v=1793701763&width=160","u":"/products/tip-212-active-filter-slim-konisch-6-7mm-25er-beutel-6er-display"},{"v":51475646284106,"h":"9910-activ-tips-slim-aktivkohlefilter-7mm-50er-schachtel","t":"OCB Activ Tips Aktivkohlefilter 7mm 50er Schachtel","p":749,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/9910.webp?v=1793701864&width=160","u":"/products/9910-activ-tips-slim-aktivkohlefilter-7mm-50er-schachtel"},{"v":61373255287114,"h":"tip-wz02-50-cl-phil-trino-classic-smart-filter-50er-pack","t":"WEEDLEZ® Phil Trino 6mm CLASSIC 50er","p":799,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-wz02-50-cl.webp?v=1793701757&width=160","u":"/products/tip-wz02-50-cl-phil-trino-classic-smart-filter-50er-pack"},{"v":51475632456010,"h":"tip-236-premium-aktivkohlefilter-6-9mm-50er-packung","t":"Granny´s Weed Granny's Weed Premium Aktivkohlefilter (6.9mm, 50er)","p":790,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-236.webp?v=1793701711&width=160","u":"/products/tip-236-premium-aktivkohlefilter-6-9mm-50er-packung"},{"v":51475619873098,"h":"x-tyson-2-0-xtra-slim-5-9-mm-filter-33er-onlybubatz","t":"Purize x Tyson 2.0 Aktivkohlefilter (33er)","p":695,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-102.webp?v=1793702711&width=160","u":"/products/x-tyson-2-0-xtra-slim-5-9-mm-filter-33er-onlybubatz"},{"v":51475619283274,"h":"purize-019-aktivkohlefilter-xtra-slim-5-9mm-50er-packung-green","t":"Purize Aktivkohlefilter XTRA Slim (50er, GREEN)","p":798,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-019.webp?v=1793701682&width=160","u":"/products/purize-019-aktivkohlefilter-xtra-slim-5-9mm-50er-packung-green"}]</script>
+  <script>window.OB_UPSELL_CFG = {"n": 3, "t": "Noch [betrag] bis versandkostenfrei – passt dazu:", "tf": "Passt dazu"};</script><div class="pdp-lightbox" id="pdpLightbox" hidden role="dialog" aria-modal="true" aria-label="Bild vergrößern">
+    <button class="pdp-lightbox__close" type="button" aria-label="Schließen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img src="" alt="">
+  </div>
+
+
+
+  <script>
+
+    window.Shopify = window.Shopify || {};
+
+    window.OB_MONEY_FORMAT = "{{amount_with_comma_separator}} €";
+    window.OB_FREE_FROM = 4900;
+    window.OB_SHIP = {"on": true, "cut": 14, "sat": false, "hol": "25.12.2026, 26.12.2026, 01.01.2027, 26.03.2027, 29.03.2027, 01.05.2027, 06.05.2027, 17.05.2027, 27.05.2027, 03.10.2027, 01.11.2027, 25.12.2027, 26.12.2027", "today": "Noch [zeit] bestellen – geht heute raus", "later": "Jetzt bestellen – geht [tag] raus", "cart": true };
+
+    window.OB_CART_COUNT = 0;
+
+  </script>
+
+  <script src="../assets/theme.js" defer></script>
+  <script src="../assets/ob-verkauf.js" defer></script>
+
+  <script src="../assets/ob-extras.js" defer></script>
+
+  <script src="../assets/ob-anim.js" defer></script>
+  <script src="../assets/ob-scrollfx.js" defer></script>
+
+</body>
+
+</html>
+

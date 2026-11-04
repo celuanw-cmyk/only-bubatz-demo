@@ -1,10 +1,4 @@
-/* ==========================================================================
-   Pflanzen im Hintergrund (Andree, 31.10.: „Seite im Hintergrund paar
-   weedpflanzen wie DesignImage")
-   Die Einstellungen (deco_plant_*) werden im Liquid als Inline-Werte gesetzt —
-   hier stehen nur Position, Grundform und der Papier-Blend.
-   Deckkraft kommt aus dem Theme-Editor: 6-12 % ist der ruhige Bereich.
-   ========================================================================== */
+
 
 .ob-leaves img.l1,
 .ob-leaves img.l3 {

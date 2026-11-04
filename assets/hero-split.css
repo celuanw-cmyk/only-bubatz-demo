@@ -145,11 +145,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Der Bildausschnitt folgt dem Winkel: die schräge Kante frisst links im
-     Schnitt 0–`slant`, im Mittel also slant/2. Diese Hälfte wird nach rechts
-     geschoben, damit das Motiv in der sichtbaren Fläche mittig sitzt —
-     gemessen bei 13 %: sichtbar 19–81 % der Bildbreite (50 %) bzw. 22–84 % (58 %).
-     Statt fester 58 % rechnet die CSS-Variable mit, wenn Andree den Winkel zieht. */
+  
   object-position: calc(50% + var(--ob-slant) / 2) 50%;
 }
 

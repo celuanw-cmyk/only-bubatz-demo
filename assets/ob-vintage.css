@@ -531,12 +531,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 .ob-notify svg { flex: 0 0 auto; display: inline-block !important; width: 15px; height: 15px; color: var(--rust); }
 .ob-notify:hover svg, .ob-notify:focus-visible svg { color: #f7ecd6; }
 
-/* =====================================================================
-   BUTTONS · Emaille-Schild (Andree 04.11.2026: „B Emaille-Schild“)
-   Ein Stil für die ganze Seite. Eckig (8 px), doppelter Rand, Anton, Druck-Schatten.
-   Haupt = Rost · Zweit = Waldgrün · Karte = klein grün · Benachrichtigen = Papier mit Rost-Ring
-   Link = Anton rost mit Pfeil · auf dunklem Grund: Rand creme, Zweit invertiert.
-   ===================================================================== */
+
 :root { --vb-rust: #a63a22; --vb-green: #0b2418; --vb-paper: #f7ecd6; }
 
 /* --- Grundform (alle Knöpfe) --- */
@@ -617,7 +612,7 @@ input:focus-visible, select:focus-visible, textarea:focus-visible {
 /* Suche: Feld + Knopf dürfen auf schmalen Handys umbrechen */
 .template-search form[role="search"] { flex-wrap: wrap; }
 .template-search form[role="search"] input[type="search"] { flex: 1 1 200px; min-width: 0; }
-/* Karten-Knöpfe größer (Andree 04.11.: „ein bisschen zu klein“) — schlägt ob-v30 min-height:0 */
+
 .ob-cards-window .p-card__cta .btn, .p-card__cta .btn, .shop-v28 .card .add, .ob-cards-window .shop-v28 .card .add {
   min-height: 46px !important; height: auto !important; padding: 0 22px !important;
   font-size: 16px !important; letter-spacing: .07em !important;

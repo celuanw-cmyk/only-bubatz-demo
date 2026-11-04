@@ -1,0 +1,1645 @@
+<!doctype html>
+
+<html lang="de">
+
+<head><script>
+/* Demo: kein echter Shop dahinter – Warenkorb-Anfragen freundlich beantworten */
+(function(){var f=window.fetch;window.fetch=function(u,o){u=String(u&&u.url?u.url:u||'');
+ if(/cart\/(add|change|update|clear)/.test(u))return Promise.resolve(new Response(JSON.stringify({description:'Demo – der Warenkorb ist hier abgeschaltet'}),{status:422,headers:{'Content-Type':'application/json'}}));
+ if(/cart\.js/.test(u))return Promise.resolve(new Response(JSON.stringify({item_count:0,items:[],total_price:0}),{headers:{'Content-Type':'application/json'}}));
+ return f?f.apply(this,arguments):Promise.reject();};
+ document.addEventListener('submit',function(e){var fm=e.target;if(!e.defaultPrevented&&fm&&/post/i.test(fm.method||'')){e.preventDefault();alert('Demo – hier wird nichts abgeschickt (Warenkorb, Kasse und Formulare sind abgeschaltet).');}});
+})();
+</script><meta name="robots" content="noindex, nofollow">
+
+  <script>document.documentElement.classList.add('ob-js');</script>
+
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="theme-color" content="#0b2418">
+
+  <link rel="canonical" href="https://onlybubatz.de/pages/mix"><title>Mix & Match — Only Bubatz</title><meta name="description" content="Stelle dein Bundle zusammen."><meta property="og:site_name" content="Only Bubatz">
+<meta property="og:url" content="https://onlybubatz.de/pages/mix">
+<meta property="og:title" content="Mix &amp; Match — Only Bubatz">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE"><meta property="og:description" content="Stelle dein Bundle zusammen."><meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mix &amp; Match — Only Bubatz"><meta name="twitter:description" content="Stelle dein Bundle zusammen."><script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "OnlineStore",
+      "@id": "/#shop",
+      "name": "Only Bubatz",
+      "url": "/",
+      "description": "Premium Cannabis Gear — Papes, Filter, Grinder, Aufbewahrung.",
+      "sameAs": ["https://www.instagram.com/onlybubatz"]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "/#website",
+      "name": "Only Bubatz",
+      "url": "/",
+      "inLanguage": "de-DE",
+      "publisher": { "@id": "/#shop" },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "/search?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  ]
+}
+</script><style>
+    @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(../assets/font-anton-400.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(../assets/font-inter-400.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 500; font-display: swap;
+      src: url(../assets/font-inter-500.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap;
+      src: url(../assets/font-inter-600.woff2) format('woff2'); }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap;
+      src: url(../assets/font-inter-700.woff2) format('woff2'); }
+    @font-face { font-family: 'Caveat'; font-style: normal; font-weight: 400; font-display: swap;
+      src: url(../assets/font-caveat-400.ttf) format('truetype'); }
+  </style>
+
+
+
+  <link rel="stylesheet" href="../assets/base.css">
+
+  <link rel="stylesheet" href="../assets/ob-extras.css">
+  <link rel="stylesheet" href="../assets/ob-account.css">
+
+  <link rel="stylesheet" href="../assets/ob-v29.css">
+  <link rel="stylesheet" href="../assets/ob-v30.css">
+  <link rel="stylesheet" href="../assets/ob-flora.css"><link rel="stylesheet" href="../assets/ob-vintage.css"><style>
+
+    :root {--kraft: #ecd9b6;--kraft-light: #f7ecd6;--ink: #14100a;--rust: #a63a22;--green-deep: #0b2418;--ob-sold-dim: 0.62;
+
+      --ob-drawer-w: min(460px, 92vw);
+
+      --ob-card-img-bg: #f3e8cf;
+      --ob-sold-label: "Mail bei Restock";
+
+      --page-max: 1440px;
+
+    }
+    @media (min-width: 1700px) { :root { --page-max: min(2000px, max(1440px, 72vw)); } }
+
+  </style>
+
+  
+
+  <style>
+
+    body { position: relative; }
+
+    /* Cannabisblätter im Hintergrund: feste Positionen, bleiben beim Scrollen stehen.
+
+       Motiv: gemeinfreier Stich 1887. Drei Blätter, nur auf großen Bildschirmen. */
+
+    .ob-leaves {
+
+      position: absolute; inset: 0; z-index: 0; overflow: hidden;   /* z-index -1 lag HINTER dem Body-Papier = unsichtbar (gemessen 03.11.) */
+
+      pointer-events: none;
+
+    }
+
+    .ob-leaves img {
+      position: absolute; height: auto; opacity: .34; mix-blend-mode: multiply;
+      filter: sepia(.3) saturate(.65) contrast(.95) brightness(1.03);
+      -webkit-mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,.55) 14%, #000 42%);
+      mask-image: linear-gradient(to top, transparent 0%, rgba(0,0,0,.55) 14%, #000 42%);
+    }
+
+    .ob-leaves .l1 {
+      left: 56%; top: 170vh; height: 96vh; width: auto;
+      transform: translate(-50%, -100%) rotate(22deg); transform-origin: bottom center;
+    }  /* Stiel nach außen */
+
+    /* Inhalt liegt über den Blättern; Kopfleiste immer im Vordergrund */
+    .shopify-section-group-header-group { position: relative; z-index: 100; }
+    #MainContent, footer, .site-footer { position: relative; z-index: 1; }
+
+    @media (max-width: 1099px) { .ob-leaves { display: none; } }
+    .ob-leaves img.ob-bgleaf {
+      opacity: 0.2;
+      width: calc(30vw * var(--s, 1));
+      filter: none; -webkit-mask-image: none; mask-image: none;
+    }
+    @media (max-width: 1099px) { .ob-leaves { display: block; } .ob-leaves img.ob-bgleaf { width: calc(30vw * 1.9 * var(--s, 1)); } }
+
+
+    /* ---- Werte aus dem Theme-Editor: Deko & Hintergrund ---- */.ob-leaves img { opacity: 0.1; }
+      .ob-leaves img.ob-leaf-art { opacity: 0.2; }
+      .ob-leaves .l1 {
+        height: 84vh;
+        left: 76%;
+        transform: translate(-50%, -100%) rotate(22deg);
+      }.ob-partners__plant {
+        opacity: 0.3;
+        transform: rotate(-14deg);
+      }</style>
+
+  <link rel="stylesheet" href="../assets/ob-motion.css">
+  <style>
+  :root {
+    --font-display: 'Anton', 'Arial Narrow', Impact, sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+  </style>
+  <style>
+    @media (hover: hover) and (pointer: fine) {
+      html, body, body * {
+        cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-2%20-2%2036%2036%22%3E%3Cg%20transform%3D%22rotate(-35%2016%2016)%22%3E%3Cpath%20fill%3D%22rgba(20%2C16%2C10%2C.25)%22%20transform%3D%22translate(1.2%201.2)%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3Cpath%20fill%3D%22%23f7ecd6%22%20stroke%3D%22%23246343%22%20stroke-width%3D%221.7%22%20stroke-linejoin%3D%22round%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 8 5, auto !important;
+      }
+      body a, body a *, body button, body button *, body [role="button"], body [role="button"] *,
+      body label, body summary, body select, body .p-card, body .p-card *, body .cat-tile, body .cat-tile * {
+        cursor: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2232%22%20height%3D%2232%22%20viewBox%3D%22-2%20-2%2036%2036%22%3E%3Cg%20transform%3D%22rotate(-35%2016%2016)%22%3E%3Cpath%20fill%3D%22rgba(20%2C16%2C10%2C.25)%22%20transform%3D%22translate(1.2%201.2)%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3Cpath%20fill%3D%22%23a63a22%22%20stroke%3D%22%2314100a%22%20stroke-width%3D%221.7%22%20stroke-linejoin%3D%22round%22%20d%3D%22M16%201%20L18%208%20L17.5%2010%20L19%2013%20L18.5%2017%20L23%207%20L23%2012%20L22%2014%20L23%2014%20L20%2021%20L29%2015%20L27%2020%20L25%2021%20L26%2022%20L20%2025%20L26%2025%20L23%2028%20L18%2027%20L16.8%2026%20L17%2031%20L15%2031%20L15.2%2026%20L14%2027%20L9%2028%20L6%2025%20L12%2025%20L6%2022%20L7%2021%20L5%2020%20L3%2015%20L12%2021%20L9%2014%20L10%2014%20L9%2012%20L9%207%20L13.5%2017%20L13%2013%20L14.5%2010%20L14%208%20Z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 8 5, pointer !important;
+      }
+      body input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+      body textarea,
+      body [contenteditable="true"],
+      body [contenteditable="true"] * { cursor: text !important; }
+      body button:disabled, body input:disabled, body select:disabled, body textarea:disabled,
+      body [aria-disabled="true"], body [aria-disabled="true"] * { cursor: not-allowed !important; }
+    }
+    .ob-cursor-bit {
+      position: fixed; left: 0; top: 0; z-index: 9997; pointer-events: none;
+      width: 18px; height: 18px; margin: -9px 0 0 -9px;
+    }
+    .ob-cursor-bit svg { width: 100%; height: 100%; display: block; }
+  </style>
+  <template id="obCursorBit"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#f7ecd6" stroke="#246343" stroke-width="1.7" stroke-linejoin="round" d="M16 1 L18 8 L17.5 10 L19 13 L18.5 17 L23 7 L23 12 L22 14 L23 14 L20 21 L29 15 L27 20 L25 21 L26 22 L20 25 L26 25 L23 28 L18 27 L16.8 26 L17 31 L15 31 L15.2 26 L14 27 L9 28 L6 25 L12 25 L6 22 L7 21 L5 20 L3 15 L12 21 L9 14 L10 14 L9 12 L9 7 L13.5 17 L13 13 L14.5 10 L14 8 Z"/></svg></template>
+  <script>
+  (function () {
+    /* Klick: 6 kleine Blätter fliegen auseinander und verblassen (700 ms, nur transform/opacity) */
+    var tpl = document.getElementById('obCursorBit');
+    if (!tpl || !window.matchMedia || !window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bitSvg = tpl.innerHTML;
+    window.addEventListener('click', function (e) {
+      if (!document.body.animate) return;
+      for (var i = 0; i < 6; i++) {
+        var b = document.createElement('span');
+        b.className = 'ob-cursor-bit';
+        b.innerHTML = bitSvg;
+        document.body.appendChild(b);
+        var a = (Math.PI * 2 / 6) * i + Math.random() * .6;
+        var r = 26 + Math.random() * 22;
+        var rot = (Math.random() * 180 - 90).toFixed(0);
+        b.animate([
+          { transform: 'translate(' + e.clientX + 'px,' + e.clientY + 'px) scale(.6) rotate(0deg)', opacity: 1 },
+          { opacity: 1, offset: .55 },
+          { transform: 'translate(' + (e.clientX + Math.cos(a) * r).toFixed(1) + 'px,' + (e.clientY + Math.sin(a) * r).toFixed(1) + 'px) scale(1) rotate(' + rot + 'deg)', opacity: 0 }
+        ], { duration: 700, easing: 'cubic-bezier(.22,.75,.25,1)' }).onfinish = (function (n) { return function () { n.remove(); }; })(b);
+      }
+    }, { passive: true });
+  })();
+  </script>
+</head>
+
+<body class="template-page ob-cards-window ob-img-papermix ob-soldout ob-motion"><div style="position:sticky;top:0;z-index:2147483000;background:#14100a;color:#f3e8cf;font:600 13px/1.4 Inter,system-ui,sans-serif;text-align:center;padding:7px 12px;letter-spacing:.02em">Demo des Only-Bubatz-Shops · Beispieldaten · Warenkorb und Kasse sind abgeschaltet</div>
+
+
+
+    <div class="ob-leaves" aria-hidden="true"><img class="ob-bgleaf ob-bgleaf--1" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async"><img class="ob-bgleaf ob-bgleaf--2" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async"><img class="ob-bgleaf ob-bgleaf--3" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--4" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--5" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--6" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"><img class="ob-bgleaf ob-bgleaf--7" src="../assets/ob-leaf-art.svg" alt="" width="1000" height="1100" decoding="async" loading="lazy"></div>
+
+
+
+<a class="skip-link" href="#MainContent">Zum Inhalt springen</a>
+
+
+
+  <div class="age-gate" id="ageGate" hidden role="dialog" aria-modal="true" aria-labelledby="ageGateTitle">
+  <div class="age-gate__card">
+    <p class="eyebrow">18+ Zutritt</p>
+    <h2 id="ageGateTitle" class="display">Bist du volljährig?</h2>
+    <p>Unser Sortiment richtet sich ausschließlich an Erwachsene ab 18 Jahren. Bitte bestätige dein Alter, bevor du den Shop betrittst.</p>
+    <div class="age-gate__actions">
+      <button type="button" class="btn" id="ageGateYes">Ja, ich bin 18+</button>
+      <button type="button" class="btn btn--ghost" id="ageGateNo">Nein, ich bin unter 18</button>
+    </div>
+    <p class="age-gate__note">Mit „Ja“ bestätigst du dein Alter. Wir speichern diese Bestätigung nur lokal auf deinem Gerät — keine Datenübertragung.</p>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  <main id="MainContent" role="main" tabindex="-1">
+
+    <link rel="stylesheet" href="../assets/mix-bundles.css"><section class="mxb" data-mxb data-save-upto="Spar bis zu" aria-labelledby="mxbTitle-bundles">
+  <div class="page">
+    <header class="mxb__head"><p class="mxb__kicker">Mix & Match</p><h1 class="mxb__title" id="mxbTitle-bundles">Bau dir dein Bundle</h1><p class="mxb__lead">Bundle wählen, Artikel aussuchen, Fixpreis zahlen. Gleiche Marke mehrfach? Geht.</p></header><div class="mxb__cards" role="list"><article class="mxb-card mxb-card--green is-soon" role="listitem" data-mxb-card="0" >
+          <div class="mxb-card__top">
+            <span class="mxb-card__no">Bundle 01</span><span class="mxb-card__badge">Bald verfügbar</span></div>
+          <h2 class="mxb-card__name">Starter</h2><p class="mxb-card__text">Für 4,99 € — such dir eine Variante aus: Papers + Tips + Feuerzeug, Papers+Tips im Heftchen + Feuerzeug</p><ul class="mxb-card__list"><li><span class="mxb-card__code">A ·</span><span>4× Papers + 3× Tips + 1 Feuerzeug</span><span class="mxb-card__state">bald</span></li><li><span class="mxb-card__code">B ·</span><span>3× Papers+Tips im Heftchen + 1 Feuerzeug</span><span class="mxb-card__state">bald</span></li></ul>
+
+          <div class="mxb-card__foot">
+            <div>
+              <p class="mxb-card__meta">2 Varianten · Fixpreis</p>
+              <p class="mxb-card__price">4,99 €</p>
+              <p class="mxb-card__save" data-mxb-save hidden></p></div>
+            <button type="button" class="mxb-card__go" data-mxb-open="0" disabled aria-disabled="true" aria-label="Starter zusammenstellen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </article><article class="mxb-card mxb-card--rust is-soon" role="listitem" data-mxb-card="1" >
+          <div class="mxb-card__top">
+            <span class="mxb-card__no">Bundle 02</span><span class="mxb-card__badge">Bald verfügbar</span></div>
+          <h2 class="mxb-card__name">Session</h2><p class="mxb-card__text">2× Papers + 1× Aktivkohlefilter (33er oder 50er Beutel) + 1 Feuerzeug nach Wahl.</p><ul class="mxb-card__list"><li><span></span><span>Papers</span><span class="mxb-card__state">2×</span></li><li><span></span><span>Aktivkohlefilter (33er/50er)</span><span class="mxb-card__state">1×</span></li><li><span></span><span>Feuerzeug</span><span class="mxb-card__state">1×</span></li></ul>
+
+          <div class="mxb-card__foot">
+            <div>
+              <p class="mxb-card__meta">4 Teile · Fixpreis</p>
+              <p class="mxb-card__price">9,99 €</p>
+              <p class="mxb-card__save" data-mxb-save hidden></p></div>
+            <button type="button" class="mxb-card__go" data-mxb-open="1" disabled aria-disabled="true" aria-label="Session zusammenstellen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </article><article class="mxb-card mxb-card--paper is-soon" role="listitem" data-mxb-card="2" >
+          <div class="mxb-card__top">
+            <span class="mxb-card__no">Bundle 03</span><span class="mxb-card__badge">Bald verfügbar</span></div>
+          <h2 class="mxb-card__name">Vorrat</h2><p class="mxb-card__text">4× Papers + 2× Aktivkohlefilter (33er oder 50er Beutel) + 2 Feuerzeuge — für die ganze Runde.</p><ul class="mxb-card__list"><li><span></span><span>Papers</span><span class="mxb-card__state">4×</span></li><li><span></span><span>Aktivkohlefilter (33er/50er)</span><span class="mxb-card__state">2×</span></li><li><span></span><span>Feuerzeuge</span><span class="mxb-card__state">2×</span></li></ul>
+
+          <div class="mxb-card__foot">
+            <div>
+              <p class="mxb-card__meta">8 Teile · Fixpreis</p>
+              <p class="mxb-card__price">15,99 €</p>
+              <p class="mxb-card__save" data-mxb-save hidden></p></div>
+            <button type="button" class="mxb-card__go" data-mxb-open="2" disabled aria-disabled="true" aria-label="Vorrat zusammenstellen">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </button>
+          </div>
+        </article></div>
+
+    <div class="mxb-builder" data-mxb-builder hidden>
+      <div class="mxb-builder__main">
+        <div class="mxb-builder__head">
+          <p class="mxb__kicker" data-mxb-bname></p>
+          <div class="mxb-builder__opts" data-mxb-opts role="group" aria-label="Variante wählen"></div>
+        </div>
+        <div data-mxb-groups></div>
+      </div>
+      <aside class="mxb-panel" aria-label="Dein Bundle">
+        <p class="mxb-panel__title">Dein <span data-mxb-pname></span></p>
+        <ul class="mxb-panel__list" data-mxb-list></ul>
+        <dl class="mxb-panel__sum">
+          <div><dt>Einzelpreise</dt><dd data-mxb-sum>0,00 €</dd></div>
+          <div><dt>Fixpreis</dt><dd data-mxb-fixed>0,00 €</dd></div>
+          <div class="is-save"><dt>Du sparst</dt><dd data-mxb-saved>0,00 €</dd></div>
+        </dl>
+        <p class="mxb-panel__status" role="status" aria-live="polite" data-mxb-status></p>
+        <button type="button" class="mxb-panel__cta" data-mxb-add disabled>Bundle in den Warenkorb</button><p class="mxb-panel__note">Fixpreis inkl. MwSt. Deine Auswahl steht im Warenkorb und auf der Bestellung.</p></aside>
+    </div><script type="application/json" data-mxb-data>
+    {"bundles":[{"name":"Starter","variant":64206645133642,
+         "price":499,
+         "soon":true,
+         "options":[{"code":"A","name":"4× Papers + 3× Tips + 1 Feuerzeug","available":false,"groups":[{"label":"Papers","count":4,"items":[{"id":51475632226634,"t":"Granny's Weed Long King Size Papers + Tips","v":"Granny´s Weed","p":179,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips-8850456.png?v=1773529107&width=300"},{"id":51475646087498,"t":"RAW Ethereal Gold King Size Slim, 32 Blatt","v":"RAW","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154.webp?v=1793701856&width=300"},{"id":51475647332682,"t":"OCB X-Pert Silber Slim Fit Papers 109x40mm, ultra thin","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/1050.webp?v=1793701878&width=300"},{"id":51475632685386,"t":"Smoking Red King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-red-ks.webp?v=1793701713&width=300"},{"id":51475631309130,"t":"Granny´s Weed Granny's Weed Long King Size SLIM Paper & Tips","v":"Granny´s Weed","p":179,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pap-62.webp?v=1793701699&width=300"},{"id":51475647365450,"t":"OCB Gold „Oro“ Premium Slim Paper 109x44mm","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/ocb-03.webp?v=1793701881&width=300"},{"id":51475646906698,"t":"OCB Schwarz Premium Long Slim Paper 109x44mm","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/2000.webp?v=1793701871&width=300"},{"id":51475641041226,"t":"RAW Classic Black KS Slim Papier","v":"RAW","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-classic-black-ks-slim-papier-2220411.png?v=1776011905&width=300"},{"id":51475634127178,"t":"Smoking KUKUXUMUSU *New Collection* King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-kuk2.webp?v=1793701721&width=300"},{"id":53449597976906,"t":"Smoking BROWN Unbleached \"Creators Edition\" King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-bro-ce.webp?v=1793701718&width=300"},{"id":64154079461706,"t":"Smoking THINNEST (rot) King Size Zigarettenpapier","v":"Smoking","p":125,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=300"},{"id":64154079396170,"t":"RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen","v":"RAW","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=300"},{"id":64154079068490,"t":"Juicy Jays King Size Slim aromat. Papier, Mello Mango","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=300"},{"id":64154078970186,"t":"Juicy Jays King Size Slim aromat. Papier, Cotton Candy","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=300"},{"id":64154078937418,"t":"Juicy Jays King Size Slim aromat. Papier, Liquorice","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=300"},{"id":64154078445898,"t":"Juicy Jays King Size Slim aromat. Papier, Coconut","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=300"},{"id":64154077921610,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Greenleaf","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=300"},{"id":64154077430090,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Candy (1 Box)","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=300"},{"id":64154076709194,"t":"Juicy Jays King Size Slim aromat. Papier, Grape","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=300"},{"id":64154076217674,"t":"Juicy Jays King Size Slim aromat. Papier, Pineapple","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=300"},{"id":64154075234634,"t":"Juicy Jays King Size Slim aromat. Papier, Double Dutch Chocolate","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate-jj-ks-0_e03fd0e8-dceb-4d5d-beed-bfeefceb9fd1.webp?v=1793702643&width=300"},{"id":64154074743114,"t":"Juicy Jays King Size Slim aromat. Papier, Jamaican Rum","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-jamaican-rum-jj-ks-07_bb88954d-1202-4092-b664-087ec8f41e31.webp?v=1793702640&width=300"},{"id":64154074218826,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Watermelon","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-watermelon-jj-paf-03_6b50bc3c-5ad4-473c-908b-106886d31ce0.webp?v=1793702638&width=300"},{"id":64154074186058,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Black Berrylicious","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious-jj-paf-05_7df9f77e-5c08-4ca5-84af-e3c62ace0249.webp?v=1793702636&width=300"}]},{"label":"Tips","count":3,"items":[]},{"label":"Feuerzeuge","count":1,"items":[{"id":51475683180874,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur No plant is illegal","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/only-bubatz-hulle-fur-feuerzeug-mit-gravur-ca24x3x65cm-no-plant-is-illegal-8684403.jpg?v=1773583521&width=300"},{"id":64154002489674,"t":"RAW Raffiniertes Feuerzeuggas, 90 ml","v":"RAW","p":195,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-raffiniertes-feuerzeuggas-24-fzg-z-46.webp?v=1793701987&width=300"},{"id":64154001670474,"t":"TOBALIQ Jet Flame Rotary Torch Lighter - Gasbrenner \"Military X2S\" 2farbig sort.","v":"TOBALIQ","p":299,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tobaliq-jet-flame-rotary-torch-lighter-gasbrenner-military-x2s-2farbig-sort_faa971a0-7ab6-4a39-8309-ba6f79ffd0e3.jpg?v=1793699199&width=300"},{"id":51475683410250,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur ca2,4x3x6,5cm 420 + 4 Leaves","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/fzg-z-39-003-hulle-fur-feuerzeug-mit-gravur-ca2-4x3x6-5cm-420-4-leaves_1fd9ea1e-f98c-4f07-b85e-607d7824db0c.jpg?v=1793698955&width=300"},{"id":51475683344714,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur Weed + Leaf","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/fzg-z-39-002-hulle-fur-feuerzeug-mit-gravur-ca2-4x3x6-5cm-weed-leaf.png?v=1793698952&width=300"}]}]},{"code":"B","name":"3× Papers+Tips im Heftchen + 1 Feuerzeug","available":false,"groups":[{"label":"Papers+Tips im Heftchen","count":3,"items":[{"id":51475632226634,"t":"Granny's Weed Long King Size Papers + Tips","v":"Granny´s Weed","p":179,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips-8850456.png?v=1773529107&width=300"},{"id":51475631309130,"t":"Granny´s Weed Granny's Weed Long King Size SLIM Paper & Tips","v":"Granny´s Weed","p":179,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pap-62.webp?v=1793701699&width=300"}]}]}]},{"name":"Session","variant":64206645166410,
+         "price":999,
+         "soon":true,
+         "options":[{"code":"A","name":"Session","available":true,"groups":[{"label":"Papers","count":2,"items":[{"id":51475632226634,"t":"Granny's Weed Long King Size Papers + Tips","v":"Granny´s Weed","p":179,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips-8850456.png?v=1773529107&width=300"},{"id":51475646087498,"t":"RAW Ethereal Gold King Size Slim, 32 Blatt","v":"RAW","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154.webp?v=1793701856&width=300"},{"id":51475647332682,"t":"OCB X-Pert Silber Slim Fit Papers 109x40mm, ultra thin","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/1050.webp?v=1793701878&width=300"},{"id":51475632685386,"t":"Smoking Red King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-red-ks.webp?v=1793701713&width=300"},{"id":51475631309130,"t":"Granny´s Weed Granny's Weed Long King Size SLIM Paper & Tips","v":"Granny´s Weed","p":179,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pap-62.webp?v=1793701699&width=300"},{"id":51475647365450,"t":"OCB Gold „Oro“ Premium Slim Paper 109x44mm","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/ocb-03.webp?v=1793701881&width=300"},{"id":51475646906698,"t":"OCB Schwarz Premium Long Slim Paper 109x44mm","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/2000.webp?v=1793701871&width=300"},{"id":51475641041226,"t":"RAW Classic Black KS Slim Papier","v":"RAW","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-classic-black-ks-slim-papier-2220411.png?v=1776011905&width=300"},{"id":51475634127178,"t":"Smoking KUKUXUMUSU *New Collection* King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-kuk2.webp?v=1793701721&width=300"},{"id":53449597976906,"t":"Smoking BROWN Unbleached \"Creators Edition\" King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-bro-ce.webp?v=1793701718&width=300"},{"id":64154079461706,"t":"Smoking THINNEST (rot) King Size Zigarettenpapier","v":"Smoking","p":125,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=300"},{"id":64154079396170,"t":"RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen","v":"RAW","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=300"},{"id":64154079068490,"t":"Juicy Jays King Size Slim aromat. Papier, Mello Mango","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=300"},{"id":64154078970186,"t":"Juicy Jays King Size Slim aromat. Papier, Cotton Candy","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=300"},{"id":64154078937418,"t":"Juicy Jays King Size Slim aromat. Papier, Liquorice","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=300"},{"id":64154078445898,"t":"Juicy Jays King Size Slim aromat. Papier, Coconut","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=300"},{"id":64154077921610,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Greenleaf","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=300"},{"id":64154077430090,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Candy (1 Box)","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=300"},{"id":64154076709194,"t":"Juicy Jays King Size Slim aromat. Papier, Grape","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=300"},{"id":64154076217674,"t":"Juicy Jays King Size Slim aromat. Papier, Pineapple","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=300"},{"id":64154075234634,"t":"Juicy Jays King Size Slim aromat. Papier, Double Dutch Chocolate","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate-jj-ks-0_e03fd0e8-dceb-4d5d-beed-bfeefceb9fd1.webp?v=1793702643&width=300"},{"id":64154074743114,"t":"Juicy Jays King Size Slim aromat. Papier, Jamaican Rum","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-jamaican-rum-jj-ks-07_bb88954d-1202-4092-b664-087ec8f41e31.webp?v=1793702640&width=300"},{"id":64154074218826,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Watermelon","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-watermelon-jj-paf-03_6b50bc3c-5ad4-473c-908b-106886d31ce0.webp?v=1793702638&width=300"},{"id":64154074186058,"t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Black Berrylicious","v":"Juicy Jays","p":189,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious-jj-paf-05_7df9f77e-5c08-4ca5-84af-e3c62ace0249.webp?v=1793702636&width=300"}]},{"label":"Aktivkohlefilter (33er/50er)","count":1,"items":[{"id":51475632357706,"t":"Granny's Hybrid Deluxe Aktivkohlefilter 6mm, 210er","v":"Granny´s Weed","p":798,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-239.webp?v=1793701708&width=300"},{"id":51475635798346,"t":"GIZEH Active Filter Slim konisch 6-7mm 25er Beutel","v":"Gizeh","p":745,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-212.webp?v=1793701763&width=300"},{"id":51475646284106,"t":"OCB Activ Tips Aktivkohlefilter 7mm 50er Schachtel","v":"OCB","p":749,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/9910.webp?v=1793701864&width=300"},{"id":61373255287114,"t":"WEEDLEZ® Phil Trino 6mm CLASSIC 50er","v":"WEEDLEZ","p":799,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-wz02-50-cl.webp?v=1793701757&width=300"},{"id":51475632456010,"t":"Granny´s Weed Granny's Weed Premium Aktivkohlefilter (6.9mm, 50er)","v":"Granny´s Weed","p":790,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-236.webp?v=1793701711&width=300"},{"id":51475619873098,"t":"Purize x Tyson 2.0 Aktivkohlefilter (33er)","v":"PURIZE","p":695,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-102.webp?v=1793702711&width=300"},{"id":51475619283274,"t":"Purize Aktivkohlefilter XTRA Slim (50er, GREEN)","v":"PURIZE","p":798,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-019.webp?v=1793701682&width=300"}]},{"label":"Feuerzeug","count":1,"items":[{"id":51475683180874,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur No plant is illegal","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/only-bubatz-hulle-fur-feuerzeug-mit-gravur-ca24x3x65cm-no-plant-is-illegal-8684403.jpg?v=1773583521&width=300"},{"id":64154002489674,"t":"RAW Raffiniertes Feuerzeuggas, 90 ml","v":"RAW","p":195,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-raffiniertes-feuerzeuggas-24-fzg-z-46.webp?v=1793701987&width=300"},{"id":64154001670474,"t":"TOBALIQ Jet Flame Rotary Torch Lighter - Gasbrenner \"Military X2S\" 2farbig sort.","v":"TOBALIQ","p":299,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tobaliq-jet-flame-rotary-torch-lighter-gasbrenner-military-x2s-2farbig-sort_faa971a0-7ab6-4a39-8309-ba6f79ffd0e3.jpg?v=1793699199&width=300"},{"id":51475683410250,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur ca2,4x3x6,5cm 420 + 4 Leaves","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/fzg-z-39-003-hulle-fur-feuerzeug-mit-gravur-ca2-4x3x6-5cm-420-4-leaves_1fd9ea1e-f98c-4f07-b85e-607d7824db0c.jpg?v=1793698955&width=300"},{"id":51475683344714,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur Weed + Leaf","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/fzg-z-39-002-hulle-fur-feuerzeug-mit-gravur-ca2-4x3x6-5cm-weed-leaf.png?v=1793698952&width=300"}]}]}]},{"name":"Vorrat","variant":64206645264714,
+         "price":1599,
+         "soon":true,
+         "options":[{"code":"A","name":"Vorrat","available":true,"groups":[{"label":"Papers","count":4,"items":[{"id":51475647332682,"t":"OCB X-Pert Silber Slim Fit Papers 109x40mm, ultra thin","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/1050.webp?v=1793701878&width=300"},{"id":51475632685386,"t":"Smoking Red King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-red-ks.webp?v=1793701713&width=300"},{"id":51475647365450,"t":"OCB Gold „Oro“ Premium Slim Paper 109x44mm","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/ocb-03.webp?v=1793701881&width=300"},{"id":51475646906698,"t":"OCB Schwarz Premium Long Slim Paper 109x44mm","v":"OCB","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/2000.webp?v=1793701871&width=300"},{"id":51475641041226,"t":"RAW Classic Black KS Slim Papier","v":"RAW","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-classic-black-ks-slim-papier-2220411.png?v=1776011905&width=300"},{"id":51475634127178,"t":"Smoking KUKUXUMUSU *New Collection* King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-kuk2.webp?v=1793701721&width=300"},{"id":53449597976906,"t":"Smoking BROWN Unbleached \"Creators Edition\" King Size Zigarettenpapier","v":"Smoking","p":129,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-bro-ce.webp?v=1793701718&width=300"},{"id":64154079461706,"t":"Smoking THINNEST (rot) King Size Zigarettenpapier","v":"Smoking","p":125,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=300"}]},{"label":"Aktivkohlefilter (33er/50er)","count":2,"items":[{"id":51475632357706,"t":"Granny's Hybrid Deluxe Aktivkohlefilter 6mm, 210er","v":"Granny´s Weed","p":798,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-239.webp?v=1793701708&width=300"},{"id":51475635798346,"t":"GIZEH Active Filter Slim konisch 6-7mm 25er Beutel","v":"Gizeh","p":745,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-212.webp?v=1793701763&width=300"},{"id":51475646284106,"t":"OCB Activ Tips Aktivkohlefilter 7mm 50er Schachtel","v":"OCB","p":749,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/9910.webp?v=1793701864&width=300"},{"id":61373255287114,"t":"WEEDLEZ® Phil Trino 6mm CLASSIC 50er","v":"WEEDLEZ","p":799,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-wz02-50-cl.webp?v=1793701757&width=300"},{"id":51475632456010,"t":"Granny´s Weed Granny's Weed Premium Aktivkohlefilter (6.9mm, 50er)","v":"Granny´s Weed","p":790,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-236.webp?v=1793701711&width=300"},{"id":51475619873098,"t":"Purize x Tyson 2.0 Aktivkohlefilter (33er)","v":"PURIZE","p":695,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-102.webp?v=1793702711&width=300"},{"id":51475619283274,"t":"Purize Aktivkohlefilter XTRA Slim (50er, GREEN)","v":"PURIZE","p":798,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-019.webp?v=1793701682&width=300"}]},{"label":"Feuerzeuge","count":2,"items":[{"id":51475683180874,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur No plant is illegal","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/only-bubatz-hulle-fur-feuerzeug-mit-gravur-ca24x3x65cm-no-plant-is-illegal-8684403.jpg?v=1773583521&width=300"},{"id":64154002489674,"t":"RAW Raffiniertes Feuerzeuggas, 90 ml","v":"RAW","p":195,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-raffiniertes-feuerzeuggas-24-fzg-z-46.webp?v=1793701987&width=300"},{"id":64154001670474,"t":"TOBALIQ Jet Flame Rotary Torch Lighter - Gasbrenner \"Military X2S\" 2farbig sort.","v":"TOBALIQ","p":299,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tobaliq-jet-flame-rotary-torch-lighter-gasbrenner-military-x2s-2farbig-sort_faa971a0-7ab6-4a39-8309-ba6f79ffd0e3.jpg?v=1793699199&width=300"},{"id":51475683410250,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur ca2,4x3x6,5cm 420 + 4 Leaves","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/fzg-z-39-003-hulle-fur-feuerzeug-mit-gravur-ca2-4x3x6-5cm-420-4-leaves_1fd9ea1e-f98c-4f07-b85e-607d7824db0c.jpg?v=1793698955&width=300"},{"id":51475683344714,"t":"Only Bubatz Hülle für Feuerzeug mit Gravur Weed + Leaf","v":"Only Bubatz","p":199,"img":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/fzg-z-39-002-hulle-fur-feuerzeug-mit-gravur-ca2-4x3x6-5cm-weed-leaf.png?v=1793698952&width=300"}]}]}]}]}
+    </script></div>
+</section>
+
+<script src="../assets/mix-bundles.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="../assets/mix-match.css"><section class="mix section" data-mix aria-labelledby="mixTitle-mix">
+  <div class="page">
+
+    <header class="mix__head"><p class="eyebrow">Mix & Match</p><h1 class="mix__title" id="mixTitle-mix">Bau dir deinen Mix</h1><p class="lead mix__lead">Drei, fünf oder acht Artikel aussuchen, Fixpreis zahlen. Was im Bundle landet, entscheidest du.</p></header><div class="mix__bundles" role="group" aria-label="Bundle wählen"><button type="button"
+                  class="mix__bundle"
+                  data-mix-bundle="0"
+                  data-slots="3"
+                  data-price="3990"
+                  data-name="3er Mix"
+                  aria-pressed="true"
+                  ><span class="mix__bundle-label">Beliebt</span><span class="mix__bundle-name">3er Mix</span>
+            <span class="mix__bundle-price">39,90 €</span>
+            <span class="mix__bundle-meta">3 Artikel · Fixpreis</span>
+          </button><button type="button"
+                  class="mix__bundle"
+                  data-mix-bundle="1"
+                  data-slots="5"
+                  data-price="5990"
+                  data-name="5er Mix"
+                  aria-pressed="false"
+                  ><span class="mix__bundle-label">Mehr Auswahl</span><span class="mix__bundle-name">5er Mix</span>
+            <span class="mix__bundle-price">59,90 €</span>
+            <span class="mix__bundle-meta">5 Artikel · Fixpreis</span>
+          </button><button type="button"
+                  class="mix__bundle"
+                  data-mix-bundle="2"
+                  data-slots="8"
+                  data-price="8990"
+                  data-name="8er Mix"
+                  aria-pressed="false"
+                  ><span class="mix__bundle-label">Bester Preis</span><span class="mix__bundle-name">8er Mix</span>
+            <span class="mix__bundle-price">89,90 €</span>
+            <span class="mix__bundle-meta">8 Artikel · Fixpreis</span>
+          </button></div>
+
+      <div class="mix__layout">
+
+        <div class="mix__pool">
+          <div class="mix__pool-head">
+            <h2 class="mix__pool-title">Produkte im Pool</h2>
+            <p class="mix__pool-note">24 Artikel zur Auswahl. Antippen – der Artikel landet im nächsten freien Slot.</p>
+          </div>
+
+          <div class="mix__grid" data-mix-grid><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64206645264714"
+                        data-title="Mix &amp; Match Bundle Vorrat"
+                        data-price="1599"
+                        data-image=""
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><span class="mix-card__noimg">Kein Bild</span></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Mix & Match</span>
+                    <span class="mix-card__title">Mix & Match Bundle Vorrat</span>
+                    <span class="mix-card__price">15,99 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64206645166410"
+                        data-title="Mix &amp; Match Bundle Session"
+                        data-price="999"
+                        data-image=""
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><span class="mix-card__noimg">Kein Bild</span></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Mix & Match</span>
+                    <span class="mix-card__title">Mix & Match Bundle Session</span>
+                    <span class="mix-card__price">9,99 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64206645133642"
+                        data-title="Mix &amp; Match Bundle Starter"
+                        data-price="499"
+                        data-image=""
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><span class="mix-card__noimg">Kein Bild</span></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Mix & Match</span>
+                    <span class="mix-card__title">Mix & Match Bundle Starter</span>
+                    <span class="mix-card__price">4,99 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154080018762"
+                        data-title="Tightvac Vakuum Kunstoffbehälter 0,29 Liter"
+                        data-price="899"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/t-vac-062-eco_4faa13be-86ab-4867-b653-c4f09e607c07.webp?v=1793702691&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/t-vac-062-eco_4faa13be-86ab-4867-b653-c4f09e607c07.webp?v=1793702691&width=360"
+                           width="360" height="360"
+                           alt="Tightvac Vakuum Kunstoffbehälter 0,29 Liter"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Tightvac</span>
+                    <span class="mix-card__title">Tightvac Vakuum Kunstoffbehälter 0,29 Liter</span>
+                    <span class="mix-card__price">8,99 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079985994"
+                        data-title="Tightvac Vakuum Kunstoffbehälter 0,12 Liter"
+                        data-price="749"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/t-vac-061-eco_23cdb045-5d46-496a-9f0b-8d3de7bbc1cd.webp?v=1793702689&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/t-vac-061-eco_23cdb045-5d46-496a-9f0b-8d3de7bbc1cd.webp?v=1793702689&width=360"
+                           width="360" height="360"
+                           alt="Tightvac Vakuum Kunstoffbehälter 0,12 Liter"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Tightvac</span>
+                    <span class="mix-card__title">Tightvac Vakuum Kunstoffbehälter 0,12 Liter</span>
+                    <span class="mix-card__price">7,49 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079887690"
+                        data-title="Tightvac Vakuum Kunstoffbehälter 0,06 Liter"
+                        data-price="549"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/t-vag-060-eco_41765ac3-5c74-497d-8dd1-736351381e7f.webp?v=1793702687&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/t-vag-060-eco_41765ac3-5c74-497d-8dd1-736351381e7f.webp?v=1793702687&width=360"
+                           width="360" height="360"
+                           alt="Tightvac Vakuum Kunstoffbehälter 0,06 Liter"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Tightvac</span>
+                    <span class="mix-card__title">Tightvac Vakuum Kunstoffbehälter 0,06 Liter</span>
+                    <span class="mix-card__price">5,49 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079658314"
+                        data-title="Storz &amp; Bickel VOLCANO HYBRID Vaporizer"
+                        data-price="59700"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/vol-02_9d83227d-579e-4334-b0a0-0db9a686c047.webp?v=1793702684&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/vol-02_9d83227d-579e-4334-b0a0-0db9a686c047.webp?v=1793702684&width=360"
+                           width="360" height="360"
+                           alt="Storz &amp; Bickel VOLCANO HYBRID Vaporizer"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Storz & Bickel</span>
+                    <span class="mix-card__title">Storz & Bickel VOLCANO HYBRID Vaporizer</span>
+                    <span class="mix-card__price">597,00 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079494474"
+                        data-title="STORZ &amp; BICKEL VOLCANO CLASSIC Vaporizer"
+                        data-price="34700"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/volc-01_da25e11a-90ce-45f5-8bbd-fb7f134ac688.webp?v=1793702682&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/volc-01_da25e11a-90ce-45f5-8bbd-fb7f134ac688.webp?v=1793702682&width=360"
+                           width="360" height="360"
+                           alt="STORZ &amp; BICKEL VOLCANO CLASSIC Vaporizer"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Storz & Bickel</span>
+                    <span class="mix-card__title">STORZ & BICKEL VOLCANO CLASSIC Vaporizer</span>
+                    <span class="mix-card__price">347,00 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079461706"
+                        data-title="Smoking THINNEST (rot) King Size Zigarettenpapier"
+                        data-price="125"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=360"
+                           width="360" height="360"
+                           alt="Smoking THINNEST (rot) King Size Zigarettenpapier"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Smoking</span>
+                    <span class="mix-card__title">Smoking THINNEST (rot) King Size Zigarettenpapier</span>
+                    <span class="mix-card__price">1,25 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079428938"
+                        data-title="RAW CONE Wanduhr"
+                        data-price="2895"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-z-040-b_ff25c843-0b47-4c3f-9163-54e1852e17af.webp?v=1793702678&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-z-040-b_ff25c843-0b47-4c3f-9163-54e1852e17af.webp?v=1793702678&width=360"
+                           width="360" height="360"
+                           alt="RAW CONE Wanduhr"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">RAW</span>
+                    <span class="mix-card__title">RAW CONE Wanduhr</span>
+                    <span class="mix-card__price">28,95 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079396170"
+                        data-title="RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=360"
+                           width="360" height="360"
+                           alt="RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">RAW</span>
+                    <span class="mix-card__title">RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079297866"
+                        data-title="RAW Drehtablett aus Glas groß"
+                        data-price="2799"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/dre-tray-12.webp?v=1793702672&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/dre-tray-12.webp?v=1793702672&width=360"
+                           width="360" height="360"
+                           alt="RAW Drehtablett aus Glas groß"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">RAW</span>
+                    <span class="mix-card__title">RAW Drehtablett aus Glas groß</span>
+                    <span class="mix-card__price">27,99 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079265098"
+                        data-title="Kailar Cellulose Aktivkohle-FilterSlim ø 5,9mm braun ungebleicht 250er Beutel"
+                        data-price="2990"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-163-br_44ca3b64-82c2-4d44-8b05-39928374468f.webp?v=1793702670&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-163-br_44ca3b64-82c2-4d44-8b05-39928374468f.webp?v=1793702670&width=360"
+                           width="360" height="360"
+                           alt="Kailar Cellulose Aktivkohle-FilterSlim ø 5,9mm braun ungebleicht 250er Beutel"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Kailar</span>
+                    <span class="mix-card__title">Kailar Cellulose Aktivkohle-FilterSlim ø 5,9mm braun ungebleicht 250er Beutel</span>
+                    <span class="mix-card__price">29,90 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079232330"
+                        data-title="Gunnysack Jutesack &#34;Superskunk Amsterdam&#34;"
+                        data-price="990"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tut-gs-02_67ef61ff-bdbf-4549-ab0f-fa022170a531.webp?v=1793702668&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tut-gs-02_67ef61ff-bdbf-4549-ab0f-fa022170a531.webp?v=1793702668&width=360"
+                           width="360" height="360"
+                           alt="Gunnysack Jutesack &#34;Superskunk Amsterdam&#34;"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Gunnysack</span>
+                    <span class="mix-card__title">Gunnysack Jutesack "Superskunk Amsterdam"</span>
+                    <span class="mix-card__price">9,90 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079199562"
+                        data-title="GIZEH PINK Active Filter Slim ø 6mm"
+                        data-price="849"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tp-199-10_88b7308b-2423-463f-bb84-0e29d90783cd.webp?v=1793702665&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tp-199-10_88b7308b-2423-463f-bb84-0e29d90783cd.webp?v=1793702665&width=360"
+                           width="360" height="360"
+                           alt="GIZEH PINK Active Filter Slim ø 6mm"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Gizeh</span>
+                    <span class="mix-card__title">GIZEH PINK Active Filter Slim ø 6mm</span>
+                    <span class="mix-card__price">8,49 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079101258"
+                        data-title="Storz &amp; Bickel Veazy Vaporizer Verdampfer"
+                        data-price="22900"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/storz-bickel-veazy-vaporizer-verdampfer-7584477.jpg?v=1793412491&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/storz-bickel-veazy-vaporizer-verdampfer-7584477.jpg?v=1793412491&width=360"
+                           width="360" height="360"
+                           alt="Storz &amp; Bickel Veazy Vaporizer Verdampfer - Only Bubatz"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Storz & Bickel</span>
+                    <span class="mix-card__title">Storz & Bickel Veazy Vaporizer Verdampfer</span>
+                    <span class="mix-card__price">229,00 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154079068490"
+                        data-title="Juicy Jays King Size Slim aromat. Papier, Mello Mango"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays King Size Slim aromat. Papier, Mello Mango"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays King Size Slim aromat. Papier, Mello Mango</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154078970186"
+                        data-title="Juicy Jays King Size Slim aromat. Papier, Cotton Candy"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays King Size Slim aromat. Papier, Cotton Candy"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays King Size Slim aromat. Papier, Cotton Candy</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154078937418"
+                        data-title="Juicy Jays King Size Slim aromat. Papier, Liquorice"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays King Size Slim aromat. Papier, Liquorice"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays King Size Slim aromat. Papier, Liquorice</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154078445898"
+                        data-title="Juicy Jays King Size Slim aromat. Papier, Coconut"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays King Size Slim aromat. Papier, Coconut"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays King Size Slim aromat. Papier, Coconut</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154077921610"
+                        data-title="Juicy Jays &#34;SUPERFINE&#34; 1 1/4 aromat. Papier, Greenleaf"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays &#34;SUPERFINE&#34; 1 1/4 aromat. Papier, Greenleaf"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays "SUPERFINE" 1 1/4 aromat. Papier, Greenleaf</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154077430090"
+                        data-title="Juicy Jays &#34;SUPERFINE&#34; 1 1/4 aromat. Papier, Candy (1 Box)"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays &#34;SUPERFINE&#34; 1 1/4 aromat. Papier, Candy (1 Box)"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays "SUPERFINE" 1 1/4 aromat. Papier, Candy (1 Box)</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154076709194"
+                        data-title="Juicy Jays King Size Slim aromat. Papier, Grape"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays King Size Slim aromat. Papier, Grape"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays King Size Slim aromat. Papier, Grape</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button><button type="button"
+                        class="mix-card"
+                        data-mix-product
+                        data-id="64154076217674"
+                        data-title="Juicy Jays King Size Slim aromat. Papier, Pineapple"
+                        data-price="189"
+                        data-image="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=360"
+                        aria-pressed="false"
+                        >
+                  <span class="mix-card__media"><img src="https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=360"
+                           width="360" height="360"
+                           alt="Juicy Jays King Size Slim aromat. Papier, Pineapple"
+                           loading="lazy" decoding="async"></span>
+                  <span class="mix-card__body">
+                    <span class="mix-card__vendor">Juicy Jays</span>
+                    <span class="mix-card__title">Juicy Jays King Size Slim aromat. Papier, Pineapple</span>
+                    <span class="mix-card__price">1,89 €</span></span>
+                  <span class="mix-card__state" aria-hidden="true">Im Bundle</span>
+                  <span class="visually-hidden" data-mix-action>Zum Bundle hinzufügen</span>
+                </button></div>
+        </div>
+
+        <aside class="mix__panel" data-mix-panel aria-label="Dein Bundle">
+          <p class="mix__panel-kicker">Dein <span data-mix-name>3er Mix</span></p>
+
+          <ol class="mix__slots" data-mix-slots><li class="mix-slot" data-slot-wrap="0">
+                <button type="button" class="mix-slot__btn" data-slot="0"
+                        aria-label="Slot 1: leer – Produkt im Raster wählen">
+                  <span class="mix-slot__media">
+                    <span class="mix-slot__num" aria-hidden="true">1</span>
+                  </span>
+                </button>
+                <button type="button" class="mix-slot__clear" data-slot-clear="0"
+                        aria-label="Slot 1 leeren" hidden>&times;</button>
+              </li><li class="mix-slot" data-slot-wrap="1">
+                <button type="button" class="mix-slot__btn" data-slot="1"
+                        aria-label="Slot 2: leer – Produkt im Raster wählen">
+                  <span class="mix-slot__media">
+                    <span class="mix-slot__num" aria-hidden="true">2</span>
+                  </span>
+                </button>
+                <button type="button" class="mix-slot__clear" data-slot-clear="1"
+                        aria-label="Slot 2 leeren" hidden>&times;</button>
+              </li><li class="mix-slot" data-slot-wrap="2">
+                <button type="button" class="mix-slot__btn" data-slot="2"
+                        aria-label="Slot 3: leer – Produkt im Raster wählen">
+                  <span class="mix-slot__media">
+                    <span class="mix-slot__num" aria-hidden="true">3</span>
+                  </span>
+                </button>
+                <button type="button" class="mix-slot__clear" data-slot-clear="2"
+                        aria-label="Slot 3 leeren" hidden>&times;</button>
+              </li></ol>
+
+          <dl class="mix__sum">
+            <div class="mix__sum-row">
+              <dt>Einzelpreise</dt>
+              <dd data-mix-sum>0,00 €</dd>
+            </div>
+            <div class="mix__sum-row">
+              <dt>Fixpreis</dt>
+              <dd data-mix-fixed>39,90 €</dd>
+            </div>
+            <div class="mix__sum-row mix__save">
+              <dt>Du sparst</dt>
+              <dd><span data-mix-save>0,00 €</span><span class="mix__save-pct" data-mix-save-pct hidden></span></dd>
+            </div>
+          </dl>
+
+          <p class="mix__status" id="mix-status-mix" role="status" aria-live="polite" data-mix-status>
+            Noch 3 Slots füllen.
+          </p>
+
+          <button type="button"
+                  class="btn btn--block mix__cta"
+                  data-mix-add
+                  data-label="Bundle in den Warenkorb"
+                  disabled
+                  aria-describedby="mix-status-mix">
+            Noch 3 Slots füllen
+          </button>
+
+          <p class="mix__fineprint">Fixpreise gelten für Artikel aus dem Pool. Alle Preise inkl. MwSt.</p>
+        </aside>
+
+      </div>
+
+      <script type="application/json" data-mix-bundles>
+        [{
+            "name": "3er Mix",
+            "slots": 3,
+            "price": 3990
+          },{
+            "name": "5er Mix",
+            "slots": 5,
+            "price": 5990
+          },{
+            "name": "8er Mix",
+            "slots": 8,
+            "price": 8990
+          }]
+      </script></div>
+</section>
+
+<script src="../assets/mix-match.js" defer></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  </main>
+
+
+
+  
+
+  <div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Warenkorb" aria-hidden="true">
+  <div class="cart-drawer__scrim" data-cart-close></div>
+  <div class="cart-drawer__panel">
+    <div class="cart-drawer__head">
+      <h2 class="display">Warenkorb</h2>
+      <button type="button" class="icon-btn" id="cartClose" data-cart-close aria-label="Warenkorb schließen">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </div>
+    <div class="cart-drawer__body" id="cartBody">
+      <p class="cart-empty">Warenkorb wird geladen …</p>
+    </div>
+    <div class="cart-drawer__foot" id="cartFoot"></div>
+  </div>
+</div><script type="application/json" id="obUpsell">[{"v":51475632226634,"h":"pap-67-long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips","t":"Granny's Weed Long King Size Papers + Tips","p":179,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips-8850456.png?v=1773529107&width=160","u":"/products/pap-67-long-king-size-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips"},{"v":51475646087498,"h":"pa-div-154-ethereal-gold-king-size-slim-ungebleicht","t":"RAW Ethereal Gold King Size Slim, 32 Blatt","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154.webp?v=1793701856&width=160","u":"/products/pa-div-154-ethereal-gold-king-size-slim-ungebleicht"},{"v":51475647332682,"h":"1050-x-pert-slim-fit-paper-ultra-thin-extra-fine-109x40mm-50er","t":"OCB X-Pert Silber Slim Fit Papers 109x40mm, ultra thin","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/1050.webp?v=1793701878&width=160","u":"/products/1050-x-pert-slim-fit-paper-ultra-thin-extra-fine-109x40mm-50er"},{"v":51475632685386,"h":"smo-red-ks-paper-108x37mm-50er","t":"Smoking Red King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-red-ks.webp?v=1793701713&width=160","u":"/products/smo-red-ks-paper-108x37mm-50er"},{"v":51475631309130,"h":"pap-62-long-king-size-extra-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips","t":"Granny´s Weed Granny's Weed Long King Size SLIM Paper & Tips","p":179,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pap-62.webp?v=1793701699&width=160","u":"/products/pap-62-long-king-size-extra-slim-zigarettenpapier-filtertips-24er-box-36-blatt-36-tips"},{"v":51475647365450,"h":"ocb-03-premium-slim-oro-gold-paper-109x44mm-50er","t":"OCB Gold „Oro“ Premium Slim Paper 109x44mm","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/ocb-03.webp?v=1793701881&width=160","u":"/products/ocb-03-premium-slim-oro-gold-paper-109x44mm-50er"},{"v":51475646906698,"h":"2000-schwarz-premium-long-slim-paper-109x44mm-50er-box-32-blatt","t":"OCB Schwarz Premium Long Slim Paper 109x44mm","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/2000.webp?v=1793701871&width=160","u":"/products/2000-schwarz-premium-long-slim-paper-109x44mm-50er-box-32-blatt"},{"v":51475641041226,"h":"pa-div-113-classic-black-ks-slim-papier-50er-box","t":"RAW Classic Black KS Slim Papier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/raw-classic-black-ks-slim-papier-2220411.png?v=1776011905&width=160","u":"/products/pa-div-113-classic-black-ks-slim-papier-50er-box"},{"v":51475634127178,"h":"smo-kuk2-paper-kukuxumusu-k-s-slim-108x37mm-50er-box","t":"Smoking KUKUXUMUSU *New Collection* King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-kuk2.webp?v=1793701721&width=160","u":"/products/smo-kuk2-paper-kukuxumusu-k-s-slim-108x37mm-50er-box"},{"v":53449597976906,"h":"smo-bro-ce-brown-unbleached-creatons-edition-k-s-paper-50er-box","t":"Smoking BROWN Unbleached \"Creators Edition\" King Size Zigarettenpapier","p":129,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-bro-ce.webp?v=1793701718&width=160","u":"/products/smo-bro-ce-brown-unbleached-creatons-edition-k-s-paper-50er-box"},{"v":64154079461706,"h":"smoking-thinnest-rot-king-size-zigarettenpapier","t":"Smoking THINNEST (rot) King Size Zigarettenpapier","p":125,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/smo-rth_f7953d68-8501-4f40-9eff-74a97b74b0bb.webp?v=1793702680&width=160","u":"/products/smoking-thinnest-rot-king-size-zigarettenpapier"},{"v":64154079396170,"h":"raw-ethereal-gold-king-size-slim-32-blatt-pro-heftchen","t":"RAW Ethereal (Gold) King Size Slim 32 Blatt pro Heftchen","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/pa-div-154_6b7424a1-33e8-4130-9c7a-e12890c0c5d6.webp?v=1793702675&width=160","u":"/products/raw-ethereal-gold-king-size-slim-32-blatt-pro-heftchen"},{"v":64154079068490,"h":"juicy-jays-king-size-slim-aromat-papier-mello-mango","t":"Juicy Jays King Size Slim aromat. Papier, Mello Mango","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-mello-mango-jj-ks-11_390859b4-4271-4ad3-b041-9f4c7b33e697.webp?v=1793702661&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-mello-mango"},{"v":64154078970186,"h":"juicy-jays-king-size-slim-aromat-papier-cotton-candy","t":"Juicy Jays King Size Slim aromat. Papier, Cotton Candy","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-cotton-candy-jj-ks-24_e5759151-baf7-4b56-b2fc-9b468ac57d69.webp?v=1793702658&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-cotton-candy"},{"v":64154078937418,"h":"juicy-jays-king-size-slim-aromat-papier-liquorice","t":"Juicy Jays King Size Slim aromat. Papier, Liquorice","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-liquorice-jj-ks-25_4de7e398-22fa-4a89-9cb1-25b47a32c4d9.webp?v=1793702656&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-liquorice"},{"v":64154078445898,"h":"juicy-jays-king-size-slim-aromat-papier-coconut","t":"Juicy Jays King Size Slim aromat. Papier, Coconut","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-coconut-jj-ks-02_8bfc16ee-e468-4641-8140-00b3f578cd48.webp?v=1793702654&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-coconut"},{"v":64154077921610,"h":"juicy-jays-superfine-1-1-4-aromat-papier-greenleaf","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Greenleaf","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf-jj-paf-06_471e8b4e-817c-4abd-8215-fd902d1a7bb0.webp?v=1793702652&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-greenleaf"},{"v":64154077430090,"h":"juicy-jays-superfine-1-1-4-aromat-papier-candy-1-box","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Candy (1 Box)","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-candy-jj-paf-07_86185000-b359-4eb7-ad65-8ddc0f09b60d.webp?v=1793702650&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-candy-1-box"},{"v":64154076709194,"h":"juicy-jays-king-size-slim-aromat-papier-grape","t":"Juicy Jays King Size Slim aromat. Papier, Grape","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-grape-jj-ks-15_fd4b152a-5bcc-4e60-bae2-7a366e5af0cd.webp?v=1793702647&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-grape"},{"v":64154076217674,"h":"juicy-jays-king-size-slim-aromat-papier-pineapple","t":"Juicy Jays King Size Slim aromat. Papier, Pineapple","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-pineapple-jj-ks-05_483067eb-718c-421f-9068-9271eef49cdc.webp?v=1793702645&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-pineapple"},{"v":64154075234634,"h":"juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate","t":"Juicy Jays King Size Slim aromat. Papier, Double Dutch Chocolate","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate-jj-ks-0_e03fd0e8-dceb-4d5d-beed-bfeefceb9fd1.webp?v=1793702643&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-double-dutch-chocolate"},{"v":64154074743114,"h":"juicy-jays-king-size-slim-aromat-papier-jamaican-rum","t":"Juicy Jays King Size Slim aromat. Papier, Jamaican Rum","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-king-size-slim-aromat-papier-jamaican-rum-jj-ks-07_bb88954d-1202-4092-b664-087ec8f41e31.webp?v=1793702640&width=160","u":"/products/juicy-jays-king-size-slim-aromat-papier-jamaican-rum"},{"v":64154074218826,"h":"juicy-jays-superfine-1-1-4-aromat-papier-watermelon","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Watermelon","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-watermelon-jj-paf-03_6b50bc3c-5ad4-473c-908b-106886d31ce0.webp?v=1793702638&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-watermelon"},{"v":64154074186058,"h":"juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious","t":"Juicy Jays \"SUPERFINE\" 1 1/4 aromat. Papier, Black Berrylicious","p":189,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious-jj-paf-05_7df9f77e-5c08-4ca5-84af-e3c62ace0249.webp?v=1793702636&width=160","u":"/products/juicy-jays-superfine-1-1-4-aromat-papier-black-berrylicious"},{"v":51475632357706,"h":"tip-239-aktivkohle-filter-6mm-50er-packung","t":"Granny's Hybrid Deluxe Aktivkohlefilter 6mm, 210er","p":798,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-239.webp?v=1793701708&width=160","u":"/products/tip-239-aktivkohle-filter-6mm-50er-packung"},{"v":51475635798346,"h":"tip-212-active-filter-slim-konisch-6-7mm-25er-beutel-6er-display","t":"GIZEH Active Filter Slim konisch 6-7mm 25er Beutel","p":745,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-212.webp?v=1793701763&width=160","u":"/products/tip-212-active-filter-slim-konisch-6-7mm-25er-beutel-6er-display"},{"v":51475646284106,"h":"9910-activ-tips-slim-aktivkohlefilter-7mm-50er-schachtel","t":"OCB Activ Tips Aktivkohlefilter 7mm 50er Schachtel","p":749,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/9910.webp?v=1793701864&width=160","u":"/products/9910-activ-tips-slim-aktivkohlefilter-7mm-50er-schachtel"},{"v":61373255287114,"h":"tip-wz02-50-cl-phil-trino-classic-smart-filter-50er-pack","t":"WEEDLEZ® Phil Trino 6mm CLASSIC 50er","p":799,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-wz02-50-cl.webp?v=1793701757&width=160","u":"/products/tip-wz02-50-cl-phil-trino-classic-smart-filter-50er-pack"},{"v":51475632456010,"h":"tip-236-premium-aktivkohlefilter-6-9mm-50er-packung","t":"Granny´s Weed Granny's Weed Premium Aktivkohlefilter (6.9mm, 50er)","p":790,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/tip-236.webp?v=1793701711&width=160","u":"/products/tip-236-premium-aktivkohlefilter-6-9mm-50er-packung"},{"v":51475619873098,"h":"x-tyson-2-0-xtra-slim-5-9-mm-filter-33er-onlybubatz","t":"Purize x Tyson 2.0 Aktivkohlefilter (33er)","p":695,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-102.webp?v=1793702711&width=160","u":"/products/x-tyson-2-0-xtra-slim-5-9-mm-filter-33er-onlybubatz"},{"v":51475619283274,"h":"purize-019-aktivkohlefilter-xtra-slim-5-9mm-50er-packung-green","t":"Purize Aktivkohlefilter XTRA Slim (50er, GREEN)","p":798,"i":"https://cdn.shopify.com/s/files/1/0953/4865/4410/files/purize-019.webp?v=1793701682&width=160","u":"/products/purize-019-aktivkohlefilter-xtra-slim-5-9mm-50er-packung-green"}]</script>
+  <script>window.OB_UPSELL_CFG = {"n": 3, "t": "Noch [betrag] bis versandkostenfrei – passt dazu:", "tf": "Passt dazu"};</script><div class="pdp-lightbox" id="pdpLightbox" hidden role="dialog" aria-modal="true" aria-label="Bild vergrößern">
+    <button class="pdp-lightbox__close" type="button" aria-label="Schließen">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <img src="" alt="">
+  </div>
+
+
+
+  <script>
+
+    window.Shopify = window.Shopify || {};
+
+    window.OB_MONEY_FORMAT = "{{amount_with_comma_separator}} €";
+    window.OB_FREE_FROM = 4900;
+    window.OB_SHIP = {"on": true, "cut": 14, "sat": false, "hol": "25.12.2026, 26.12.2026, 01.01.2027, 26.03.2027, 29.03.2027, 01.05.2027, 06.05.2027, 17.05.2027, 27.05.2027, 03.10.2027, 01.11.2027, 25.12.2027, 26.12.2027", "today": "Noch [zeit] bestellen – geht heute raus", "later": "Jetzt bestellen – geht [tag] raus", "cart": true };
+
+    window.OB_CART_COUNT = 0;
+
+  </script>
+
+  <script src="../assets/theme.js" defer></script>
+  <script src="../assets/ob-verkauf.js" defer></script>
+
+  <script src="../assets/ob-extras.js" defer></script>
+
+  <script src="../assets/ob-anim.js" defer></script>
+  <script src="../assets/ob-scrollfx.js" defer></script>
+
+</body>
+
+</html>
+

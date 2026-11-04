@@ -1,9 +1,5 @@
 
-/* ==========================================================================
-   v29 (31.10.2026) — Ausverkauft-Regel, Partner, Warenkorb, Bewegung
-   Andreess sieben Punkte. Alles über Theme-Einstellungen schaltbar:
 
-/* ---------- Punkt 5: ein Bildmaß für alle Karten (1:1) ---------- */
 /* Das height="480"-Attribut am <img> wirkt als CSS-Höhe und schlägt aspect-ratio —
    deshalb Rahmen 1:1 + Bild height:100% (gemessen 31.10.: 259×482 -> 259×259).
    Bildmodus kommt aus dem Theme-Editor (Produktbilder): normalisierte Fotos haben
