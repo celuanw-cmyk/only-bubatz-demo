@@ -2,7 +2,7 @@
 
 <html lang="de">
 
-<head><script>
+<head><meta name="robots" content="noindex, nofollow"><script>
 /* Demo: kein echter Shop dahinter – Warenkorb-Anfragen freundlich beantworten */
 (function(){var f=window.fetch;window.fetch=function(u,o){u=String(u||'');
  if(/cart\/(add|change|update|clear)/.test(u))return Promise.resolve(new Response(JSON.stringify({description:'Demo – der Warenkorb ist hier abgeschaltet'}),{status:422,headers:{'Content-Type':'application/json'}}));
